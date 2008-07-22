@@ -1,0 +1,5 @@
+$declare(Double P = new Double(1.0e-250))
+$(P.getValue())
+$declare(double p = 1.0e-250)
+$do(P = new Double(p))
+$(P.getValue())

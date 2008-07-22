@@ -1,0 +1,4 @@
+ArrayBoundsException thrown in killme(excp_stacktrace.moto:14)
+   called from function doit(excp_stacktrace.moto:10)
+   called from function <main>(excp_stacktrace.moto:3)
+

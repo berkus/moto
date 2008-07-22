@@ -1,0 +1,33 @@
+$use("codex.util")
+$use("cstdlib")
+${
+	// Method Identification
+	Vector v1 = new Vector();
+	Vector v2 = new Vector();	
+	StringSet s1 = new StringSet();
+	
+	void(Object) add = v1.add;
+	Object(int) get = v1.get;
+	
+	add("hello");
+	add("goodbye");
+	add("hello");
+	add("goodbye");
+	add("so");
+	add("long");
+				
+	print <String>get(0) + "\n";
+	print <String>get(1) + "\n";
+		
+	v1.elements().each(v2.add);
+	print "Cloned: "+ join(<String[]><Object>v2.toArray(),",") + "\n";
+		
+	v2.sort(<int(Object,Object)>strcmp);
+	print "Sorted: "+ join(<String[]><Object>v2.toArray(),",") + "\n";
+	
+	v2.clear();
+	v1.elements().each(<void(Object)>s1.add);
+	s1.elements().each(v2.add);
+	print "Unique: "+ join(<String[]><Object>v2.toArray(),",") + "\n";	
+
+}$

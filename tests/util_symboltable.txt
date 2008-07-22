@@ -1,0 +1,17 @@
+bar = bar
+slaka = shlaka
+null = null
+null = null
+true = true
+true = true
+false = false
+3 = 3
+maka,foo,bingo,= maka,foo,bingo,
+slaka,bar,null,= shlaka,bar,null,
+2 = 2
+false = false
+1 = 1
+false = false
+1 = 1
+0 = 0
+

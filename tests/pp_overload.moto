@@ -1,0 +1,4 @@
+#readdefs("pp_overload.lib")
+$maka("buggy")
+$baz("buggy")
+$foo("buggy")

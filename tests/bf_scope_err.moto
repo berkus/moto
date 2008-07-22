@@ -1,0 +1,14 @@
+$if(true)
+   $declare(int s = 1)
+   $(++s) - 2
+$endif
+$(s) - Variable not declared
+
+$if(true)
+   $declare(int t=1) 
+   $(++t) - 2
+$endif
+$(t) - Variable not declared
+
+${ {int u = 1;} {print u;} }$
+

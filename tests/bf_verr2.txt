@@ -1,0 +1,17 @@
+bf_verr2.moto:2: Illegal binary operation: <int> * <String>
+bf_verr2.moto:3: Illegal binary operation: <int> % <double>
+bf_verr2.moto:4: Illegal binary operation: <double> / <String>
+bf_verr2.moto:6: Variable of type <String> cannot store type <int>
+bf_verr2.moto:12: Variable 'b' not declared before used
+bf_verr2.moto:15: Case type must match that of switch: <int> != <char>
+bf_verr2.moto:17: Case type must match that of switch: <float> != <char>
+bf_verr2.moto:17: Case arguments must be literals 
+bf_verr2.moto:20: Type not defined: <Maka>
+bf_verr2.moto:22: Multiply declared variable 's'
+bf_verr2.moto:24: Illegal type for condition: <int>
+bf_verr2.moto:27: No such method: Regex::maka()
+bf_verr2.moto:29: No such method: String::maka()
+bf_verr2.moto:31: Only reference types have destructors
+bf_verr2.moto:33: Type not defined: <Maka>
+bf_verr2.moto:33: No such constructor: Maka()
+bf_verr2.moto:37: Illegal unary operation: ! <String>

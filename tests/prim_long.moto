@@ -1,0 +1,5 @@
+$declare(Long P = new Long(99999999999L))
+$(P.getValue())
+$declare(long p = 99999999999L)
+$do(P = new Long(p))
+$(P.getValue())

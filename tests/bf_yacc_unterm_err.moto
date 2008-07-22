@@ -1,0 +1,12 @@
+$if(true)
+$for(;true;)
+$while(true)
+$switch(true)
+
+$if(true)
+   $if(true)
+   $for(;true;)
+   $while(true)
+   $switch(true)
+$endif
+

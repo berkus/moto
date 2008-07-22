@@ -1,0 +1,18 @@
+${
+
+	use "codex.util";	
+
+	SymbolTable st = new SymbolTable();
+
+	st.put("foo","bar");
+	st.put("maka","slaka");
+	st.put("bingo","null");
+
+	Enumeration e = st.keys();
+	while(e.hasNext()){
+		print <String> (++e) + ",";
+		continue;
+	}
+	print "= maka,foo,bingo,\n";
+
+}$

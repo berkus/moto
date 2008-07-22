@@ -1,0 +1,36 @@
+atrue = atrue
+afalse = afalse
+anull = anull
+aa = aa
+a1 = a1
+a1.100000e+00 = a1.1
+a99999999999 = a999999999999
+
+trueB = trueB     
+falseB = falseB
+nullB = nullB
+aB = aB
+1B = 1B
+1.100000e+00B = 1.1B
+999999999999B = 999999999999B
+
+
+
+A656565.0000006.500000e+01 = A656565.065.?
+B = B
+
+false = false
+true = true
+true = true
+true = true
+false = false
+false = false
+
+true = true
+true = true 
+true = true 
+true = true 
+
+66 == 66
+
+true = true 

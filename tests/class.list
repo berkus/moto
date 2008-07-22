@@ -1,0 +1,8 @@
+
+class_yacc_err
+class_verr_err
+class_succ
+class_redefined_err
+class_selfreference_succ
+class_complex_succ
+class_tree_succ

@@ -1,0 +1,12 @@
+${
+   class Foo{
+      int bar = this;
+      int this = bar;
+      int maka(this foo){
+         this = null;
+         this++;
+         delete this;
+         int this = 27;
+      }
+   }
+}$

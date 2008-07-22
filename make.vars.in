@@ -1,0 +1,99 @@
+#======================================================================
+#
+# $RCSfile: make.vars.in,v $
+# $Revision: 1.14 $
+# $Author: scorsi $
+# $Date: 2003/02/07 15:36:26 $
+#
+# Makefile.in boilerplate 
+#
+#======================================================================
+# Shell
+
+SHELL = /bin/sh
+
+#----------------------------------------------------------------------
+# Debugging
+
+#LOG_LEVEL = LOG_DEBUG
+LOG_LEVEL = LOG_ERROR
+
+#----------------------------------------------------------------------
+# Variables
+
+PROGRAM =
+LIBRARY =
+OBJECTS =
+HEADERS = $(wildcard *.h)
+LOCAL_CLEAN_FILES =
+CLEAN_FILES = ${PROGRAM} ${LIBRARY} ${OBJECTS} ${LOCAL_CLEAN_FILES}
+
+#----------------------------------------------------------------------
+# Moto Source Paths
+
+ROOT_DIR = @ROOT_DIR@
+MOD_DIR = ${ROOT_DIR}/mod
+INC_DIR = ${ROOT_DIR}/include
+LIB_DIR = ${ROOT_DIR}/lib
+BIN_DIR = ${ROOT_DIR}/bin
+MX_DIR = ${ROOT_DIR}/mx
+
+#----------------------------------------------------------------------
+# Installation Paths
+
+INST_ROOT_DIR = ${DESTDIR}@INST_ROOT_DIR@
+INST_BIN_DIR = ${DESTDIR}@INST_BIN_DIR@
+INST_LIB_DIR = ${DESTDIR}@INST_LIB_DIR@
+INST_INC_DIR = ${DESTDIR}@INST_INC_DIR@
+INST_MX_DIR = ${DESTDIR}@INST_MX_DIR@
+INST_MOD_DIR = ${DESTDIR}@INST_MOD_DIR@
+
+#----------------------------------------------------------------------
+# Apache Paths
+
+AP_BIN_DIR = @APACHE_BIN_DIR@
+AP_INC_DIR = @APACHE_INCLUDE_DIR@
+AP_LIBEXEC_DIR = @APACHE_LIBEXEC_DIR@
+
+#----------------------------------------------------------------------
+# MySQL Paths
+
+MY_INC_DIR = @MYSQL_INCLUDE_DIR@
+MY_LIB_DIR = @MYSQL_LIBRARY_DIR@
+
+#----------------------------------------------------------------------
+# PGSQL Paths
+
+PG_INC_DIR = @PGSQL_INCLUDE_DIR@
+PG_LIB_DIR = @PGSQL_LIBRARY_DIR@
+
+#----------------------------------------------------------------------
+# Flags
+
+ARFLAGS = cr
+
+#----------------------------------------------------------------------
+# Executables
+
+CC = @CC@
+AR = @AR@
+APXS = @APXS@
+LEX = @LEX@
+YACC = @YACC@
+RANLIB = @RANLIB@
+SED = @SED@
+INSTALL = @ROOT_DIR@/install-sh -c
+MKDIR = @ROOT_DIR@/install-sh -c -d
+@SET_MAKE@
+
+#----------------------------------------------------------------------
+# Suffix rules
+
+.SUFFIXES: .c.o
+.c.o:
+	${CC} ${CPPFLAGS} ${DEFS} ${CFLAGS} -c $< -o $@ 
+
+#======================================================================
+# end	vars
+#======================================================================
+

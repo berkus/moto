@@ -1,0 +1,2 @@
+$use("codex.util")
+$declare(HashSet is = new HashSet())

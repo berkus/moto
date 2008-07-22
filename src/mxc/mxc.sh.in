@@ -1,0 +1,284 @@
+#!/bin/sh
+#==============================================================================
+#
+# mxc: a script for building moto extensions
+# $Author: dhakim $
+# $Id: mxc.sh.in,v 1.10 2002/10/30 19:05:40 dhakim Exp $
+#
+#==============================================================================
+# Script Functions
+#
+# say
+# echo a message, conditional on the verbosity level
+say() {
+if [ $VERBOSE = "ON" ]; then
+   echo $*
+fi
+}
+# warn
+# echo a warning message
+warn() {
+echo "*** warning: ""$*"
+}
+# err
+# echo an error message
+err() {
+echo "*** error: ""$*"
+}
+# locateprog
+# attempts to locate an executable using the $PATH environment variable
+locateprog() {
+prog=$1
+locatepath=
+SAVEIFS="$IFS"; IFS=":" 
+for dir in $EXEPATH; do
+   test -z $dir && dir=.
+   if [ -f $dir/$prog ]; then
+      if [ -z "$REALPATH" ]; then
+         locatepath="$dir/$prog"
+      else
+         locatepath=`$REALPATH $dir/$prog`
+      fi
+      break
+   fi
+done   
+if [ -n "$locatepath" ]; then
+   say "$prog... $locatepath"
+else
+   echo "Cannot find path to $prog. Exiting"
+   exit 1
+fi
+IFS="$SAVEIFS"
+}
+# usage
+# prints out the program usage string
+usage() {
+cat << EOF
+Usage: mxc [options] <directory>
+          
+Options:
+   -v:        Verbose mode.
+EOF
+}
+#
+#==============================================================================
+# Task list
+
+#  0: Set up variables and find programs
+#  1. Read options
+#  2. Tell 'em what we're gonna do
+#  3. Locate executables
+#  4. Check location, get extension name, and build file list
+#  5. Run code generator
+#  6. Compile the extension
+#  7. Tell 'em what we've done
+
+#==============================================================================
+#  0: Set up variables and find programs
+
+# Global variables ------------------------------------------------------------
+
+# The moto root directory
+ROOT_DIR=@ROOT_DIR@
+
+# Set the executables path
+EXEPATH="$ROOT_DIR/src/tools:$ROOT_DIR/bin:$PATH"
+
+# The verbosity level
+VERBOSE=OFF
+
+# The file list
+FILES=
+
+# The extension name to build
+EXTNAME=
+
+# The program name string
+PROGNAME='mxc: The Moto Module Compiler'
+
+# Step variables --------------------------------------------------------------
+
+STEP1=ON
+STEP2=ON
+STEP3=ON
+STEP4=ON
+STEP5=ON
+STEP6=ON
+STEP7=ON
+
+#==============================================================================
+#  1. Read options
+
+if [ $STEP1 = "ON" ]; then
+
+# Read options
+while getopts vm arg
+do
+   case "$arg" in
+      v) if [ "$VERBOSE" = OFF ]; then
+            VERBOSE=ON
+         else
+            err "Multiply defined option: v"
+            echo
+            usage
+            exit 10
+         fi;;
+      \?) usage
+         exit 10;;
+   esac
+done
+
+if [ "$OPTIND" -gt "$#" ]; then
+   usage
+   exit 11
+fi
+
+shiftcount=`expr $OPTIND - 1`
+shift $shiftcount
+
+fi
+
+#==============================================================================
+#  2. Tell 'em what we're gonna do
+
+if [ $STEP2 = "ON" ]; then
+
+say
+say ">>> $PROGNAME"
+say
+
+fi
+
+#==============================================================================
+#  3. Locate executables
+
+if [ $STEP3 = "ON" ]; then
+
+say "### Locating executables..."
+
+# The 'realpath' program
+REALPATH=
+locateprog realpath
+REALPATH="$locatepath"
+REALPATH=`$REALPATH $REALPATH`
+
+# The 'fchk' program
+locateprog fchk
+FCHK="$locatepath"
+FCHK=`$REALPATH $FCHK`
+
+# The 'mxcg' program
+locateprog mxcg
+MXCG="$locatepath"
+MXCG=`$REALPATH $MXCG`
+
+# The 'mxcg' properties file
+locateprog mxcg.properties
+MXCGPROPS="$locatepath"
+MXCGPROPS=`$REALPATH $MXCGPROPS`
+
+# The sed program
+locateprog sed
+SED="$locatepath"
+
+# The make program
+locateprog make
+MAKE="$locatepath"
+
+say
+
+fi
+
+#==============================================================================
+#  4. Check location, get extension name, and build file list
+
+if [ $STEP4 = "ON" ]; then
+
+ARG=`echo $1 | $SED "s/\/$//"`
+ARG=`$REALPATH $ARG`
+if [ "$?" -ne 0 ]; then
+   echo $ARG
+   exit 31
+else
+   if [ -d "$ARG" ]; then
+      CHK=`echo $ARG | $SED -e "s/\/mx\//MX/"`
+      if [ "$CHK" = "$ARG" ]; then
+         err "The path of the directory argument must contain 'mx': $ARG"
+         echo
+         exit 32
+      fi
+      EXTNAME=`echo $ARG | sed -e "s/.*mx\///" | sed -e "s/\//_/g"`      
+      say "### Building extension..."
+      say "$ARG => shared library: lib_mx$EXTNAME.so"
+      say "$ARG => static archive: lib_mx$EXTNAME.a"
+      cd $ARG
+      FILES=`ls *.i`
+      if [ "$?" -ne 0 ]; then
+         err "No .i files in $ARG"
+         echo
+         exit 33
+      fi
+   else
+      err "Argument must be a directory: $ARG"
+      echo
+      exit 34
+   fi
+fi
+
+say
+
+fi
+
+#==============================================================================
+#  5. Run code generator
+
+if [ $STEP5 = "ON" ]; then
+
+say "### Running code generator..."
+
+CWD=`pwd`
+echo "$MXCG -p $MXCGPROPS -n $EXTNAME -d $CWD *.i"
+$MXCG -p $MXCGPROPS -n $EXTNAME -d $CWD *.i
+
+say
+
+fi
+
+#==============================================================================
+#  6. Compile the extension
+
+if [ $STEP6 = "ON" ]; then
+
+say "### Compiling the extension..."
+
+OBJECTS=`ls | grep '[.]c$' | sed -e "s;[.]c;.o;g"`
+cat mx.mk | sed -e "s%<OBJECTS>%`echo $OBJECTS`%g" > mx.mk.new
+mv mx.mk.new mx.mk
+echo "$MAKE -f mx.mk"
+$MAKE -f mx.mk
+
+say
+
+fi
+
+#==============================================================================
+# 7. Tell 'em what we've done
+
+if [ $STEP7 = "ON" ]; then
+
+say "##################################################################"
+say 
+say "Done."
+say 
+say "##################################################################"
+say
+say "<<< $PROGNAME"
+say
+
+fi
+
+exit 0
+
+#==============================================================================
+# end
+

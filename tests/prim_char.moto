@@ -1,0 +1,5 @@
+$declare(Character P = new Character('a'))
+$(P.getValue())
+$declare(char p = 'a')
+$do(P = new Character(p))
+$(P.getValue())

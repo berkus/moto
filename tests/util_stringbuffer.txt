@@ -1,0 +1,13 @@
+happy
+null
+1
+1.000000e+00
+1.000000
+c
+true
+false
+1
+20000000002
+cat
+dog
+

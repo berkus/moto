@@ -1,0 +1,16 @@
+${print 7.00e+10 ;}$
+${print 7.00E+10 ;}$
+${print 7.00e-10 ;}$
+${print 7.00E-10 ;}$
+${print false; }$
+${print 7.0F; }$
+${print 7.0f; }$
+${ print 7;}$
+${
+  print 7L;
+  print "\n";
+  print 7l;
+}$
+${print null;}$
+${print "string";}$
+$(true)

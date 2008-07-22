@@ -1,0 +1,33 @@
+### In Try Block
+### About to Return
+### In Finally Block
+### Got 1
+### In Try Block
+### About to Return
+### In Finally Block
+### Got 2
+### In Outer Try Block
+### In Inner Try Block
+### About to Return
+### In Inner Finally Block
+### In Outer Finally Block
+### Got 3
+### In Outer Try Block
+### In Inner Try Block
+### About to Return
+### In Inner Finally Block
+### In Outer Catch Block
+### Got 4
+### In Outer Try Block
+### In Inner Try Block
+### About to Return
+### In Inner Finally Block
+### In Outer Catch Block
+### In Outer Finally Block
+### Got 5
+### Got 6
+### Dealt with NPE
+### Got 7
+### Got 8
+### Got 9
+

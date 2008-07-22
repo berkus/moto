@@ -1,0 +1,14 @@
+#define FOO foo
+#define BAR bar
+#if defined FOO && defined BAR
+yes
+#endif
+#if ! defined BAZ && ! defined QUUX
+yes
+#endif
+#if defined FOO && ! defined QUUX
+yes
+#endif
+#if ! defined FOO && defined QUUX
+yes
+#endif

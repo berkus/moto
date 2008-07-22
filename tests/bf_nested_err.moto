@@ -1,0 +1,13 @@
+${
+   {
+      use "codex.util";
+      global int foo;
+      int maka(String shlaka){ print "foo"; }
+   }
+}$
+
+$if(true)
+   $use("codex.util")
+   $declare(global int foo)
+   $define(int maka(String shlaka))  $enddef
+$endif

@@ -1,0 +1,77 @@
+#======================================================================
+#
+# Makefile for the moto interpreter module and supporting library
+#
+# $RCSfile: Makefile.in,v $
+# $Revision: 1.19 $
+# $Author: dhakim $
+# $Date: 2002/06/07 22:48:47 $
+#
+#======================================================================
+# Standard Variables
+#
+
+include @ROOT_DIR@/make.vars
+
+#----------------------------------------------------------------------
+# Variables
+
+LIBRARY = libmotom.a
+OBJECTS = mimeentity.o module.o timer.o mod_moto.o cookie.o
+MOD = mod_moto.so
+AROBJECTS = module.o timer.o mimeentity.o cookie.o
+LMOTOM = ${LIB_DIR}/libmotom.a
+LMOTOL = ${LIB_DIR}/libmotol.a
+LMOTOT = ${LIB_DIR}/libmotot.a 
+LCODEX = ${LIB_DIR}/libcodex.a
+
+#----------------------------------------------------------------------
+# Flags
+
+CPPFLAGS = @CPPFLAGS@
+DEFS = @DEFS@
+CFLAGS = @CFLAGS@ -DEAPI
+LDFLAGS = @LDFLAGS@ 
+LIBS = @LIBS@ @FTWLIB@ -lmotol 
+GCCLDPATH = @GCCLDPATH@
+GCCLIB = @GCCLIB@
+
+#----------------------------------------------------------------------
+# Standard targets
+
+all: ${OBJECTS} ${MOD} ${LIBRARY}
+
+${MOD}: ${OBJECTS} ${LCODEX} ${LMOTOL}
+	-rm -rf tmp
+	mkdir tmp
+	cd tmp; ${AR} -x ${LCODEX}
+	${APXS} -o $@ -c -L${LIB_DIR} ${GCCLDPATH} ${LIBS} ${GCCLIB} ${OBJECTS} tmp/*.o 
+	rm -rf tmp
+	cp ${MOD} ${MOD_DIR}
+
+${LIBRARY}: ${OBJECTS} 
+	${AR} ${ARFLAGS} ${LIBRARY} ${AROBJECTS}
+	${RANLIB} ${LIBRARY}
+	${INSTALL} ${LIBRARY} ${LIB_DIR}
+	cp *.h ${INC_DIR}
+
+dep:
+
+install: all
+	${MKDIR} ${INST_LIB_DIR}
+	${MKDIR} ${INST_INC_DIR}
+	${MKDIR} ${INST_MOD_DIR}
+	${INSTALL} ${LIBRARY} ${INST_LIB_DIR}
+	${RANLIB} ${INST_LIB_DIR}/${LIBRARY}
+	${INSTALL} ${MOD} ${INST_MOD_DIR}
+	cp *.h ${INST_INC_DIR}
+
+#----------------------------------------------------------------------
+# Standard Rules
+
+include @ROOT_DIR@/make.xrules
+
+#======================================================================
+# end
+#======================================================================
+

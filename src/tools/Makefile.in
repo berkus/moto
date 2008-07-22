@@ -1,0 +1,72 @@
+#======================================================================
+#
+# Makefile for a useful little tool set
+#
+# $RCSfile: Makefile.in,v $
+# $Revision: 1.15 $
+# $Author: dhakim $
+# $Date: 2002/10/29 21:25:14 $
+#
+#======================================================================
+# Standard Variables
+#
+
+include @ROOT_DIR@/make.vars
+
+#----------------------------------------------------------------------
+# Variables
+
+PROGRAMS = ftw realpath fchk
+LIBRARY = libmotot.a
+
+LOCAL_CLEAN_FILES	= ${PROGRAMS}
+
+#----------------------------------------------------------------------
+# Flags
+
+CPPFLAGS = @CPPFLAGS@
+DEFS = @DEFS@
+CFLAGS = @CFLAGS@
+
+#----------------------------------------------------------------------
+# Targets
+
+all: ${PROGRAMS} ${LIBRARY}
+
+fchk: fchk.o
+	${CC} ${LDFLAGS} -L${LIB_DIR} ${CFLAGS} -o fchk fchk.o ${LIBS}
+
+ftw: ftwmain.o @FTW_O@
+	${CC} ${LDFLAGS} -L${LIB_DIR} ${CFLAGS} -o ftw ftwmain.o @FTW_O@ ${LIBS}
+
+realpath: realpath.o 
+	${CC} ${LDFLAGS} -L${LIB_DIR} ${CFLAGS} -o realpath realpath.o ${LIBS}
+
+${LIBRARY}: @FTW_O@ 
+	${AR} ${ARFLAGS} ${LIBRARY} @FTW_O@
+	${RANLIB} ${LIBRARY}
+	${INSTALL} ${LIBRARY} ${LIB_DIR}
+	cp *.h ${INC_DIR}
+
+dep:
+
+install: all
+	${MKDIR} ${INST_LIB_DIR}
+	${MKDIR} ${INST_INC_DIR}
+	${MKDIR} ${BIN_DIR}
+	${INSTALL} ${LIBRARY} ${INST_LIB_DIR}
+	${RANLIB} ${INST_LIB_DIR}/${LIBRARY}
+	cp *.h ${INST_INC_DIR}
+	${INSTALL} ftw ${INST_BIN_DIR}
+	${INSTALL} realpath ${INST_BIN_DIR}
+	${INSTALL} fchk ${INST_BIN_DIR}
+
+#----------------------------------------------------------------------
+# Standard Rules
+
+include @ROOT_DIR@/make.xrules
+
+#======================================================================
+# end
+#======================================================================
+

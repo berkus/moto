@@ -1,0 +1,27 @@
+$(2*"hello") - Illegal binary operation
+$declare(String s = 2) - Illegal assignment
+$declare(float f)
+$(b) - Var not declared
+$switch('a')
+$case(2) - Illegal Case Type
+$case(f) - Illegal Case Argument
+$endswitch
+$declare(Maka m) - Type not defined
+$declare(String s = "bar") - Multiply declared variable
+$if(1) $endif - Illegal Conditional
+$(maka()) - No such function
+- Not sure how to make an ambiguous function call
+$(/foo/.maka()) - Can't invoke method on type
+$(s.maka()) - No such method
+$do(delete 1) - Illegal delete operation
+$(new Maka()) - No such constructor
+$(!s) - Illegal unary operation
+$do(++1) - Illegal increment
+$do(--2) - Illegal decrement
+$(/(/) - Regex parse error
+$switch(0.0) - Illegal switch argument
+$endswitch
+$(true?"foo":1) - Illegal ternary operands
+$use("foo.maka.shlaka") - No such library
+$use("cstdlib")
+$do(s = atoi("1")) - Var type assign error

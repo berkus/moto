@@ -1,0 +1,265 @@
+Extension: MySQLResultSet
+
+@MXLIBM@
+@MXLIBZ@
+@MXLIBSSL@
+@MXLIBCRYPTO@
+
+Archive: "@MYSQL_LIBRARY_DIR@/libmysqlclient.a"
+
+Include: "myconn.h"
+Include: "myrset.h"
+Include: "tabulardata.h"
+
+IncludePath: "@MYSQL_INCLUDE_DIR@" 
+
+LibraryPath: "@MYSQL_LIBRARY_DIR@"
+
+Interface:
+
+/** Returns the String at column <i>column</i> of the current row.
+Column numbers start with 0. If <i>column</i> < 0 or <i>column</i> >=
+the number of columns in the result set an exception will be thrown.
+**/
+tracked String MySQLResultSet::getString(int column) =>
+	char* myrset_getString(MySQLResultSet *this, int column);
+
+/** Returns the byte[] at column <i>column</i> of the current row.
+Column numbers start with 0. If <i>column</i> < 0 or <i>column</i> >=
+the number of columns in the result set an exception will be thrown.
+**/
+tracked byte[] MySQLResultSet::getBytes(int column) =>
+	UnArray* myrset_getBytes(MySQLResultSet *this, int column);
+        
+/** Returns the int at column <i>column</i> of the current row.
+Column numbers start with 0. If <i>column</i> < 0 or <i>column</i> >=
+the number of columns in the result set an exception will be thrown.
+**/
+int MySQLResultSet::getInt(int column) =>
+	int myrset_getInt(MySQLResultSet *this, int column);
+
+/** Returns the float at column <i>column</i> of the current row.
+Column numbers start with 0. If <i>column</i> < 0 or <i>column</i> >=
+the number of columns in the result set an exception will be thrown.
+**/
+float	MySQLResultSet::getFloat(int column) =>
+	float myrset_getFloat(MySQLResultSet *this, int column);
+
+/** Returns the char at column <i>column</i> of the current row.
+Column numbers start with 0. If <i>column</i> < 0 or <i>column</i> >=
+the number of columns in the result set an exception will be thrown.
+**/
+char MySQLResultSet::getChar(int column) =>
+	char myrset_getChar(MySQLResultSet *this, int column);
+
+/** Returns the byte at column <i>column</i> of the current row.
+Column numbers start with 0. If <i>column</i> < 0 or <i>column</i> >=
+the number of columns in the result set an exception will be thrown.
+**/
+byte MySQLResultSet::getByte(int column) =>
+  char myrset_getChar(MySQLResultSet *this, int column);
+
+/** Returns the double at column <i>column</i> of the current row.
+Column numbers start with 0. If <i>column</i> < 0 or <i>column</i> >=
+the number of columns in the result set an exception will be thrown.
+**/
+double MySQLResultSet::getDouble(int column) =>
+	double myrset_getDouble(MySQLResultSet *this, int column);
+
+/** Returns the long at column <i>column</i> of the current row.
+Column numbers start with 0. If <i>column</i> < 0 or <i>column</i> >=
+the number of columns in the result set an exception will be thrown.
+**/
+long MySQLResultSet::getLong(int column) =>
+	int64_t myrset_getLong(MySQLResultSet *this, int column);
+
+/** Returns the String at the column named <i>column</i> of the current row.
+Column numbers start with 0. If <i>column</i> is not present in this result set
+an exception will be thrown.
+**/
+tracked String MySQLResultSet::getString(String column) =>
+	char* myrset_getStringByColumnName(MySQLResultSet *this, char *column);
+
+/** Returns the byte[] at the column named <i>column</i> of the current row.
+Column numbers start with 0. If <i>column</i> is not present in this result set
+an exception will be thrown.
+**/
+tracked byte[] MySQLResultSet::getBytes(String column) =>
+	UnArray* myrset_getBytesByColumnName(MySQLResultSet *this, char *column);
+        
+/** Returns the int at the column named <i>column</i> of the current row.
+Column numbers start with 0. If <i>column</i> is not present in this result set
+an exception will be thrown.
+**/
+int MySQLResultSet::getInt(String column) =>
+	int myrset_getIntByColumnName(MySQLResultSet *this, char *column);
+
+/** Returns the float at the column named <i>column</i> of the current row.
+Column numbers start with 0. If <i>column</i> is not present in this result set
+an exception will be thrown.
+**/
+float MySQLResultSet::getFloat(String column) =>
+	float myrset_getFloatByColumnName(MySQLResultSet *this, char *column);
+
+/** Returns the double at the column named <i>column</i> of the current row.
+Column numbers start with 0. If <i>column</i> is not present in this result set
+an exception will be thrown.
+**/
+double MySQLResultSet::getDouble(String column) =>
+	double myrset_getDoubleByColumnName(MySQLResultSet *this, char *column);
+
+/** Returns the long at the column named <i>column</i> of the current row.
+Column numbers start with 0. If <i>column</i> is not present in this result set
+an exception will be thrown.
+**/
+long MySQLResultSet::getLong(String column) =>
+  int64_t myrset_getLongByColumnName(MySQLResultSet *this, char *column);
+
+/** Returns the char at the column named <i>column</i> of the current row.
+Column numbers start with 0. If <i>column</i> is not present in this result set
+an exception will be thrown.
+**/
+char MySQLResultSet::getChar(String column) =>
+	char myrset_getCharByColumnName(MySQLResultSet *this, char *column);
+
+/** Returns the byte at the column named <i>column</i> of the current row.
+Column numbers start with 0. If <i>column</i> is not present in this result set
+an exception will be thrown.
+**/
+byte MySQLResultSet::getByte(String column) =>
+	char myrset_getCharByColumnName(MySQLResultSet *this, char *column);
+
+/** Returns a Date object for column <i>column</i> of the current row.
+Column numbers start with 0. If <i>column</i> is not present in this result set
+an exception will be thrown.
+**/
+tracked Date MySQLResultSet::getDate(String column) =>
+	Date* myrset_getDateByColumnName(MySQLResultSet *this, char *column);
+
+/** Returns a Date object for column <i>column</i> of the current row.
+Column numbers start with 0. If <i>column</i> is not present in this result set
+an exception will be thrown.
+**/
+tracked Date MySQLResultSet::getDate(int column) =>
+  Date* myrset_getDate(MySQLResultSet *this, int column);
+
+void MySQLResultSet::~MySQLResultSet() =>
+	void myrset_free(MySQLResultSet *this);
+
+/** Returns the number of rows in this result set **/
+int MySQLResultSet::rows() =>
+	int myrset_rows(MySQLResultSet *this);
+
+/** Depracated. Use rows() instead. **/
+int MySQLResultSet::size() =>
+	int myrset_rows(MySQLResultSet *this);
+
+/** Returns the current row number **/
+int MySQLResultSet::row() =>
+	int myrset_row(MySQLResultSet *this);
+
+/** Sets the current row to the absolute index of <i>row</i> **/
+boolean MySQLResultSet::moveToRow(int row) =>
+	int myrset_moveToRow(MySQLResultSet *this, int row);
+
+/** Moves the cursor a relative number of rows, either positive or negative **/
+boolean MySQLResultSet::moveRow(int offset) =>
+	int myrset_moveRow(MySQLResultSet *this, int offset);
+
+/** Sets the current row to the next row and returns true if there was a
+next row to be set to. If the result set was just retrieved then this method
+sets the current row to the first row **/
+boolean MySQLResultSet::next() =>
+	int myrset_next(MySQLResultSet *this);
+
+/** Sets the current row to the previous row and returns true if there was a
+previous row to be set to. **/
+boolean MySQLResultSet::prev() =>
+	int myrset_prev(MySQLResultSet *this);
+
+/** Releases all resources associated with the MySQLResultSet **/
+void MySQLResultSet::close() =>
+	void myrset_close(MySQLResultSet *this);
+
+/** Returns a column index for a given column name **/
+int MySQLResultSet::getColumnIndex(String colname) =>
+	int myrset_getColumnIndex(MySQLResultSet *this, char *colname);
+
+/** Returns a TabularData object created from this result set. MySQLResultSets
+cannot be persisted (cached) in the session or context. But by creating a 
+TabularData object from a result set you can persist that effectively cacheing
+the result of a query. **/
+TabularData MySQLResultSet::store() =>
+	TabularData* myrset_store(MySQLResultSet *this);
+
+/** Returns the number of columns in this result set **/
+int	MySQLResultSet::columns() =>
+	int myrset_columns(MySQLResultSet *this);
+
+/** Depracated. Use columns() instead. **/
+int MySQLResultSet::getColumns() =>
+  int myrset_columns(MySQLResultSet *this);
+
+/** Returns the column name of column <i>col</i> **/
+String MySQLResultSet::getColumnName(int col) =>
+	char* myrset_getColumnName(MySQLResultSet *rset, int col);
+
+/** Returns the column type of column <i>col</i> **/
+String MySQLResultSet::getColumnType(int col) =>
+	char* myrset_getColumnType(MySQLResultSet *rset, int col);
+
+
+
+Extension: MySQLConnection
+
+Include: "myconn.h"
+Include: "myrset.h"
+ 
+Interface:
+
+/** Creates a connection to a MySQL database <i>db</i> at the specified host
+as the specified user with the specified password **/
+tracked	MySQLConnection MySQLConnection::MySQLConnection(String host, String db, String user, String password) =>
+	MySQLConnection* myconn_create(const char *host, const char *db, const char *user, const char *password);
+
+void MySQLConnection::~MySQLConnection() =>
+	void myconn_free(MySQLConnection *this);
+
+/** Executes a query against the database and returns the results as a ResultSet **/
+tracked MySQLResultSet MySQLConnection::query(String query) =>
+	MySQLResultSet* myconn_query(MySQLConnection *this, const char *query);
+
+/** Executes an INSERT or an UPDATE or a DELETE against the database and returns 
+the number of rows affected **/ 
+int	MySQLConnection::update(String query) =>
+	int myconn_update(MySQLConnection *this, const char *query);
+
+/** Returns the id generated for the most recent insert if the insert was into
+a table where the id's auto increment **/
+int	MySQLConnection::insertID() =>
+	int myconn_insertID(MySQLConnection *conn);
+
+/** Returns a MySQLResultSet listing all the tables in the current database **/
+tracked MySQLResultSet MySQLConnection::listTables() =>
+	MySQLResultSet* myconn_listTables(MySQLConnection *conn);
+
+/** Returns a MySQLResultSet listing all the tables in the current database 
+whose names match the specified pattern (done with SQL LIKE so % are wildcards)
+**/
+tracked MySQLResultSet MySQLConnection::listTablesMatching(String pattern) =>
+	MySQLResultSet* myconn_listTablesMatching(MySQLConnection *conn, char *pattern);
+
+/** Escapes a String so it is suitable for insertion into a MySQL String column e.g.:
+<br>
+$do(rset =conn.query("SELECT id FROM deck WHERE name= '"+conn.escape(getValue("_name"))+"'"))
+**/
+tracked String MySQLConnection::escape(String s) =>
+	char* myconn_escape(MySQLConnection *this, char *string);
+        
+/** Escapes a byte[] converting it into a String suitable for insertion into a MySQL blob column
+<br>
+$do("INSERT INTO tblImg (idImg,source) VALUES (0,'"+conn.escape(getRequest().getMIMEPart(
+"_image").getBody())+"')"))**/
+tracked String MySQLConnection::escape(byte[] arr) =>
+	char* myconn_escapeBytes(MySQLConnection *this, UnArray *arr);
+

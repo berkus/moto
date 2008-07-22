@@ -1,0 +1,14 @@
+${Boolean P = new Boolean(true); print P.getValue();}$
+${boolean p = true; P = new Boolean(p); print P.getValue();}$
+${Boolean Q = new Boolean(false); print Q.getValue();}$
+${boolean q = false; Q = new Boolean(q); print Q.getValue();}$
+${Character C = new Character('a'); print C.getValue();}$
+${char c = 'a'; C = new Character(c); print C.getValue();}$
+${Double D = new Double(1.0e-250); print D.getValue();}$
+${double d = 1.0e-250; D = new Double(d); print D.getValue();}$
+${Float F = new Float(1.0F); print F.getValue();}$
+${float f = 1.0F; F = new Float(f); print F.getValue();}$
+${Integer I = new Integer(1); print I.getValue();}$
+${int i = 1; I = new Integer(i); print I.getValue();}$
+${Long L = new Long(99999999999L) ;print L.getValue();}$
+${long l = 99999999999L; L = new Long(l); print L.getValue();}$

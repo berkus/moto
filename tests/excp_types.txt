@@ -1,0 +1,10 @@
+
+caught exception 'NullPointerException : A method may not be called on null'
+   thrown at excp_types.moto:13
+caught exception 'ArrayBoundsException : Attempt to subscript array outside of declared bounds'
+   thrown at excp_types.moto:19
+caught exception 'NullPointerException : Attempt to subscript null'
+   thrown at excp_types.moto:26
+caught exception 'MathException : Attempt to divide by zero'
+   thrown at excp_types.moto:32
+

@@ -1,0 +1,109 @@
+### Testing equivalence of substring(i,length) and substring(i)
+'test' = 'test'
+'est' = 'est'
+'st' = 'st'
+'t' = 't'
+'' = ''
+### Testing equivalence of substring(i,length) and substring(i)
+'' = ''
+'TEST'
+''
+### Testing indexOf(char c)
+0 first appears at index -1 in '12345' 
+1 first appears at index 0 in '12345' 
+2 first appears at index 1 in '12345' 
+3 first appears at index 2 in '12345' 
+4 first appears at index 3 in '12345' 
+5 first appears at index 4 in '12345' 
+6 first appears at index -1 in '12345' 
+7 first appears at index -1 in '12345' 
+8 first appears at index -1 in '12345' 
+9 first appears at index -1 in '12345' 
+### Testing indexOf(char c)
+0 first appears at index -1 in '456456' 
+1 first appears at index -1 in '456456' 
+2 first appears at index -1 in '456456' 
+3 first appears at index -1 in '456456' 
+4 first appears at index 0 in '456456' 
+5 first appears at index 1 in '456456' 
+6 first appears at index 2 in '456456' 
+7 first appears at index -1 in '456456' 
+8 first appears at index -1 in '456456' 
+9 first appears at index -1 in '456456' 
+### Testing indexOf(char c)
+0 first appears at index -1 in '' 
+1 first appears at index -1 in '' 
+2 first appears at index -1 in '' 
+3 first appears at index -1 in '' 
+4 first appears at index -1 in '' 
+5 first appears at index -1 in '' 
+6 first appears at index -1 in '' 
+7 first appears at index -1 in '' 
+8 first appears at index -1 in '' 
+9 first appears at index -1 in '' 
+### Testing lastIndexOf(char c)
+0 appears last at index -1 in '12345' 
+1 appears last at index 0 in '12345' 
+2 appears last at index 1 in '12345' 
+3 appears last at index 2 in '12345' 
+4 appears last at index 3 in '12345' 
+5 appears last at index 4 in '12345' 
+6 appears last at index -1 in '12345' 
+7 appears last at index -1 in '12345' 
+8 appears last at index -1 in '12345' 
+9 appears last at index -1 in '12345' 
+### Testing lastIndexOf(char c)
+0 appears last at index -1 in '456456' 
+1 appears last at index -1 in '456456' 
+2 appears last at index -1 in '456456' 
+3 appears last at index -1 in '456456' 
+4 appears last at index 3 in '456456' 
+5 appears last at index 4 in '456456' 
+6 appears last at index 5 in '456456' 
+7 appears last at index -1 in '456456' 
+8 appears last at index -1 in '456456' 
+9 appears last at index -1 in '456456' 
+### Testing lastIndexOf(char c)
+0 appears last at index -1 in '' 
+1 appears last at index -1 in '' 
+2 appears last at index -1 in '' 
+3 appears last at index -1 in '' 
+4 appears last at index -1 in '' 
+5 appears last at index -1 in '' 
+6 appears last at index -1 in '' 
+7 appears last at index -1 in '' 
+8 appears last at index -1 in '' 
+9 appears last at index -1 in '' 
+'123456789' = '123456789'
+'' = ''
+'123456789' is '123456789' with '0' replaced by 'A'
+'A23456789' is '123456789' with '1' replaced by 'A'
+'1A3456789' is '123456789' with '2' replaced by 'A'
+'12A456789' is '123456789' with '3' replaced by 'A'
+'123A56789' is '123456789' with '4' replaced by 'A'
+'1234A6789' is '123456789' with '5' replaced by 'A'
+'12345A789' is '123456789' with '6' replaced by 'A'
+'123456A89' is '123456789' with '7' replaced by 'A'
+'1234567A9' is '123456789' with '8' replaced by 'A'
+'12345678A' is '123456789' with '9' replaced by 'A'
+'' = ''
+'' = ''
+'fuzzy' = 'fuzzy'
+'wuzzy' = 'wuzzy'
+'test' ends with 'test' = true
+'test' ends with 'est' = true
+'test' ends with 'st' = true
+'test' ends with 't' = true
+'test' ends with '' = true
+'' ends with '' = true
+'' ends with 'fudge' = false
+'test' starts with '' = true
+'test' starts with 't' = true
+'test' starts with 'te' = true
+'test' starts with 'tes' = true
+'test' starts with 'test' = true
+'' starts with '' = true
+'' starts with 'fudge' = false
+'987654321' = '987654321'
+'' = ''
+

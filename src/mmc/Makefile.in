@@ -1,0 +1,68 @@
+#======================================================================
+#
+# Makefile for the moto module generator and compiler
+#
+# $RCSfile: Makefile.in,v $
+# $Revision: 1.10 $
+# $Author: dhakim $
+# $Date: 2002/02/26 10:51:30 $
+#
+#======================================================================
+# Standard Variables
+#
+
+include @ROOT_DIR@/make.vars
+
+#----------------------------------------------------------------------
+# Variables
+
+OBJECTS = mgen.o
+PROGRAM = mgen
+SCRIPT = mmc
+SCRIPT_SH = ${SCRIPT}.sh
+PROPERTIES = mgen.properties
+LOCAL_CLEAN_FILES	= ${SCRIPT}
+
+#----------------------------------------------------------------------
+# Flags
+
+CPPFLAGS = @CPPFLAGS@
+DEFS = @DEFS@
+CFLAGS = @CFLAGS@
+LDFLAGS =
+LIBS = -lcodex
+
+#----------------------------------------------------------------------
+# Custom Make Rules
+
+all: ${PROGRAM} ${SCRIPT} 
+
+${SCRIPT}: ${SCRIPT_SH}
+	cp ${SCRIPT_SH} ${SCRIPT}
+	chmod a+x ${SCRIPT}
+	cp ${SCRIPT} ${BIN_DIR}
+
+${SCRIPT_SH}:
+
+${PROGRAM}: ${OBJECTS} ${PROPERTIES}
+	${CC} ${LDFLAGS} -L${LIB_DIR} -o ${PROGRAM} ${OBJECTS} ${LIBS}
+	cp ${PROGRAM} ${BIN_DIR}
+	cp ${PROPERTIES} ${BIN_DIR}
+
+dep:
+
+install: all
+	${MKDIR} ${INST_BIN_DIR}
+	${INSTALL} ${SCRIPT} ${INST_BIN_DIR}
+	${INSTALL} ${PROGRAM} ${INST_BIN_DIR}
+	${INSTALL} ${PROPERTIES} ${INST_BIN_DIR}
+
+#----------------------------------------------------------------------
+# Standard Rules
+
+include @ROOT_DIR@/make.xrules
+
+#======================================================================
+# end
+#======================================================================
+

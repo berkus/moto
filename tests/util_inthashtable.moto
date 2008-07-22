@@ -1,0 +1,2 @@
+$use("codex.util")
+$declare(IntHashtable ih = new IntHashtable())

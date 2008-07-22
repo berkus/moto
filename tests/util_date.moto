@@ -1,0 +1,28 @@
+$use("codex.util")
+
+${
+  Date d;
+  Enumeration k;
+  SymbolTable df = new SymbolTable();
+
+  df.put("%B %d, %Y %H:%M:%S", "December 19, 2002 10:05:08");
+  df.put("%Y%m%d%H%M%S", "20021219143659");
+  df.put("%A %d %b, %Y", "Thursday 19 Dec, 2002");
+  df.put("%a %B %d, %y at %H:%i and %s seconds", "Thu December 19, 02 at 12:21 and 33 seconds");
+
+  k = df.keys();
+  while (k.hasNext()){
+    String s = <String>k.next();
+    String v = <String>df.get(s);
+    d = new Date(s, v);
+
+    print "\n(\""+s+"\", \""+v+"\")\n";
+    print d.format("%Y (%y)")+"\n";
+    print d.format("%m")+"\n";
+    print d.format("%d")+"\n";
+    print d.format("%H")+"\n";
+    print d.format("%M")+"\n";
+    print d.format("%S")+"\n";
+  }
+}$
+

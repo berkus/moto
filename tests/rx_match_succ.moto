@@ -1,0 +1,46 @@
+${
+  void doMatch(Regex rx,String s,String comp){
+     String sx = s + " XXX", xs = "XXX "+s;
+     Match m = rx.match(s), mpx = rx.matchPrefix(sx), msx = rx.matchSuffix(xs);
+
+     print (m.toString() eq comp) +" ";
+     print (mpx.toString() eq comp)+" ";
+     print (msx.toString() eq comp)+" "; 
+     print rx.matches(s)+" ";
+     print rx.matchesPrefix(sx)+" ";
+     print rx.matchesSuffix(xs)+" ";
+     print "\n";
+  }  
+  doMatch(/(foo)|(bar)/,"bar","{\"bar\",\"null\",\"bar\"}");
+  doMatch(/(foo)|(bar)/,"foo","{\"foo\",\"foo\",\"null\"}");
+  doMatch(/(foo)|(foo)|(foo)/,"foo","{\"foo\",\"foo\",\"null\",\"null\"}");
+  doMatch(/(bar)|(foo)|(foo)/,"foo","{\"foo\",\"null\",\"foo\",\"null\"}");
+  doMatch(/(bar|bar)|(foo|foo)/,"foo","{\"foo\",\"null\",\"foo\"}");
+  doMatch(/(foo)?/,"foo","{\"foo\",\"foo\"}");
+  doMatch(/(foo)?(foo)?/,"foo","{\"foo\",\"foo\",\"null\"}");
+  doMatch(/((foo)?)?/,"foo","{\"foo\",\"foo\",\"foo\"}");
+  doMatch(/foo|(foo)?/,"foo","{\"foo\",\"null\"}");
+  doMatch(/bar|(foo)?|foo/,"foo","{\"foo\",\"foo\"}");
+  doMatch(/(a*)/,"aaaa","{\"aaaa\",\"aaaa\"}");
+  doMatch(/(a*)*/,"aaaa","{\"aaaa\",\"aaaa\"}");
+  doMatch(/((a*)*)*/,"aaaa","{\"aaaa\",\"aaaa\",\"aaaa\"}");
+  doMatch(/(a*)(a*)/,"aaa","{\"aaa\",\"aaa\",\"\"}");
+  doMatch(/(a|b|aab|ab|bab)*/,"aaabab","{\"aaabab\",\"b\"}");
+  doMatch(/(x|a*)*/,"aaaa","{\"aaaa\",\"aaaa\"}");
+  doMatch(/(x|a*)*/,"aaax","{\"aaax\",\"x\"}");
+  doMatch(/(x|a*)*/,"aaxx","{\"aaxx\",\"x\"}");
+  doMatch(/(x|a*)*/,"axxaa","{\"axxaa\",\"aa\"}");
+  doMatch(/(x|a*)*/,"xaaaa","{\"xaaaa\",\"aaaa\"}");
+  doMatch(/(x|a*)*/,"axxaaxxa","{\"axxaaxxa\",\"a\"}");
+  doMatch(/(foo)|(fo*)/,"f","{\"f\",\"null\",\"f\"}");
+  doMatch(/(foo)|(fo*)/,"fo","{\"fo\",\"null\",\"fo\"}");
+  doMatch(/(foo)|(fo*)/,"foo","{\"foo\",\"foo\",\"null\"}");
+  doMatch(/(foo)|(fo*)/,"fooo","{\"fooo\",\"null\",\"fooo\"}");
+  doMatch(/(foo)?(foo)*/,"foo","{\"foo\",\"foo\",\"null\"}");
+  doMatch(/(foo)?(foo)*/,"foofoo","{\"foofoo\",\"foo\",\"foo\"}");
+  doMatch(/(foo)?(foo)?(foo)*/,"foo","{\"foo\",\"foo\",\"null\",\"null\"}");
+  doMatch(/(foo)?(foo)?(foo)*/,"foofoo","{\"foofoo\",\"foo\",\"foo\",\"null\"}");
+  doMatch(/(foo)?(foo)?(foo)*/,"foofoofoo","{\"foofoofoo\",\"foo\",\"foo\",\"foo\"}");
+  doMatch(/(((bb)|(bbab)|(aabb))*)(a|b)*/,"bbabaabbbb","{\"bbabaabbbb\",\"bbabaabbbb\",\"bb\",\"bb\",\"null\",\"null\",\"null\"}");;
+  doMatch(/([A-Z][A-Z])?>[ ]?/,"DH> ","{\"DH> \",\"DH\"}");
+}$

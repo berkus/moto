@@ -1,0 +1,52 @@
+$("a"+true) = atrue
+$("a"+false) = afalse
+$("a"+null) = anull
+$("a"+'a') = aa
+$("a"+1) = a1
+$("a"+1.1) = a1.1
+$("a"+99999999999) = a999999999999
+
+$(true+"B") = trueB     
+$(false+"B") = falseB
+$(null+"B") = nullB
+$('a'+"B") = aB
+$(1+"B") = 1B
+$(1.1+"B") = 1.1B
+$(999999999999+"B") = 999999999999B
+
+${
+char c=65;
+int i=65;
+long l=65;
+float f=65;
+double d=65;
+String S="";
+
+S+=c;
+S+=i;
+S+=l;
+S+=f;
+S+=d;
+
+c++;
+
+}$
+
+$(S) = A656565.065.?
+$(c) = B
+
+$(c < 66) = false
+$(c <= 66) = true
+$(c == 66) = true
+$(c >= 66) = true
+$(c > 66) = false
+$(c != 66) = false
+
+$((<float>65) == 'A') = true
+$((<double>65) == 'A') = true 
+$((<long>65) == 'A') = true 
+$((<int>65) == 'A') = true 
+
+$(<int>'B') == 66
+
+$(65 == <long>65.0) = true 

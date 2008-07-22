@@ -1,0 +1,6 @@
+Square perimeter : 1.200000e+01
+Square area : 9.000000e+00
+Triangle perimeter : 9.000000e+00
+Triangle area : 4.500000e+00
+Circle perimeter : 9.420000e+00
+Circle area : 3.532500e+00

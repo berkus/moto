@@ -1,0 +1,6 @@
+$use("codex.util")
+$declare(String s= str(1))
+$declare(int i = 1)
+
+$(i=null)
+

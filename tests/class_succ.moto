@@ -1,0 +1,53 @@
+$class(ABook)
+	$declare(int i = 27*3)
+$endclass
+$declare(ABook a = new ABook())
+$(a.i)
+
+${
+	class BBook{ 
+		int chapters; 
+		String chapterContents[]; 
+
+		BBook(int chapters){
+   			this.chapters = chapters;
+			chapterContents = new String[chapters];
+
+  			int i;
+			for(i=0;i<chapters;i++) 
+				chapterContents[i]="Chapter "+str(i+1);
+		}
+
+		String getChapter(int i){ 
+			if ( i >= 0 && i< chapters) 
+				return this.chapterContents[i];
+                       
+			print "Chapter "+str(i)+" out of range\n";
+			return null;
+		}
+	}
+	BBook b = new BBook(3);
+        print b.getChapter(2);
+        print "\n";
+        print b.getChapter(7);
+}$
+$(b.chapters)
+${
+   class MemberVarEmpty { void out(){ print "I am an empty class\n";} } 
+   MemberVarEmpty mvempty = new MemberVarEmpty(); 
+
+   class Constructor {
+      int i;
+      int j=1;
+      int k=i+j*2;
+      
+      Constructor(){ print "#0 arg constructor i:"+i+" j:"+j+" k:"+ k+"\n"; }
+      Constructor(int i){ print "#1 arg constructor i:"+(this.i=i)+" j:"+j+" k:"+ k+"\n"; }
+      Constructor(int i,int j){ print "#2 arg constructor i:"+(this.i=i)+" j:"+(this.j=j)+" k:"+ k+"\n"; }
+      Constructor(int i,int j,int k){ print "#3 arg constructor i:"+(this.i=i)+" j:"+(this.j=j)+" k:"+ (this.k=k)+"\n"; }
+   }
+   new Constructor();
+   new Constructor(11);
+   new Constructor(11,12);
+   new Constructor(11,12,13);
+}$

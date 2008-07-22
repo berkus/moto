@@ -1,0 +1,114 @@
+$use("codex.util")
+${
+	StringSet toStringSet(String[] strings){
+		StringSet sset = new StringSet();
+		for(int i=0;i<length(strings);i++)
+			sset.add(strings[i]);
+		return sset;
+	}
+	
+	String toString(StringSet sset){
+		return sset.size() + " elements : {" + join(sset.toArray(),",") + "}" ;
+	}
+	
+	void testContains(StringSet sset,String s){
+		print "\n### Testing whether sset contains \""+s+"\"\n";
+		print "sset: "+toString(sset)+"\n";
+		print "sset contains \""+s+"\" = "+sset.contains(s)+"\n";
+	}
+
+	void testEquals(StringSet s1,StringSet s2){
+		print "\n### Testing whether s1 equals s2\n";
+		print "s1: "+toString(s1)+"\n";
+		print "s2: "+toString(s2)+"\n";
+		print "s1 equals s2 = "+s1.equals(s2)+"\n";
+	}
+
+	void testUnion(StringSet s1,StringSet s2){
+		StringSet a,b,c,d;
+		print "\n### Testing s1 union s2\n";
+		print "s1: "+toString(s1)+"\n";
+		print "s2: "+toString(s2)+"\n";
+		
+		print "union(s1,s2) = "+toString(a = union(s1,s2))+"\n";
+		print "s1 += s2 = "+toString((b = s1,b += s2))+"\n";
+		print "s1 + s2 = "+toString(c= s1 + s2)+"\n";
+		print "s1.clone().addSet(s2) = "+toString((d = s1.clone(),d.addSet(s2),d))+"\n";
+		print a.equals(b)+" "+b.equals(c)+" "+c.equals(d)+"\n";
+	}
+
+	void testDifference(StringSet s1,StringSet s2){
+		StringSet a,b,c,d;
+		print "\n### Testing s1 minus s2\n";
+		print "s1: "+toString(s1)+"\n";
+		print "s2: "+toString(s2)+"\n";
+		
+		print "difference(s1,s2) = "+toString(c=difference(s1,s2))+"\n";
+		print "s1 -= s2 = "+toString((b= s1,b -= s2))+"\n";			
+		print "s1 - s2 = "+toString(a= s1 - s2)+"\n";
+		print "s1.clone().removeSet(s2) = "+toString((d = s1.clone(),d.removeSet(s2),d))+"\n";
+		print a.equals(b)+" "+b.equals(c)+" "+c.equals(d)+"\n";
+	}
+
+	void testIntersection(StringSet s1,StringSet s2){
+		StringSet a,b,c;
+		print "\n### Testing s1 intersect s2\n";
+		print "s1: "+toString(s1)+"\n";
+		print "s2: "+toString(s2)+"\n";
+		
+		print "intersection(s1,s2) = "+toString(a= intersection(s1,s2))+"\n";
+		print "s1 *= s2 = "+toString((b= s1,b *= s2))+"\n";
+		print "s1 * s2 = "+toString(c= s1 * s2)+"\n";
+		
+		print a.equals(b)+" "+b.equals(c)+" "+c.equals(a)+"\n";
+	}
+			
+	StringSet ss0 = new StringSet();		
+	StringSet ss1 = new StringSet();
+	
+	ss1.add("foo");
+	ss1.add("bar");
+	ss1.add("maka");
+	
+	print toString(ss1) + "\n";
+	ss1.add("maka");
+	
+	print toString(ss1) + "\n";
+	
+	testContains(ss1,"foo");
+	testContains(ss1,"buggy");
+	
+	ss1.remove("foo");
+	print toString(ss1) + "\n";
+	
+	ss1.remove("shlaka");
+	print toString(ss1) + "\n";
+	
+	StringSet ss2 = ss1.clone();
+	print toString(ss2) + "\n";
+	
+	testEquals(ss1,ss2);
+
+	StringSet ss3 = toStringSet(<String[]>{"foo","bar","maka","shlaka","ragga","ragga"});
+	print toString(ss3) + "\n";
+	
+	StringSet ss4 = toStringSet(<String[]>{"fuzzy","wuzzy"});
+	print toString(ss4) + "\n";
+	
+	testEquals(ss1,ss3);
+	
+	testUnion(ss0,ss1);
+	testUnion(ss1,ss2);
+	testUnion(ss1,ss3);
+	testUnion(ss1,ss4);
+	
+	testDifference(ss0,ss1);
+	testDifference(ss1,ss2);
+	testDifference(ss1,ss3);
+	testDifference(ss1,ss4);
+	
+	testIntersection(ss0,ss1);
+	testIntersection(ss1,ss2);
+	testIntersection(ss1,ss3);
+	testIntersection(ss1,ss4); 
+}$

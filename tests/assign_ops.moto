@@ -1,0 +1,11 @@
+${
+	
+	int output(int i) {
+		print i + "\n";
+		return i;
+	}
+
+	int [] foo = new int[100];
+	foo[output(27)] = output(30);
+
+}$

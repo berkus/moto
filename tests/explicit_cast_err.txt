@@ -1,0 +1,30 @@
+explicit_cast_err.moto:2: Type not defined: <Fuzzy>
+explicit_cast_err.moto:3: Expressions cannot be cast to <void>
+explicit_cast_err.moto:5: Expression of type <long> cannot be cast to <String>
+explicit_cast_err.moto:6: Expression of type <double> cannot be cast to <String>
+explicit_cast_err.moto:7: Expression of type <int> cannot be cast to <String>
+explicit_cast_err.moto:8: Expression of type <boolean> cannot be cast to <String>
+explicit_cast_err.moto:9: Expression of type <Regex> cannot be cast to <String>
+explicit_cast_err.moto:10: Expression of type <Exception> cannot be cast to <String>
+explicit_cast_err.moto:12: Expression of type <long> cannot be cast to <boolean>
+explicit_cast_err.moto:13: Expression of type <double> cannot be cast to <boolean>
+explicit_cast_err.moto:14: Expression of type <int> cannot be cast to <boolean>
+explicit_cast_err.moto:15: Expression of type <char> cannot be cast to <boolean>
+explicit_cast_err.moto:16: Expression of type <String> cannot be cast to <boolean>
+explicit_cast_err.moto:18: Expression of type <boolean> cannot be cast to <char>
+explicit_cast_err.moto:19: Expression of type <String> cannot be cast to <char>
+explicit_cast_err.moto:21: Expression of type <boolean> cannot be cast to <double>
+explicit_cast_err.moto:22: Expression of type <String> cannot be cast to <double>
+explicit_cast_err.moto:24: Expression of type <boolean> cannot be cast to <float>
+explicit_cast_err.moto:25: Expression of type <String> cannot be cast to <float>
+explicit_cast_err.moto:27: Expression of type <boolean> cannot be cast to <int>
+explicit_cast_err.moto:28: Expression of type <String> cannot be cast to <int>
+explicit_cast_err.moto:30: Expression of type <boolean> cannot be cast to <long>
+explicit_cast_err.moto:31: Expression of type <String> cannot be cast to <long>
+explicit_cast_err.moto:33: Expression of type <boolean> cannot be cast to <byte>
+explicit_cast_err.moto:34: Expression of type <String> cannot be cast to <byte>
+explicit_cast_err.moto:36: Expression of type <int[]> cannot be cast to <int>
+explicit_cast_err.moto:37: Expression of type <int> cannot be cast to <int[]>
+explicit_cast_err.moto:38: Expression of type <int[]> cannot be cast to <byte[]>
+explicit_cast_err.moto:39: Expression of type <int[]> cannot be cast to <int[][]>
+explicit_cast_err.moto:40: Expression of type <int[][]> cannot be cast to <int[]>

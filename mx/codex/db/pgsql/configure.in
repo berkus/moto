@@ -1,0 +1,98 @@
+dnl -------------------------------------------------------------------
+dnl Process this file with autoconf to produce a configure script
+dnl $RCSfile: configure.in,v $
+dnl $Revision: 1.9 $
+dnl $Author: dhakim $
+dnl $Date: 2003/03/10 21:45:23 $
+dnl -------------------------------------------------------------------
+
+AC_INIT(Makefile.in)
+
+dnl -------------------------------------------------------------------
+dnl Set the moto root dir
+dnl Use a value that has been supplied, otherwise grep around for it 
+dnl -------------------------------------------------------------------
+
+ROOT_DIR=
+AC_DEFUN(AC_MX,
+[AC_MSG_CHECKING([configuration directory])
+AC_ARG_WITH(moto,[  --with-moto=PREFIX     use the moto installation at PREFIX],
+	ROOT_DIR=$withval 
+	BIN_DIR=$ROOT_DIR/bin
+	INCL_DIR=$ROOT_DIR/include
+	LIB_DIR=$ROOT_DIR/lib
+	if test -d "$ROOT_DIR" &&
+		test -d "$BIN_DIR" &&
+		test -d "$INCL_DIR" &&
+		test -d "$LIB_DIR"; then
+		AC_MSG_RESULT(ok)
+   else
+	AC_MSG_ERROR([
+
+********************************************************************************
+   Can not build extension
+   This directory does not contain a complete Moto installation:      
+   Directory: \`$ROOT_DIR' 
+********************************************************************************
+	])
+	fi
+	,
+	CWD=`pwd`
+	ROOT_DIR=`pwd | sed -e "s;/mx/.*;;"`
+        BIN_DIR=$ROOT_DIR/bin
+        INCL_DIR=$ROOT_DIR/include
+        LIB_DIR=$ROOT_DIR/lib
+        if test -d "$ROOT_DIR" &&
+           test -d "$BIN_DIR" &&
+           test -d "$INCL_DIR" &&
+           test -d "$LIB_DIR"; then
+           AC_MSG_RESULT(ok)
+	else
+AC_MSG_ERROR([
+
+********************************************************************************
+Can not build extension
+Can not find a complete Moto installation in this path:      
+Directory: `pwd` 
+********************************************************************************
+])
+	fi
+)
+AC_SUBST(ROOT_DIR)
+])dnl
+
+AC_MX
+
+AC_PGSQL
+
+dnl -------------------------------------------------------------------
+dnl Check for libraries
+dnl -------------------------------------------------------------------
+
+AC_CHECK_LIB(crypt,crypt,[MXLIBCRYPT="Library: -lcrypt"])
+
+SSL=`$PGSQL_CONFIG --configure|grep "\-\-with\-openssl"`
+
+MXLIBCRYPTO=
+MXLIBSSL=
+
+if test -n "$SSL" ; then
+   AC_CHECK_LIB(crypto,ERR_reason_error_string,[MXLIBCRYPTO="Library: -lcrypto"])
+   AC_CHECK_LIB(ssl,SSL_free,[MXLIBSSL="Library: -lssl"])
+fi
+
+dnl -------------------------------------------------------------------
+dnl Output files
+dnl -------------------------------------------------------------------
+
+AC_SUBST(MXLIBCRYPT)
+AC_SUBST(MXLIBSSL)
+AC_SUBST(MXLIBCRYPTO)
+
+AC_OUTPUT(Makefile PGSQL.i)
+
+dnl -------------------------------------------------------------------
+dnl end
+dnl -------------------------------------------------------------------
+
+

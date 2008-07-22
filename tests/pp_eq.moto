@@ -1,0 +1,12 @@
+#define FOO foo
+#define BAR bar
+#if $FOO == "foo"
+yes
+#else
+no
+#endif
+#if $BAR == "foo"
+yes
+#else
+no
+#endif

@@ -1,0 +1,195 @@
+#======================================================================
+#
+# Makefile for the moto core language
+#
+# $RCSfile: Makefile.in,v $
+# $Revision: 1.24 $
+# $Author: dhakim $
+# $Date: 2003/03/20 22:33:08 $
+#
+#======================================================================
+# Standard Variables
+#
+
+include @ROOT_DIR@/make.vars
+
+#----------------------------------------------------------------------
+# Variables
+
+PROGRAM = moto
+MXTOOL = mxtool
+LIBRARY = libmotol.a
+MAINOBJECT = main.o
+TOOLOBJECT = mxtool.o
+AROBJECTS = lex.motoyy.o \
+	moto.tab.o \
+	lex.pp.o \
+	motopp.tab.o \
+	lex.ryy.o \
+	readdefs.tab.o \
+	dl.o \
+	env.o	\
+	ftable.o \
+	mc.o \
+	meta.o \
+	motoc.o \
+	motod.o \
+	motoerr.o \
+	motofn.o	\
+	motoi.o \
+	motoppi.o \
+	mototree.o \
+	mototype.o \
+	motoutil.o \
+	motov.o \
+	motox.o \
+	motofunction.o \
+	motoextension.o \
+	pp.o \
+	motohook.o \
+	pputil.o
+LOCAL_CLEAN_FILES	= *.o *.*.c *.tab.c *.tab.h
+
+#----------------------------------------------------------------------
+# Flags
+
+CPPFLAGS = @CPPFLAGS@
+DEFS = @DEFS@
+CFLAGS = @CFLAGS@
+
+LDFLAGS = @LDFLAGS@
+LIBS = @LIBS@ @LEXLIB@
+
+#MOTOLEXFLAGS = -I -d -Pmotoyy
+MOTOLEXFLAGS = -I -Pmotoyy
+MOTOYACCFLAGS = -d -pmotoyy
+
+#PPLEXFLAGS = -I -d -Ppp
+PPLEXFLAGS = -I -Ppp
+PPYACCFLAGS = -d -ppp
+
+#RYYLEXFLAGS = -I -d -Pryy
+RYYLEXFLAGS = -I -Pryy
+RYYYACCFLAGS = -d -pryy
+
+#EYYLEXFLAGS = -I -d -Peyy
+EYYLEXFLAGS = -I -Peyy
+
+#----------------------------------------------------------------------
+# Library list
+
+LCODEX = ${LIB_DIR}/libcodex.a
+LMOTOL = ${LIB_DIR}/libmotol.a
+
+#----------------------------------------------------------------------
+# Standard targets
+
+all: ${AROBJECTS} ${PROGRAM} ${MXTOOL} ${LIBRARY}
+
+${PROGRAM}: ${AROBJECTS} ${MAINOBJECT} ${LCODEX}
+	-rm -rf tmp 
+	mkdir tmp
+	cd tmp; ${AR} -x ${LCODEX}
+	${CC} ${CFLAGS} ${LDFLAGS} -L${LIB_DIR} -o ${PROGRAM} ${MAINOBJECT} ${AROBJECTS} tmp/*.o ${LIBS} 
+	rm -rf tmp
+	cp ${PROGRAM} ${BIN_DIR}
+	cp *.h ${INC_DIR}
+
+${MXTOOL}: ${AROBJECTS} ${TOOLOBJECT} ${LCODEX}
+	-rm -rf tmp 
+	mkdir tmp
+	cd tmp; ${AR} -x ${LCODEX}
+	${CC} ${CFLAGS} ${LDFLAGS} -L${LIB_DIR} -o ${MXTOOL} ${TOOLOBJECT} ${AROBJECTS} tmp/*.o ${LIBS} 
+	rm -rf tmp
+	cp ${MXTOOL} ${BIN_DIR}
+	cp *.h ${INC_DIR}
+	
+${LIBRARY}: ${AROBJECTS} ${LCODEX}
+	${AR} ${ARFLAGS} ${LIBRARY} ${AROBJECTS}
+	${RANLIB} ${LIBRARY}
+	${INSTALL} ${LIBRARY} ${LIB_DIR}
+	cp *.h ${INC_DIR}		
+
+dep:
+
+install: all
+	${MKDIR} ${INST_BIN_DIR}
+	${MKDIR} ${INST_LIB_DIR}
+	${MKDIR} ${INST_INC_DIR}
+	${INSTALL} ${PROGRAM} ${INST_BIN_DIR}
+	${INSTALL} ${MXTOOL} ${INST_BIN_DIR}
+	${INSTALL} ${LIBRARY} ${INST_LIB_DIR}
+	${RANLIB} ${INST_LIB_DIR}/${LIBRARY}
+	cp *.h ${INST_INC_DIR}
+
+#----------------------------------------------------------------------
+# Standard Rules
+
+include @ROOT_DIR@/make.xrules
+
+#----------------------------------------------------------------------
+# Custom targets
+
+# moto 
+
+lex.motoyy.o: lex.motoyy.c
+
+lex.motoyy.c: moto.l \
+	cell.h \
+	dl.h \
+	env.h	\
+	motoerr.h \
+	motohook.h \
+	motolex.h \
+	moto.tab.h \
+	motoutil.h
+	${LEX} ${MOTOLEXFLAGS} moto.l
+	
+moto.tab.o: moto.tab.c
+
+moto.tab.c: moto.y
+	${YACC} ${MOTOYACCFLAGS} moto.y
+
+moto.l: moto.tab.h cell.h
+
+moto.tab.h: moto.y cell.h
+	${YACC} ${MOTOYACCFLAGS} moto.y
+
+# moto pp 
+
+lex.pp.o: lex.pp.c
+
+lex.pp.c: motopp.l motopp.tab.h
+	${LEX} ${PPLEXFLAGS} motopp.l
+	
+motopp.tab.o: motopp.tab.c
+
+motopp.tab.c: motopp.y
+	${YACC} ${PPYACCFLAGS} motopp.y
+
+motopp.l: motopp.tab.h
+
+motopp.tab.h: motopp.y
+	${YACC} ${PPYACCFLAGS} motopp.y
+
+# readdefs 
+
+lex.ryy.o: lex.ryy.c
+
+lex.ryy.c: readdefs.l readdefs.tab.h
+	${LEX} ${RYYLEXFLAGS} readdefs.l
+	
+readdefs.tab.o: readdefs.tab.c
+
+readdefs.tab.c: readdefs.y
+	${YACC} ${RYYYACCFLAGS} readdefs.y
+
+readdefs.l: readdefs.tab.h
+
+readdefs.tab.h: readdefs.y
+	${YACC} ${RYYYACCFLAGS} readdefs.y
+
+#======================================================================
+# end
+#======================================================================
+

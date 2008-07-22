@@ -1,0 +1,143 @@
+$use("codex.util")
+
+${
+	String s1= "bar:(maka8(shlaka";
+	String s2= "bar:(maka8(shlakaBo";
+	String s3= ":)bar:(maka8(shlaka";
+	String s4= ":):):)bar:(maka8(shlaka";
+	String s5= "bar:(maka8(shlakaBoBoBo";
+        String s6= "bar:(:(:(:(maka8(8(8(8(shlaka";
+	Regex rx = /[:8B][)(o]/;
+
+	Tokenizer t;
+	String c;
+	int i=0;
+
+	t= new Tokenizer(s1,rx);print s1+"\n";
+	i=0;for(c=t.next();c != null;c=t.next()){print "'"+c+"',"; }
+	print "\n";
+	t= new Tokenizer(s2,rx);print s2+"\n";
+	i=0;for(c=t.next();c != null;c=t.next()){print "'"+c+"',"; }
+	print "\n";
+	t= new Tokenizer(s3,rx); print s3+"\n";
+	i=0;for(c=t.next();c != null;c=t.next()){print "'"+c+"',"; }
+	print "\n";
+	t= new Tokenizer(s4,rx); print s4+"\n";
+	i=0;for(c=t.next();c != null;c=t.next()){print "'"+c+"',"; }
+	print "\n";
+	t= new Tokenizer(s5,rx); print s5+"\n";
+	i=0;for(c=t.next();c != null;c=t.next()){print "'"+c+"',"; }
+	print "\n";
+	t= new Tokenizer(s6,rx);print s6+"\n"; 
+	i=0;for(c=t.next();c != null;c=t.next()){print "'"+c+"',";}
+	print "\n";
+	t= new Tokenizer(s1,rx);t.setReturnDelimiters(true);print s1+"\n";
+	i=0;for(c=t.next();c != null;c=t.next()){print "'"+c+"',"; }
+	print "\n";
+	t= new Tokenizer(s2,rx);t.setReturnDelimiters(true);print s2+"\n";
+	i=0;for(c=t.next();c != null;c=t.next()){ print"'"+c+"',"; }
+	print "\n";
+	t= new Tokenizer(s3,rx);t.setReturnDelimiters(true);print s3+"\n";
+	i=0;for(c=t.next();c != null;c=t.next()){ print"'"+c+"',"; }
+	print "\n";
+	t= new Tokenizer(s4,rx);t.setReturnDelimiters(true);print s4+"\n";
+	i=0;for(c=t.next();c != null;c=t.next()){ print"'"+c+"',"; }
+	print "\n";
+	t= new Tokenizer(s5,rx);t.setReturnDelimiters(true);print s5+"\n";
+	i=0;for(c=t.next();c != null;c=t.next()){ print"'"+c+"',"; }
+	print "\n";
+	t= new Tokenizer(s6,rx);t.setReturnDelimiters(true);print s6+"\n";
+	i=0;for(c=t.next();c != null;c=t.next()){ print "'"+c+"',"; }
+	print "\n";
+	
+	String s7= "bar|maka|shlaka";
+	String s8= "bar|maka|shlaka|";
+	String s9= "|bar|maka|shlaka";
+	String s10= "|||bar|maka|shlaka";
+	String s11= "bar|maka|shlaka|||";
+   String s12= "bar||||maka||||shlaka";
+
+
+	t= new Tokenizer(s7,'|');print s7+"\n";
+	i=0;for(c=t.next();c != null;c=t.next()){print "'"+c+"',"; }
+	print "\n";
+	t= new Tokenizer(s8,'|');print s8+"\n";
+	i=0;for(c=t.next();c != null;c=t.next()){print "'"+c+"',"; }
+	print "\n";
+	t= new Tokenizer(s9,'|'); print s9+"\n";
+	i=0;for(c=t.next();c != null;c=t.next()){print "'"+c+"',"; }
+	print "\n";
+	t= new Tokenizer(s10,'|'); print s10+"\n";
+	i=0;for(c=t.next();c != null;c=t.next()){print "'"+c+"',"; }
+	print "\n";
+	t= new Tokenizer(s11,'|'); print s11+"\n";
+	i=0;for(c=t.next();c != null;c=t.next()){print "'"+c+"',"; }
+	print "\n";
+	t= new Tokenizer(s12,'|');print s12+"\n"; 
+	i=0;for(c=t.next();c != null;c=t.next()){print "'"+c+"',";}
+	print "\n";
+	t= new Tokenizer(s7,'|');t.setReturnDelimiters(true);print s7+"\n";
+	i=0;for(c=t.next();c != null;c=t.next()){print "'"+c+"',"; }
+	print "\n";
+	t= new Tokenizer(s8,'|');t.setReturnDelimiters(true);print s8+"\n";
+	i=0;for(c=t.next();c != null;c=t.next()){ print"'"+c+"',"; }
+	print "\n";
+	t= new Tokenizer(s9,'|');t.setReturnDelimiters(true);print s9+"\n";
+	i=0;for(c=t.next();c != null;c=t.next()){ print"'"+c+"',"; }
+	print "\n";
+	t= new Tokenizer(s10,'|');t.setReturnDelimiters(true);print s10+"\n";
+	i=0;for(c=t.next();c != null;c=t.next()){ print"'"+c+"',"; }
+	print "\n";
+	t= new Tokenizer(s11,'|');t.setReturnDelimiters(true);print s11+"\n";
+	i=0;for(c=t.next();c != null;c=t.next()){ print"'"+c+"',"; }
+	print "\n";
+	t= new Tokenizer(s12,'|');t.setReturnDelimiters(true);print s12+"\n";
+	i=0;for(c=t.next();c != null;c=t.next()){ print "'"+c+"',"; }
+	print "\n";
+	
+	String s13= "barAAAmakaAAAshlaka";
+	String s14= "barAAAmakaAAAshlakaAAA";
+	String s15= "AAAbarAAAmakaAAAshlaka";
+	String s16= "AAAAAAAAAbarAAAmakaAAAshlaka";
+	String s17= "barAAAmakaAAAshlakaAAAAAAAAA";
+   String s18= "barAAAAAAAAAAAAmakaAAAAAAAAAAAAshlaka";
+
+	KMPString kmp= new KMPString("AAA");
+	t= new Tokenizer(s13,kmp);print s13+"\n";
+	i=0;for(c=t.next();c != null;c=t.next()){print "'"+c+"',"; }
+	print "\n";
+	t= new Tokenizer(s14,kmp);print s14+"\n";
+	i=0;for(c=t.next();c != null;c=t.next()){print "'"+c+"',"; }
+	print "\n";
+	t= new Tokenizer(s15,kmp); print s15+"\n";
+	i=0;for(c=t.next();c != null;c=t.next()){print "'"+c+"',"; }
+	print "\n";
+	t= new Tokenizer(s16,kmp); print s16+"\n";
+	i=0;for(c=t.next();c != null;c=t.next()){print "'"+c+"',"; }
+	print "\n";
+	t= new Tokenizer(s17,kmp); print s17+"\n";
+	i=0;for(c=t.next();c != null;c=t.next()){print "'"+c+"',"; }
+	print "\n";
+	t= new Tokenizer(s18,kmp);print s18+"\n"; 
+	i=0;for(c=t.next();c != null;c=t.next()){print "'"+c+"',";}
+	print "\n";
+	t= new Tokenizer(s13,kmp);t.setReturnDelimiters(true);print s13+"\n";
+	i=0;for(c=t.next();c != null;c=t.next()){print "'"+c+"',"; }
+	print "\n";
+	t= new Tokenizer(s14,kmp);t.setReturnDelimiters(true);print s14+"\n";
+	i=0;for(c=t.next();c != null;c=t.next()){ print"'"+c+"',"; }
+	print "\n";
+	t= new Tokenizer(s15,kmp);t.setReturnDelimiters(true);print s15+"\n";
+	i=0;for(c=t.next();c != null;c=t.next()){ print"'"+c+"',"; }
+	print "\n";
+	t= new Tokenizer(s16,kmp);t.setReturnDelimiters(true);print s16+"\n";
+	i=0;for(c=t.next();c != null;c=t.next()){ print"'"+c+"',"; }
+	print "\n";
+	t= new Tokenizer(s17,kmp);t.setReturnDelimiters(true);print s17+"\n";
+	i=0;for(c=t.next();c != null;c=t.next()){ print"'"+c+"',"; }
+	print "\n";
+	t= new Tokenizer(s18,kmp);t.setReturnDelimiters(true);print s18+"\n";
+	i=0;for(c=t.next();c != null;c=t.next()){ print "'"+c+"',"; }
+	print "\n";
+}$
+

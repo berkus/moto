@@ -1,0 +1,17 @@
+${
+   /* Define bba */
+   void bba(int count){
+      print "bba count is "+str(count--)+"\n";
+      if(count>0)
+         abb(count);
+   }
+
+   /* Define abb */
+   void abb(int count){
+      print "abb count is "+str(count--)+"\n";
+      if(count>0)
+         bba(count);
+   }
+
+   abb(10);
+}$

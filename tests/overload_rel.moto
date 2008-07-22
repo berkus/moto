@@ -1,0 +1,47 @@
+${
+
+	use "codex.util";	
+
+	IntSet i1 = new IntSet();
+	IntSet i2 = new IntSet();
+
+	i1+=1;
+	i1+=2;
+	i1+=3;
+	i2+=1;
+	i2+=2;
+	i2+=4;
+
+	print i1.size() + "\n";
+	print i2.size() + "\n";
+
+//	print (i1 gt i2) + "\n";
+//	print (i1 lt i2) + "\n";
+	print (i1 eq i2) + "\n";
+	print (i1 ne i2) + "\n";
+//	print (i1 gte i2) + "\n";
+//	print (i1 lte i2) + "\n";
+
+	i2-=4;
+	i2+=3;
+
+	print i1.size() + "\n";
+	print i2.size() + "\n";
+
+//	print (i1 gt i2) + "\n";
+//	print (i1 lt i2) + "\n";
+	print (i1 eq i2) + "\n";
+	print (i1 ne i2) + "\n";
+//	print (i1 gte i2) + "\n";
+//	print (i1 lte i2) + "\n";
+
+	i2-=2;
+
+//	print (i1 gt i2) + "\n";
+//	print (i1 lt i2) + "\n";
+	print (i1 eq i2) + "\n";
+	print (i1 ne i2) + "\n";
+//	print (i1 gte i2) + "\n";
+//	print (i1 lte i2) + "\n";
+	
+}$

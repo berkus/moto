@@ -1,0 +1,78 @@
+Moto README 
+===========
+
+Installing Moto 
+---------------
+
+To install moto, refer to the file named 'INSTALL' located in the same
+directory as this README.
+
+
+Moto Software Map 
+-----------------
+ 
+This diagram shows a simplified structure of the moto source tree,
+one that serves to highlight the areas of greatest interest. 
+Brief descriptions appear in parentheses to the right of each item.
+
+moto-<version>
+ |
+ - AUTHORS       (The folks who wrote Moto)
+ |
+ - COPYING       (The license under which Moto is made available)
+ |
+ - INSTALL       (Directions for installing Moto)
+ |
+ - NEWS          (The latest word on Moto happenings)
+ |
+ - README        (This file)
+ |
+ - bin           (Contains all Moto binaries)
+ |
+ - doc           (Contains Moto documentation)
+ |
+ - examples      (Contains Moto example programs)
+ |
+ - include       (Contains Moto header source files)
+ | 
+ - lib           (Contains Moto libraries)
+ |
+ - mod           (Contains compiled Moto module)
+ |
+ - mx            (Root directory for all Moto extensions) 
+ |  |
+ |  - cstdlib    (Contains extensions for C Standard Library functions)
+ |  |
+ |  - moto       (Contains source for Moto core extensions)
+ |  |
+ |  - codex      (Contains extensions for the Codex C Library)
+ |     |
+ |     - http    (Contains http-related extensions)
+ |     |
+ |     - util    (Contains data structure and utility extensions)
+ |     |
+ |     - sql     (Contains database extensions)
+ |
+ - src           (The main source tree)
+ |  |
+ |  - codex      (Contains source for the Codex C Library)
+ |  |
+ |  - moto       (Contains source for the Moto language)
+ |  |    
+ |  - mmc        (Contains source for the Moto HTTP module compiler)
+ |  |   
+ |  - mxc        (Contains source for the Moto extension compiler)
+ |  |
+ |  - mod        (Contains source for the Moto Apache Module)
+ |  |
+ |  - tools      (Contains source for cetain command line tools used by mmc)
+ |
+ - tests         (Contains the Moto test library)
+ 
+
+More information
+----------------
+
+For more information about moto and links to the latest version, visit:
+http://www.projectmoto.org/
+

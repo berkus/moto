@@ -1,0 +1,22 @@
+$* malformed use *$
+   ${ use ; }$
+$* malformed declare *$
+   ${ int ; }$
+
+$* malformed print *$
+   ${ print ; }$
+$* malformed for *$
+   ${ for(); }$
+
+$* malformed while *$
+   ${ while(); }$
+
+$* malformed switch *$
+   ${ switch(); }$
+
+$* malformed if *$
+   ${ if() ; }$
+
+$* malformed case *$
+   ${ switch(1) { case: } }$
+

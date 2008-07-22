@@ -1,0 +1,4 @@
+fn_verr_err.moto:2: Return type <int> cannot be implicitly cast to type <String>
+fn_verr_err.moto:5: Type not defined: <Stringle>
+fn_verr_err.moto:8: Type not defined: <Apple>
+fn_verr_err.moto:11: No such function: foo(<char>)

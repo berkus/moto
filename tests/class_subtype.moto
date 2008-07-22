@@ -1,0 +1,29 @@
+${
+	class ByteClass{ byte v; }
+        class BooleanClass{ boolean v; }
+	class CharClass{ char v; } 
+        class IntClass{ int v; }
+        class LongClass{ long v; }
+        class DoubleClass{ double v; }
+        class FloatClass{ float v; }
+        class StringClass{ String v; } 
+
+	ByteClass yc = new ByteClass();
+	BooleanClass bc = new BooleanClass();
+	CharClass cc = new CharClass();
+	IntClass ic = new IntClass();
+	LongClass lc = new LongClass();
+	DoubleClass dc = new DoubleClass();
+	FloatClass fc = new FloatClass();
+	StringClass sc = new StringClass();
+
+	print (yc.v=2)+"\n";
+        print (bc.v=true)+"\n"; 
+        print (cc.v='B')+"\n"; 
+        print (ic.v=200)+"\n"; 
+        print (lc.v=2000000000)+"\n"; 
+        print (dc.v=2.23456)+"\n"; 
+        print (fc.v=1/3.0f)+"\n"; 
+        print (sc.v="hello")+"\n"; 
+}$
+

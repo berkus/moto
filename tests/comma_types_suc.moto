@@ -1,0 +1,15 @@
+
+${
+	void foo(){ print "foo! "; }
+	print "MAX_INT: "	+ (foo(),2147483646 + 1) + "\n";
+	print "MAX_LONG: "	+ (foo(),9223372036854775806 + 1) + "\n";
+	print "MAX_FLOAT: "	+ (foo(),3.403E+38) + "\n";
+	// print "MAX_DOUBLE: "+ (foo(),1.800E+308) + "\n";	
+	print "CHAR: "		+ (foo(),'A') + "\n";
+	print "BOOLEAN: "	+ (foo(),true) + "\n";	
+	print "STRING: "	+ (foo(),"bar") + "\n";			 
+	print "NULL: "		+ (foo(),null) + "\n";	 
+	
+	String A,B,C="whoa!";
+	print "ANOTHER STRING: "	+ (foo(),B=C,A=B,A) + "\n";		
+}$

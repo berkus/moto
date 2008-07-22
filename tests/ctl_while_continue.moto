@@ -1,0 +1,8 @@
+$declare(int i = 0)
+$while(i < 10)
+	$do(i++)
+	$if(i % 2 == 0)
+		$continue
+	$endif
+	$(i)
+$endwhile

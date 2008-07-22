@@ -1,0 +1,29 @@
+$declare(int s=1)
+$if(true)
+   $(++s) - 2
+$endif
+$(s) - 2
+
+$declare(int t=1)
+$if(true)
+   $declare(int t=1) 
+   $(++t) - 2
+$endif
+$(t) - 1
+
+${ 
+   int i = 1;
+   { 
+      print ++i; print "\n";
+   }
+   print i;print "\n";
+}$
+
+${
+   int j = 1;
+   {
+      int j = 1;
+      print ++j; print "\n";
+   }
+   print j;print "\n";
+}$

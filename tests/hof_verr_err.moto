@@ -1,0 +1,93 @@
+${
+	use "cstdlib";
+	
+	// No Such Functional Type in declarations
+	int(Foo) a;
+    Foo(Bar[])(Maka()) b;
+    
+    // Type assign errors
+    String() c = "hi";
+    String s = c;
+    
+    // No Such Functional Type in casts
+    
+    <Foo(Bar[])(Maka())> b;
+    
+    // No Such Function
+    Object o;
+    o = &atoi();
+    o = &atoi(?,?);
+    
+    // Type not callable
+    s(a,b,c);
+    true(); 				// booleans aren't callable
+    'a'(); 					// chars aren't callable
+    7.00E+10(); 			// floats aren't callable
+    23.1F(); 				// doubles aren't callable
+    23(); 					// ints aren't callable
+    23L(); 					// longs aren't callable
+    "happy"(); 				// Strings aren't callable
+    (<int[]>{1,2,3,4})(); 	// Arrays aren't callable
+    (new Integer(3))();		// Objects aren't callable
+    null();					// null isn't callable
+    
+    // Different arguments expected
+    int(String)myatoi = &atoi(<String>?);
+    myatoi('c');			// Cannot cast char to String
+    myatoi(2,"String");		// Too many arguments provided to call
+    myatoi();				// Too few arguments provided to call
+    
+    // Invalid assignments
+    void(Object) func0;
+    void(String) func1;
+    String(Object) func2;
+    String(String) func3;
+    Object(Object) func4;
+    Object(String) func5;
+     
+    func0 = func0; // PASS
+    func0 = func1; // FAIL
+    func0 = func2; // PASS
+    func0 = func3; // FAIL   
+    func0 = func4; // PASS
+    func0 = func5; // FAIL    
+
+    func1 = func0; // PASS
+    func1 = func1; // PASS
+    func1 = func2; // PASS
+    func1 = func3; // PASS   
+    func1 = func4; // PASS
+    func1 = func5; // PASS
+    
+    func2 = func0; // FAIL
+    func2 = func1; // FAIL
+    func2 = func2; // PASS
+    func2 = func3; // FAIL   
+    func2 = func4; // FAIL
+    func2 = func5; // FAIL
+
+    func3 = func0; // FAIL
+    func3 = func1; // FAIL
+    func3 = func2; // PASS
+    func3 = func3; // PASS   
+    func3 = func4; // FAIL
+    func3 = func5; // FAIL
+
+    func4 = func0; // FAIL
+    func4 = func1; // FAIL
+    func4 = func2; // PASS
+    func4 = func3; // FAIL   
+    func4 = func4; // PASS
+    func4 = func5; // FAIL
+
+    func5 = func0; // FAIL
+    func5 = func1; // FAIL
+    func5 = func2; // PASS
+    func5 = func3; // PASS   
+    func5 = func4; // PASS
+    func5 = func5; // PASS
+                    
+    // '?' may only be used as an argument to functional typed expressions
+	int foo = 3 + ?;
+	int bar = 4 - <int>?;
+}$

@@ -1,0 +1,5 @@
+class_verr_err.moto:6: A return type must not be specified for constructors.
+class_verr_err.moto:8: Variable of type <foo(String,int)> cannot store type <int>
+class_verr_err.moto:10: A return type must be specified for all functions and methods except constructors.
+class_verr_err.moto:13: Cannot dereference this type: <boolean>
+class_verr_err.moto:14: No such class member: String::maka

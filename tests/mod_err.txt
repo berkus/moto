@@ -1,0 +1,12 @@
+mod_err.moto:3: Illegal binary operation: <double> % <double>
+mod_err.moto:6: Illegal binary operation: <double> % <float>
+mod_err.moto:9: Illegal binary operation: <double> % <int>
+mod_err.moto:12: Illegal binary operation: <double> % <long>
+mod_err.moto:15: Illegal binary operation: <float> % <double>
+mod_err.moto:18: Illegal binary operation: <float> % <float>
+mod_err.moto:21: Illegal binary operation: <float> % <int>
+mod_err.moto:24: Illegal binary operation: <float> % <long>
+mod_err.moto:27: Illegal binary operation: <int> % <double>
+mod_err.moto:30: Illegal binary operation: <int> % <float>
+mod_err.moto:33: Illegal binary operation: <long> % <double>
+mod_err.moto:36: Illegal binary operation: <long> % <float>

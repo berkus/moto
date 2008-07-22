@@ -1,0 +1,27 @@
+${ print 2*"happy"; 
+   String s = 2;
+   float f;
+   print b;
+   switch('a') {
+      case 2: { }
+      case f: { }
+   }
+   Maka m;
+   String s = "bar";
+   if(1) { }
+   maka();
+   print /foo/.maka();
+   s.maka();
+   delete 1;
+   new Maka();
+   print !s;
+   ++1;
+   --2;
+   print /(/;
+   switch(0.0) { }
+   print true?"foo":1;
+   s = atoi("1");
+   use "foo.maka.shlaka"; 
+   use "cstdlib";
+   s = atoi("1");
+}$ 

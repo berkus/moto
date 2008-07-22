@@ -1,0 +1,5 @@
+${
+   use "codex.util";
+   String(String) f = &getFile(<String> ?);
+   print f("hof_tracked.moto");
+}$

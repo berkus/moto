@@ -1,0 +1,109 @@
+$use("cstdlib")
+${
+	/* Addresses of functions */
+	
+	&atoi(<String> ?);
+	&isupper(<char> ?);
+	&f1 (<int()> ?);
+	&f2 (<int()> ?,<float()> ?);
+	&f3 (<int(int)> ?,<float(String)> ?);	
+	&f4 (<int()> ?,<float()> ?);
+	&f5 (<int(int)()> ?,<float()(String)> ?);		
+	
+	&rf1 (<int()> ?);
+	&rf2 (<int()> ?,<float()> ?);
+	&rf3 (<int(int)> ?,<float(String)> ?);	
+	&rf4 (<int()> ?,<float()> ?);
+	&rf5 (<int(int)()> ?,<float()(String)> ?);		
+
+	/* HOF Declarations */
+	int() f;
+	int(int) g;
+	int(int,String) h;
+	
+	int(int()) i;
+	int(int,int()) j;
+	int(int(int),String()) k;
+	
+	int(int())() l;
+	int(int,int())(String) m;
+	int(int(int),String())(String(),float) n;
+	
+	int[]() o;
+	int[][](int) p;
+	int[][][](int,String) q;
+	
+	int[](int[]()) r;
+	int[](int[][],int[]()) s;
+	int[][](int(int[]),String[]()) t;
+	
+	int[](int())() u[];
+	int(int[],int())(String[]) v[][]; 
+	int(int[](int[][]),String())(String[](),float[]) w;
+	
+	int(int()[]) x;	
+	
+	/* Assignments of function typed expressions */
+	
+	int(String) myatoi = &atoi(<String> ?);
+	myatoi = &atoi(<String> ?);
+	
+	boolean(char) myisdigit = &isdigit(<char> ?);
+	double(double) mysqrt = &sqrt(<double> ?);
+	double(double,int) myldexp = &ldexp(<double> ?,<int> ?);
+	
+	/* Function calls to function typed expressions */
+
+	print myatoi("37") + "\n";
+	// print isdigit('3') + "\n";
+	// print myisdigit('3') + "\n"; Not a fair test, the is digit function is f***d up
+	print mysqrt(36.0) + "\n";
+	print mysqrt(400) + "\n";
+	print myldexp(3,3) + "\n";
+
+	/* Functions that take functions as arguments */
+	
+	int f1 (int() arg1) {}
+	int f2 (int() arg1,float() arg2) {}
+	int f3 (int(int) arg1,float(String) arg2) {}	
+	int f4 (int() arg1,float() arg2) {}
+	int f5 (int(int)() arg1,float()(String) arg2) {}
+
+	/* Functions that return functions */
+	
+	int() rf1 (int() arg1) {}
+	int(String[]) rf2 (int() arg1,float() arg2) {}
+	int[]() rf3 (int(int) arg1,float(String) arg2) {}	
+	int()[] rf4 (int() arg1,float() arg2) {}
+	int(String(),int[]())()[] rf5 (int(int)() arg1,float()(String) arg2) {}
+		
+	/* Casts to function types */
+	
+	Object O;
+
+	<int()>O;
+	<int(int)>O;
+	<int(int,String)>O;
+	
+	<int(int())>O;
+	<int(int,int())>O;
+	<int(int(int),String())>O;
+	
+	<int(int())()>O;
+	<int(int,int())(String)>O;
+	<int(int(int),String())(String(),float)>O;
+	
+	<int[]()>O;
+	<int[][](int)>O;
+	<int[][][](int,String)>O;
+	
+	<int[](int[]())>O;
+	<int[](int[][],int[]())>O;
+	<int[][](int(int[]),String[]())>O;
+	
+	<int[](int())()[]>O;
+	<int(int[],int())(String[])[][]>O; 
+	<int(int[](int[][]),String())(String[](),float[])>O;
+
+}$
+	

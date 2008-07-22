@@ -1,0 +1,5 @@
+#define FOO(a) $a
+#define BAR(b) $FOO($b)
+#define BAZ(c) $BAR($c)
+#define QUX(d) $BAZ($d)
+$QUX(this is some text)

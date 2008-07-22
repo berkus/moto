@@ -1,0 +1,22 @@
+$try
+$catch(...)         $* malformed $catch *$
+$endtry
+
+$try                $* $try without $catch or $finally *$
+$endtry
+
+$catch(Exception e) $* $catch not within try *$
+$finally            $* $finally not within try *$
+$endtry             $* $endtry without $try *$
+
+${
+   try{
+   }catch(...){}        // malformed catch  
+   finally{}
+
+   catch(Exception e){} // catch not within try block
+   finally{}            // finally not within try block
+   
+}$
+
+$try                $* $unterminated $try *$

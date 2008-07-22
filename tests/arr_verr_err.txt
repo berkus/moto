@@ -1,0 +1,21 @@
+arr_verr_err.moto:2: Variable of type <int[]> cannot store type <int[][]>
+arr_verr_err.moto:3: Variable of type <char[][]> cannot store type <float[][]>
+arr_verr_err.moto:4: Illegal type used for array index: <char>
+arr_verr_err.moto:5: Variable of type <boolean[][][][]> cannot store type <char[][]>
+arr_verr_err.moto:7: Illegal binary operation: <char[]> + <char[]>
+arr_verr_err.moto:7: Variable of type <char[]> cannot store type <int>
+arr_verr_err.moto:8: Variable of type <float[][][]> cannot store type <float[][]>
+arr_verr_err.moto:9: Variable of type <float> cannot store type <float[]>
+arr_verr_err.moto:11: Illegal type used for array index: <char[][]>
+arr_verr_err.moto:12: The subscript operator [] may only be used on Arrays, not variables of type <char>
+arr_verr_err.moto:13: Variable of type <boolean> cannot store type <char>
+arr_verr_err.moto:15: The subscript operator [] may only be used on Arrays, not variables of type <int>
+arr_verr_err.moto:15: Illegal type used for array index: <char>
+arr_verr_err.moto:17: Illegal type used for array index: <boolean>
+arr_verr_err.moto:18: The subscript operator [] may only be used on Arrays, not variables of type <boolean>
+arr_verr_err.moto:21: Variable of type <int[]> cannot store type <double>
+arr_verr_err.moto:24: Variable of type <char[]> cannot store type <boolean>
+arr_verr_err.moto:25: The subscript operator [] may only be used on Arrays, not variables of type <char>
+arr_verr_err.moto:31: The subscript operator [] may only be used on Arrays, not variables of type <char>
+arr_verr_err.moto:31: Illegal type used for array index: <char>
+arr_verr_err.moto:31: Variable of type <int> cannot store type <String>

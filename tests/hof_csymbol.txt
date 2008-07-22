@@ -1,0 +1,34 @@
+happy
+happy
+23
+23
+{we,got,the,funk}
+{we,got,the,funk}
+happy * 3
+happy * 3
+happy * 3
+happy * 3
+happy * 3
+69
+69
+69
+69
+69
+{we,got,the,funk,*,3}
+{we,got,the,funk,*,3}
+{we,got,the,funk,*,3}
+{we,got,the,funk,*,3}
+{we,got,the,funk,*,3}
+23
+23
+happy
+happy
+{we,got,the,funk}
+{we,got,the,funk}
+23-23
+23-23
+32-23-happy
+32-23-happy
+{we,got,the,funk}-{we,got,the,funk}
+{we,got,the,funk}-{we,got,the,funk}
+

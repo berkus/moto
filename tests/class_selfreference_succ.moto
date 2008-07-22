@@ -1,0 +1,16 @@
+${
+   class A{
+      A a;
+      A getA(){return a;}
+   }
+
+   class B{
+      C b;
+      C getB(){return b;}
+   }
+
+   class C{
+      B c;
+      B getC(){return c;}
+   }
+}$

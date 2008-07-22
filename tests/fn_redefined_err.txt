@@ -1,0 +1,6 @@
+fn_redefined_err.moto:2: Function foo re-defined.
+   Original definition at fn_redefined_err.moto:1
+fn_redefined_err.moto:3: Function str re-defined.
+   Original definition in extension "moto"
+fn_redefined_err.moto:5: Function baz re-defined.
+   Original definition at fn_redefined_err.moto:4

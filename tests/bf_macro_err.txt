@@ -1,0 +1,11 @@
+/usr/local/wa/dhakim/moto/tests/bf_macro_err.incl:5: Illegal binary operation: <String> * <boolean>
+   >>> in file included from bf_macro_err.moto:2
+/usr/local/wa/dhakim/moto/tests/bf_macro_err.lib:2: Illegal binary operation: <int> + <boolean>
+   >>> in macro BAD_MACRO called from bf_macro_err.moto:5
+/usr/local/wa/dhakim/moto/tests/bf_macro_err.moto:1: Variable 's' not declared before used
+   >>> in macro ANOTHER_BAD_MACRO called from bf_macro_err.moto:7
+/usr/local/wa/dhakim/moto/tests/bf_macro_err.lib:5: No such function: atoi(<int>)
+   >>> in macro BAD_MACRO_W_ARGS(1) called from bf_macro_err.moto:9
+/usr/local/wa/dhakim/moto/tests/bf_macro_err.lib:5: No such function: atoi(<boolean>)
+   >>> in macro BAD_MACRO_W_ARGS(1) called from /usr/local/wa/dhakim/moto/tests/bf_macro_err.lib:8
+   >>> in macro BAD_MACRO_THAT_CALLS_ANOTHER_BAD_MACRO called from bf_macro_err.moto:10

@@ -1,0 +1,75 @@
+${
+
+	use "codex.util";
+
+	SymbolTable s1 = new SymbolTable();
+	SymbolTable s2 = new SymbolTable();
+	SymbolTable food = new SymbolTable();
+	SymbolTable fruit = new SymbolTable();
+	SymbolTable wines = new SymbolTable();
+	s1.put("foo", "bar");
+
+	String res = <String> s1["foo"] + "\n";
+	print res;
+
+	s2.put("bar", "baz");
+	print <String> s2["bar"] + "\n";
+
+	s1.put("boz", s2);
+	print <String>(<SymbolTable>(s1["boz"]))["bar"] + "\n";
+
+	s1["biz"] = "buz";
+	print <String> s1["biz"] + "\n";
+
+	s1["arr"] = s2;
+	print <String>(<SymbolTable>(s1["arr"]))["bar"] + "\n";
+
+	fruit["apple"] = "green";
+	fruit["strawberry"] = "red";
+	fruit["cherry"] = "red";
+
+	wines["muller-thurgau"] = "white";
+	wines["brunello di montalcino"] = "red";
+	wines["Ernest & Julio Gallo"] = "both";
+
+	food["wines"] = wines;
+	food["fruit"] = fruit;
+
+	print <String> (<SymbolTable>food["wines"])["brunello di montalcino"] + "\n";
+	print <String> (<SymbolTable>food["fruit"])["cherry"] + "\n";
+
+	SymbolTable [][] s = new SymbolTable[10][10];
+	s[0][0] = new SymbolTable();
+	s[0][0].put("boz", "bez");
+	s[0][0]["boz"] = "brz";
+	print <String> s[0][0]["boz"] + "\n";
+
+	SymbolTable st = new SymbolTable();
+	for (int i = 0; i < 1000; i++) {
+		st["" + i + ""] = "" + i + "";
+	}
+	int lines = 0;
+	for (int i = 0; i < 1000; i++) {
+		print <String> st["" + i + ""];
+		lines++;
+		if (lines == 10) {
+			print "\n";
+			lines = 0;
+		}
+	}		
+
+	SymbolTable val1 = new SymbolTable();
+	SymbolTable val2 = new SymbolTable();
+	SymbolTable val3 = new SymbolTable();
+	SymbolTable val4 = new SymbolTable();
+
+	val1["foo"] = val2["bar"] = val3["baz"] = val4["biz"] = "boz";
+	print <String> val1["foo"] + "\n";
+
+	String[] str1 = {"aaaa", "bbbb"};
+	String[] str2 = {"cccc", "dddd"};
+
+	val1["faa"] = val3["baz"] = str2[0] = str1[0];
+	print <String> val1["faa"] + "\n";
+
+}$

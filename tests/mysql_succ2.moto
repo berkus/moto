@@ -1,0 +1,296 @@
+${
+   print 1.17549435e-38F * 10e+38 + "\n";
+   print 3.40282347e+38F + "\n";
+   use "codex.db.mysql";
+   use "codex.util";
+   String pad(String txt,int size){
+      char[] r = new char[size];
+      int i;
+      for(i=0;i<size;i++){
+         if(i<txt.length()) r[i]=txt.charAt(i);
+         else r[i]=' ';
+      }
+      return new String(r);
+   }
+
+   /* Display the table and return the number of rows iterated over */
+   int printResult(MySQLResultSet rset){
+      int i=0,j;
+
+      for(j=0;j<rset.columns();j++)
+         print (j==0?"+":"")+"---------------+";
+      print "\n";
+      for(j=0;j<rset.columns();j++)
+         print (j==0?"|":"")+pad(rset.getColumnName(j),15) + "|";
+      print "\n";
+      for(j=0;j<rset.columns();j++)
+         print (j==0?"+":"")+"---------------+";
+      print "\n";
+
+      while(rset.next()){
+         for(j=0;j<rset.columns();j++)
+            print (j==0?"|":"")+pad(rset.getString(j),15)+ "|";
+         print "\n";
+         i++;
+      }
+
+      for(j=0;j<rset.columns();j++)      
+         print (j==0?"+":"")+"---------------+";     
+      print "\n";
+      
+      return i;
+   }
+   
+   String DBHost = "localhost";
+   String DBName = "test";
+   String DBUser = "root";
+   String DBPassword = "";
+
+   print "# Test connecting to the database\n";
+
+   MySQLConnection conn;
+   
+   try { new MySQLConnection("255.255.255.255", DBName,DBUser,DBPassword); } 
+   catch (Exception e) { print e.toString() + "\n" ; }
+   try { new MySQLConnection(DBHost, "DNE",DBUser,DBPassword); } 
+   catch (Exception e) { print e.toString() + "\n"; }
+   try { new MySQLConnection(DBHost, DBName,"DNE",DBPassword); } 
+   catch (Exception e) { print e.toString() + "\n"; }
+   try { new MySQLConnection(DBHost, DBName,DBUser,"DNE"); } 
+   catch (Exception e) { print e.toString() + "\n"; }
+      
+   conn = new MySQLConnection(
+      DBHost,DBName,DBUser,DBPassword);
+
+   print "# Testing some Bad SQL\n";
+   
+   try { conn.query("FOO BAR MAKA"); } catch (Exception e) { print e.toString() + "\n";}
+   try { conn.update("FOO BAR MAKA"); } catch (Exception e) { print e.toString()  + "\n";}
+         
+   print "# Creating test tables\n";
+   
+   try {
+	   conn.update("CREATE TABLE test1(id int)");
+	   conn.update("CREATE TABLE test2(name varchar(64), value varchar(64))");
+	   
+	   /* Create a table that follows the default moto type to MySQL type mapping */
+		 
+	   conn.update(
+		  "CREATE TABLE test3("+
+		  "   byteColumn1 TINYINT ,"+ 	  	// TINYINTs go from -128 to 127
+		  
+		  "   bytesColumn1 TINYBLOB ,"+	  	// TINYBLOBs can hold up to 255 bytes
+		  "   bytesColumn2 BLOB ,"+		  	// BLOBs can hold up to 65,535 bytes
+		  "   bytesColumn3 MEDIUMBLOB ,"+  	// MEDIUMBLOBs can hold up to 16,777,215 bytes
+		  "   bytesColumn4 LONGBLOB ,"+    	// LONGBLOBs can hold up to 4,294,967,295 bytes  
+		  
+		  "   charColumn CHAR ,"+		  		// CHARs go from 0 to 255
+		  
+		  "   doubleColumn DOUBLE ,"+	  		// DOUBLEs go from/to Min=+/-2.225E-308 Max=+/-1.800E+308
+		  
+		  "   floatColumn FLOAT ,"+		  	// FLOATs go from/to Min=+/-1.175E-38 Max=+/-3.403E+38
+		  
+		  "   intColumn1 SMALLINT ,"+	  		// SMALLINTs go from -32,768 to 32,767
+		  "   intColumn2 MEDIUMINT ,"+	  	// MEDIUMINTs go from -8,388,608 to 8,388,607
+		  "   intColumn3 INT ,"+			  	// INTs go from/to -2,147,483,648 to 2,147,483,647
+		  
+		  "   longColumn BIGINT ,"+		  	// BIGINTs go from/to -/+9,223,372,036,854,775,807
+		  
+		  "   stringColumn1 VARCHAR(64) ,"+	// VARCHARs hold up to 255 characters, trailing spaces removed
+		  "   stringColumn2 CHAR(64) ,"+		// CHARs hold up to 255 characters, right padded
+		  "   stringColumn3 TINYTEXT ,"+	  	// TINYTEXTs can hold up to 255 bytes   
+		  "   stringColumn4 TEXT ,"+ 	  		// TEXTs can hold up to 65,535 bytes
+		  "   stringColumn5 MEDIUMTEXT ,"+ 	// MEDIUMTEXTs can hold up to 16,777,215 bytes
+		  "   stringColumn6 LONGTEXT ,"+	  	// LONGTEXTSs can hold up to 4,294,967,295 bytes
+		  
+		  "   dateColumn1 DATE ,"+		  		// "1000-01-01" - "9999-12-31" (YYYY-MM-DD)
+		  "   dateColumn2 TIME ,"+		  		// "-838:59:59" - "838:59:59" (hh:mm:ss)
+		  "   dateColumn3 DATETIME ,"+	  	// "1000-01-01 00:00:00" - "9999-12-31 23:59:59" (YYYY-MM-DD hh:mm:ss)
+		  "   dateColumn4 TIMESTAMP ,"+	  	// 19700101000000 - 2037+ (YYYYMMDDhhmmss)
+		  "   dateColumn5 YEAR "+		  		// 1900 - 2155 (YYYY)
+		  ")"
+	   );
+   } catch(Exception e) {
+   		print "# Could not re-create tables for some reason\n";
+   		print e.toString();
+   }
+   
+   print "# Test Listing tables\n";
+
+   MySQLResultSet rset = conn.listTables();
+   int i = printResult(rset);
+
+   print "# Compare sizes\n";
+   print "i="+i+" rset.rows()="+rset.rows()+"\n";
+
+   print "# Testing data insertion \n";
+   conn.update("INSERT INTO test2 (name,value) VALUES ('foo','bar')");
+   conn.update("INSERT INTO test2 (name,value) VALUES ('maka','"+
+      conn.escape("sl'ack'a")+"')"); 
+
+   print "# Testing result set boundaries\n";   
+   rset=conn.query("SELECT * FROM test2");
+   
+   try { rset.getString(1); } catch (Exception e) { print e.toString()+"\n"; }
+   rset.next();
+   try { rset.getString(-1); } catch (Exception e) { print e.toString()+"\n"; }
+   try { rset.getString("fuzzy navel"); } catch (Exception e) { print e.toString()+"\n"; }
+   
+   print "# Verifying Inserts\n";
+   printResult(rset=conn.query("SELECT * FROM test2"));
+
+   print "# Updating Data\n";
+   i = conn.update("UPDATE test2 SET value='ragga'");
+   print "Rows updated = "+i+"\n";
+
+   print "# Verifying Update\n";
+   printResult(rset=conn.query("SELECT * FROM test2"));
+
+   print "# Inserting Minimum test values into types table\n";
+   
+   try {
+   
+		conn.update("INSERT INTO test3 VALUES ("+
+			"   -128,"+ 	  							// TINYINTs go from -128 to 127
+			
+			"   'happy',"+	  							// TINYBLOBs can hold up to 255 bytes
+			"   'happy',"+								// BLOBs can hold up to 65,535 bytes
+			"   'happy',"+  							// MEDIUMBLOBs can hold up to 16,777,215 bytes
+			"   'happy',"+    						// LONGBLOBs can hold up to 4,294,967,295 bytes  
+			
+			"   0,"+		  								// CHARs go from 0 to 255
+			
+			"   -2.2250738585072014e-308,"+	  	// DOUBLEs go from/to Min=+/-2.2250738585072014e-308 Max=+/-1.800E+308
+				
+			"   -1.17549435e-38,"+		 		 	// FLOATs go from/to Min=+/-1.17549435e-38 Max=+/-3.403E+38
+		
+			"   -32768,"+		 			 			// SMALLINTs go from -32,768 to 32,767
+			"   -8388608,"+	  						// MEDIUMINTs go from -8,388,608 to 8,388,607
+			"   -2147483648,"+			  			// INTs go from/to -2,147,483,648 to 2,147,483,647
+			
+			"   -9223372036854775807,"+			// BIGINTs go from/to -/+9,223,372,036,854,775,807
+			
+			"   'happy',"+								// VARCHARs hold up to 255 characters, trailing spaces removed
+			"   'happy',"+								// CHARs hold up to 255 characters, right padded
+			"   'happy',"+	  							// TINYTEXTs can hold up to 255 bytes   
+			"   'happy',"+ 	  						// TEXTs can hold up to 65,535 bytes
+			"   'happy',"+ 							// MEDIUMTEXTs can hold up to 16,777,215 bytes
+			"   'happy',"+	  							// LONGTEXTSs can hold up to 4,294,967,295 bytes
+			
+			"   '1000-01-01',"+		  				// "1000-01-01" - "9999-12-31" (YYYY-MM-DD)
+			"   '-838:59:59',"+			 		 	// "-838:59:59" - "838:59:59" (hh:mm:ss)
+			"   '1000-01-01 00:00:00',"+	 	 	// "1000-01-01 00:00:00" - "9999-12-31 23:59:59" (YYYY-MM-DD hh:mm:ss)
+			"   '19700101000000',"+	  				// 19700101000000 - 2037+ (YYYYMMDDhhmmss)
+			"   '1900'"+					  			// 1900 - 2155 (YYYY)
+			")"
+		);
+			
+		print "# Inserting Maximum test values into types table\n";
+		
+		conn.update("INSERT INTO test3 VALUES ("+
+			"   127,"+ 	  								// TINYINTs go from -128 to 127
+			
+			"   'happy',"+								// TINYBLOBs can hold up to 255 bytes
+			"   'happy',"+								// BLOBs can hold up to 65,535 bytes
+			"   'happy',"+								// MEDIUMBLOBs can hold up to 16,777,215 bytes
+			"   'happy',"+								// LONGBLOBs can hold up to 4,294,967,295 bytes  
+			
+			"   255,"+		  							// CHARs go from 0 to 255
+			
+			"   1.7976931348623157e+308,"+	  	// DOUBLEs go from/to Min=+/-2.225E-308 Max=+/-1.800E+308
+			
+			"   3.40282347e+38,"+		 		 	// FLOATs go from/to Min=+/-1.175E-38 Max=+/-3.40282347e+38F
+			
+			"   32767,"+		 					 	// SMALLINTs go from -32,768 to 32,767
+			"   8388607,"+	  							// MEDIUMINTs go from -8,388,608 to 8,388,607
+			"   2147483647,"+						  	// INTs go from/to -2,147,483,648 to 2,147,483,647
+			
+			"   9223372036854775807,"+				// BIGINTs go from/to -/+9,223,372,036,854,775,807
+				
+			"   'happy',"+								// VARCHARs hold up to 255 characters, trailing spaces removed
+			"   'happy',"+								// CHARs hold up to 255 characters, right padded
+			"   'happy',"+	  							// TINYTEXTs can hold up to 255 bytes   
+			"   'happy',"+ 	  						// TEXTs can hold up to 65,535 bytes
+			"   'happy',"+ 							// MEDIUMTEXTs can hold up to 16,777,215 bytes
+			"   'happy',"+	  							// LONGTEXTSs can hold up to 4,294,967,295 bytes
+			
+			"   '9999-12-31',"+		  				// "1000-01-01" - "9999-12-31" (YYYY-MM-DD)
+			"   '838:59:59',"+			  			// "-838:59:59" - "838:59:59" (hh:mm:ss)
+			"   '9999-12-31 23:59:59',"+	 	 	// "1000-01-01 00:00:00" - "9999-12-31 23:59:59" (YYYY-MM-DD hh:mm:ss)
+			"   '20370101000000',"+	  				// 19700101000000 - 2037+ (YYYYMMDDhhmmss)
+			"   '2155'"+					  			// 1900 - 2155 (YYYY)
+			")"
+		);
+   
+   
+		print "# Testing out Retrieval of the Various Types\n";
+		
+		rset = conn.query("SELECT * FROM test3");
+		
+		while(rset.next()) {
+		
+			print "# Retrieved next() row\n";
+			print rset.getString(0)+ " == " + rset.getByte("byteColumn1")
+											+ " == " + <byte>rset.getLong("byteColumn1") 
+											+ " == " + <byte>rset.getInt("byteColumn1") 
+											+ " == " + <byte>rset.getFloat("byteColumn1") 
+											+ " == " + <byte>rset.getDouble("byteColumn1") 
+											+ "\n";
+			print rset.getString(1) + " == " + rset.getBytes("bytesColumn1") + "\n";
+			print rset.getString(2) + " == " + rset.getBytes("bytesColumn2") + "\n";
+			print rset.getString(3) + " == " + rset.getBytes("bytesColumn3") + "\n";
+			print rset.getString(4) + " == " + rset.getBytes("bytesColumn4") + "\n";
+
+
+			print rset.getString(5) + " == " + rset.getChar("charColumn") 
+											+ " == " + <char>rset.getInt("charColumn") 
+											+ " == " + <char>rset.getFloat("charColumn") 
+											+ " == " + <char>rset.getDouble("charColumn") 
+											+ "\n";
+														
+			print rset.getString(6) + " == "+ rset.getDouble("doubleColumn") + "\n"; 
+			
+			print rset.getString(7) + " == "+ rset.getFloat("floatColumn") + "\n";
+			
+			print rset.getString(8) + " == " + rset.getInt("intColumn1") 
+											+ " == " + <int>rset.getLong("intColumn1") + "\n";
+			print rset.getString(9) + " == " + rset.getInt("intColumn2")
+			 								+ " == " + <int>rset.getLong("intColumn2") + "\n";
+			print rset.getString(10) + " == " + rset.getInt("intColumn3")
+											 + " == " + <int>rset.getLong("intColumn3") + "\n";
+			
+			print rset.getString(11) + " == " + rset.getLong("longColumn") + "\n";
+			
+			print rset.getString(12) + " == " + rset.getString("stringColumn1")
+											 + " == " + rset.getBytes("stringColumn1") + "\n";
+			print rset.getString(13) + " == " + rset.getString("stringColumn2")
+											 + " == " + rset.getBytes("stringColumn2") + "\n";
+			print rset.getString(14) + " == " + rset.getString("stringColumn3")
+											 + " == " + rset.getBytes("stringColumn3") + "\n";
+			print rset.getString(15) + " == " + rset.getString("stringColumn4")
+											 + " == " + rset.getBytes("stringColumn4") + "\n";
+			print rset.getString(16) + " == " + rset.getString("stringColumn5")
+											 + " == " + rset.getBytes("stringColumn5") + "\n";
+			print rset.getString(17) + " == " + rset.getString("stringColumn6")
+											 + " == " + rset.getBytes("stringColumn6") + "\n";
+			
+			print rset.getString(18) + " == "+ rset.getDate("dateColumn1").toString("%m-%d-%Y %r") + "\n";
+			print rset.getString(19) + " == "+ rset.getDate("dateColumn2").toString("%m-%d-%Y %r") + "\n";
+			print rset.getString(20) + " == "+ rset.getDate("dateColumn3").toString("%m-%d-%Y %r") + "\n";
+			print rset.getString(21) + " == "+ rset.getDate("dateColumn4").toString("%m-%d-%Y %r") + "\n";
+			print rset.getString(22) + " == "+ rset.getDate("dateColumn5").toString("%m-%d-%Y %r") + "\n";
+		}
+   } catch (Exception e) {
+   	   print e.toString();
+   }
+           
+   print "#Dropping test tables\n";
+   
+   try {
+		conn.update("DROP TABLE test1");
+		conn.update("DROP TABLE test2");
+		conn.update("DROP TABLE test3");
+   } catch (Exception e) {
+   	print e.toString();
+   }
+}$   

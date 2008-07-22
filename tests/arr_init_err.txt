@@ -1,0 +1,5 @@
+arr_init_err.moto:2: The dimensions specified (1) exceeds the dimensions of the array (0)
+arr_init_err.moto:3: The dimensions specified (1) exceeds the dimensions of the array (0)
+arr_init_err.moto:4: Expression of type <String> cannot be cast to <int>
+arr_init_err.moto:6: The dimensions specified (1) exceeds the dimensions of the array (0)
+arr_init_err.moto:7: Expression of type <String> cannot be cast to <int>

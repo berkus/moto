@@ -1,0 +1,68 @@
+${print "foo" =~ /foo/;}$ - true
+${print "foo" !~ /foo/;}$ - false
+
+${print "foo" =~ /fo*/;}$ - true
+${print "foo" =~ /fo[o]+/;}$ - true
+${print "foo" =~ /fo[^f]*/;}$ - true
+
+${print "\t" =~ /\t/;}$ - true
+${print "\t" =~ /[\t]/;}$ - true
+${print "\t" =~ /[^\t]/;}$ - false
+
+${print "" =~ /foo/;}$ - false
+${print "" =~ /./;}$ - false
+${print "" =~ /.*/;}$ - true
+${print "" =~ /.?/;}$ - true
+
+${print "." =~ /\./;}$ - true
+${print "*" =~ /\*/;}$ - true
+${print "?" =~ /\?/;}$ - true
+
+${print "happy" =~ /[a-z]*/;}$ - true
+
+${Regex foo = /foo/;}$
+
+${print "foo" =~ foo;}$ - true
+${print "foo" !~ foo;}$ - false 
+${print foo.matches("foo");}$ - true
+${print foo.matchPrefix("foo").endIndex(0);}$ - 3
+
+${Regex maka = new Regex("m[aA]k.");}$
+${print maka.matches("mAka");}$ - true
+${print maka.matchPrefix("makaman").endIndex(0);}$ - 4
+${print maka.matches("foo");}$ - false
+
+Regex Parsing Issues From Moto
+${print " " =~ /[ ]/;}$ - true
+${print " " =~ /[\ ]/;}$ - true
+${print "\ " =~ /\ /;}$ - true
+
+${print "\n" =~ /\n/;}$ - true
+${print "\n" =~ /[\n]/;}$ - true
+
+${print "/" =~ /\//;}$ - true
+${print "/" =~ /[/]/;}$ - true
+${print "/" =~ /[\/]/;}$ - true
+
+${print "\\" =~ /\\/;}$ - true
+${print "\\" =~ /[\\]/;}$ - true
+
+${print "]" =~ /\]/;}$ - true
+${print "]" =~ /[\]]/;}$ - true
+
+${print "[" =~ /\[/;}$ - true
+${print "["=~ /[\[]/;}$ - true
+${
+print ( "   \n\t" =~ /\s+/) + " = true\n";
+print ( "   \n\t" =~ /\S+/) + " = false\n";
+print ( "0123456789" =~ /\d+/) + " = true\n";
+print ( "0123456789" =~ /\D+/) + " = false\n";
+print ( "aBcDeFg0123456" =~ /\w+/) + " = true\n";
+print ( "aBcDeFg0123456" =~ /\W+/) + " = false\n";
+print ( "   \n\t" =~ /[\s]+/) + " = true\n";
+print ( "   \n\t" =~ /[\S]+/) + " = false\n";
+print ( "0123456789" =~ /[\d]+/) + " = true\n";
+print ( "0123456789" =~ /[\D]+/) + " = false\n";
+print ( "aBcDeFg0123456" =~ /[\w]+/) + " = true\n";
+print ( "aBcDeFg0123456" =~ /[\W]+/) + " = false\n";
+}$

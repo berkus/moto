@@ -1,0 +1,25 @@
+${
+  int A[] = new int[1];
+  A[0] = 10;
+  A[0]++;
+  ++A[0];
+  print A[0];
+  print "\n";
+  A[0]--;
+  --A[0];
+  print A[0];
+  print "\n";
+}$
+
+${
+  class A { int a=10; }
+  A foo = new A();
+  foo.a++;
+  ++foo.a;
+  print foo.a;
+  print "\n";
+  foo.a--;
+  --foo.a;
+  print foo.a;
+  print "\n";
+}$

@@ -1,0 +1,38 @@
+${
+void hello1() { print "hello world\n"; }
+hello1();
+}$
+
+${
+String hello2() { return "hello world\n"; }
+print hello2();
+}$
+
+$define(String hello3())
+    $return("hello world")
+$enddef
+$(hello3())
+
+${
+   String inputTag(String type, String name, String value){
+      String tag = "<input type=\""+type+"\" name=\""+name+"\" value=\""+value+"\">";
+      return tag;
+   }
+}$
+
+<form>
+$(inputTag("text","foo","bar"))
+$(inputTag("submit","op","bar"))
+</form>
+${
+void foo(){
+   print "foo\n";
+   return;
+}
+foo();
+}$
+$define(void bar())
+   bar
+   $return
+$enddef
+$do(bar())

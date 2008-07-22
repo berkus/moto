@@ -1,0 +1,3 @@
+bar <img src="emoticon12.gif"> maka <img src="emoticon22.gif"> shlaka
+bar <img src="emoticon12.gif"> maka <img src="emoticon22.gif"> shlaka <img src="emoticon23.gif"> 
+ <img src="emoticon11.gif"> bar <img src="emoticon12.gif"> maka <img src="emoticon22.gif"> shlaka

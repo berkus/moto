@@ -1,0 +1,2 @@
+${ void foo(){ }$ I escaped! ${ } foo();}$
+${ class Foo{ Foo(){ }$ I escaped also! ${ }} new Foo();}$

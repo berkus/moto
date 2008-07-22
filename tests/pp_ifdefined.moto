@@ -1,0 +1,66 @@
+#define FOO
+#define BAR(a)
+#if defined FOO
+yes
+#endif
+#if defined FOO
+yes
+#else
+no
+#endif
+#if defined FOO(1)
+yes
+#endif
+#if defined FOO(1)
+yes
+#else
+no
+#endif
+#if defined BAR(1)
+yes
+#endif
+#if defined BAR(1)
+yes
+#else
+no
+#endif
+#if defined BAR
+yes
+#endif
+#if defined BAR
+yes
+#else
+no
+#endif
+#if ! defined FOO
+yes
+#endif
+#if ! defined FOO
+yes
+#else
+no
+#endif
+#if ! defined FOO(1)
+yes
+#endif
+#if ! defined FOO(1)
+yes
+#else
+no
+#endif
+#if ! defined BAR(1)
+yes
+#endif
+#if ! defined BAR(1)
+yes
+#else
+no
+#endif
+#if ! defined BAR
+yes
+#endif
+#if ! defined BAR
+yes
+#else
+no
+#endif

@@ -1,0 +1,182 @@
+$use("codex.util")
+$declare(Vector v = new Vector())
+${
+	String outputStringVector(Vector v){
+		StringBuffer s = new StringBuffer();
+		s.append("{");
+		
+		Enumeration e;
+
+		for(e=v.elements();e.hasNext();){
+			String curString = <String>e.next(); 
+			s.append( (curString!=null?"'"+curString+"'":"null")+(e.hasNext()?",":""));
+		}
+		
+		s.append("}");
+		return s.toString();
+	}
+	
+	void testRemoveAt(int index, Vector v){
+		try {
+			print "> v.removeAt("+index+")\n";		 
+			v.removeAt(index); 
+			print "POST: "+outputStringVector(v) +"\n";
+		} catch (ArrayBoundsException abe) {
+			print "ArrayBoundsException\n";
+		}
+	}
+
+	void testGet(int index, Vector v){
+		try {
+			print "> v.get("+index+")=";		 
+			print (v.get(index)!=null?"'"+<String>v.get(index)+"'":"null");
+			print "\n";
+		} catch (ArrayBoundsException abe) {
+			print "ArrayBoundsException\n";
+		}
+	}
+	
+	void testGetOverloaded(int index, Vector v){
+		try {
+			print "> v["+index+"] =";		 
+			print (v[index]!=null?"'"+<String>v.get(index)+"'":"null");
+			print "\n";
+		} catch (ArrayBoundsException abe) {
+			print "ArrayBoundsException\n";
+		}
+	}
+	
+	void testInsert(int index, String s, Vector v){
+		try {
+			print "> v.insert("+(s!=null?"'"+s+"'":"null")+","+index+")\n";	  
+			v.insert(s,index);
+			print "POST: "+outputStringVector(v) +"\n";
+		} catch (ArrayBoundsException abe) {
+			print "ArrayBoundsException\n";
+		}
+	}
+
+	void testSet(int index, String s, Vector v){
+		try {
+			print "> v.setAt("+(s!=null?"'"+s+"'":"null")+","+index+")\n";	  
+			v.setAt(s,index);
+			print "POST: "+outputStringVector(v) +"\n";
+		} catch (ArrayBoundsException abe) {
+			print "ArrayBoundsException\n";
+		}
+	}		
+
+	void testSetOverloaded(int index, String s, Vector v){
+		try {
+			print "> v["+index+"] = "+(s!=null?"'"+s+"'":"null")+"\n";	  
+			v.setAt(s,index);
+			print "POST: "+outputStringVector(v) +"\n";
+		} catch (ArrayBoundsException abe) {
+			print "ArrayBoundsException\n";
+		}
+	}		
+		
+	void testClear(Vector v){
+		try {
+			print "> v.clear()\n";	  
+			v.clear();
+			print "POST: "+outputStringVector(v) +"\n";
+		} catch (ArrayBoundsException abe) {
+			print "ArrayBoundsException\n";
+		}
+	}	
+	// Test adding elements to a Vector
+	
+	v.add("Foo");
+	v.add("Maka");
+	v.add("Bar");
+	v.add(null);
+	
+	// Test getting elements from a Vector
+	
+	 print "PRE: "+outputStringVector(v) +"\n"; 
+	testGet(-1,v);
+	testGet(0,v);
+	testGet(1,v);
+	testGet(2,v);
+	testGet(3,v);
+	testGet(4,v);
+	testGet(5,v);
+		
+	// Test calling elements() and size() on a Vector
+	
+	outputStringVector(v);
+		
+	// Test converting a Vectory to an array
+	
+	Object[] varr = v.toArray();
+	
+	// Test retrieving elements from a Vector and calling the size() method
+	
+	for(int i=0;i<v.size();i++)
+		print <String>v.get(i) + " = " + <String>varr[i] + "\n";
+	
+	// Test calling removeAt() on a Vector
+
+	print "PRE: "+outputStringVector(v) +"\n"; 
+	testRemoveAt(0,v); // should have removed "foo"
+	testRemoveAt(1,v); // should have removed "bar"
+	testRemoveAt(1,v); // should have removed null
+	testRemoveAt(1,v); // should throw an exception
+	testRemoveAt(0,v); // should have removed "maka"
+	testRemoveAt(0,v); // should throw an exception
+	testRemoveAt(-1,v); // should throw an exception
+	
+	// Test calling insertAt() on a Vector
+	
+	print "PRE: "+outputStringVector(v) +"\n"; 
+	testInsert(-1,"first",v);
+	testInsert(0,"second",v);
+	testInsert(1,"third",v);
+	testInsert(0,"first",v); 
+	testInsert(4,"fourth",v);		  
+	testInsert(3,"fourth",v);	 
+	testInsert(2,"2.5",v);		  
+	testInsert(1,null,v); 
+	
+	// Test calling setAt() on a Vector
+	
+	print "PRE: "+outputStringVector(v) +"\n"; 
+	testSet(1,"1.5",v);
+	testSet(0,"1",v);
+	testSet(-1,"pre",v);
+	testSet(6,"post 1",v);
+	testSet(7,"post 2",v);
+	
+	// Test calling clear() on a Vector
+	
+	print "PRE: "+outputStringVector(v) +"\n"; 
+	testClear(v);	
+	testClear(v);	
+	
+	// Testing conversion from arrays
+	
+	print "> new Vector(<String[]>{ \"foo\" ,\"bar\",\"maka\",\"maka\"})\n";
+	v = new Vector(<String[]>{ "foo" ,"bar","maka","maka"});
+	print "POST: "+outputStringVector(v) +"\n"; 
+	
+	// Testing overloaded subscript operators 
+	for(int i=-1;i<=v.size();i++)
+		testGetOverloaded(i,v);
+	
+	for(int i=-1;i<=v.size();i++)
+		testSetOverloaded(i,new String(i),v);
+		
+	testSetOverloaded(3,null,v);
+	
+	// Testing cloning and equals
+	
+	print "v: "+outputStringVector(v) +"\n"; 
+	Vector w = v.clone();
+	print "w: "+outputStringVector(w) +"\n"; 
+	
+	print v.equals(w);
+	print v eq w;
+	print v ne w;
+	
+}$

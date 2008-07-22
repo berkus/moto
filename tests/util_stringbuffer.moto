@@ -1,0 +1,19 @@
+${
+	use "codex.util";
+	StringBuffer sb= new StringBuffer();
+        byte ba[] = new byte[3]; ba[0]='c';ba[1]='a';ba[2]='t';
+	char ca[] = new char[3]; ca[0]='d';ca[1]='o';ca[2]='g';
+	sb.append(<String>"happy"); sb.append("\n");
+	sb.append(<String>null); sb.append("\n");
+	sb.append(<int>1); sb.append("\n");
+	sb.append(<double>1.0); sb.append("\n");
+	sb.append(<float>1.0f); sb.append("\n");
+	sb.append(<char>'c'); sb.append("\n");
+	sb.append(<boolean>true); sb.append("\n");
+        sb.append(<boolean>false); sb.append("\n");
+	sb.append(<byte>1); sb.append("\n");
+	sb.append(<long>20000000002); sb.append("\n");
+	sb.append(ba); sb.append("\n");
+	sb.append(ca); sb.append("\n");
+	print sb.toString();
+}$

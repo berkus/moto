@@ -1,0 +1,107 @@
+dnl -------------------------------------------------------------------
+dnl Process this file with autoconf to produce a configure script
+dnl $RCSfile: configure.in,v $
+dnl $Revision: 1.17 $
+dnl $Author: dhakim $
+dnl $Date: 2002/09/12 22:46:29 $
+dnl -------------------------------------------------------------------
+
+AC_INIT(cell.h)
+AC_CONFIG_HEADER(config.h)
+
+dnl -------------------------------------------------------------------
+dnl Check that we are where we're supposed to be 
+dnl Set the moto root dir
+dnl -------------------------------------------------------------------
+
+AC_PATH_END_CHECK($0,src/moto)
+ROOT_DIR=$ac_cv_path_END_CHECK
+AC_SUBST(ROOT_DIR)
+CONFIG_ERR=$ROOT_DIR/config.err
+
+dnl -------------------------------------------------------------------
+dnl Define C compiler and flags
+dnl -------------------------------------------------------------------
+
+AC_PROG_CC
+if test -z "$ac_cv_prog_CC"; then
+        $CONFIG_ERR cc
+        exit 1
+fi
+
+AC_FLAGS_C
+CPPFLAGS="$ac_cv_flags_CPP $ac_cv_flags_CPP_MOTO"
+DEFSFLAGS=$ac_cv_flags_DEFS
+CFLAGS=$ac_cv_flags_C
+
+AC_PROG_LEX
+
+AC_CANONICAL_HOST
+case "$host" in
+*linux*) 
+	LDFLAGS="-rdynamic" ;;
+*freebsd*)
+	LDFLAGS="-rdynamic" ;;
+*solaris*)
+        CPPFLAGS="$ac_cv_flags_CPP $ac_cv_flags_CPP_MOTO -U__GNUC__" ;;
+esac
+
+dnl -------------------------------------------------------------------
+dnl Check for libraries
+dnl -------------------------------------------------------------------
+
+AC_CHECK_LIB(dl,dlopen)
+
+dnl -------------------------------------------------------------------
+dnl Check for header files
+dnl -------------------------------------------------------------------
+
+AC_HEADER_STDC
+AC_HEADER_TIME
+AC_CHECK_HEADERS(malloc.h sys/time.h unistd.h)
+AC_CHECK_HEADERS(dlfcn.h mach-o/dyld.h)
+AC_CHECK_HEADERS(stdint.h inttypes.h)
+
+dnl -------------------------------------------------------------------
+dnl Check for typedefs, structures, and compiler characteristics
+dnl -------------------------------------------------------------------
+
+AC_C_CONST
+AC_TYPE_SIZE_T
+AC_STRUCT_TM
+
+AC_TRY_RUN(
+   [int main(int argc, char** argv){
+      long long a = argc; float b = argc;
+      return a != b;
+   }], ,
+   [AC_DEFINE(CAST_INT64_TO_INT32_FIRST,1,Define if using with a buggy gcc that does not cast long longs to floats right)] ,
+   [AC_DEFINE(CAST_INT64_TO_INT32_FIRST,0)] 
+)
+
+dnl -------------------------------------------------------------------
+dnl Check for library functions
+dnl -------------------------------------------------------------------
+
+AC_FUNC_STRFTIME
+AC_FUNC_VPRINTF
+
+AC_CHECK_FUNC(dlopen)
+if test "$ac_cv_func_dlopen" != yes; then
+  AC_CHECK_FUNC(
+     NSLinkModule, 
+     AC_DEFINE(USE_DYLD,1,Define if dlopen does not work but NSLinkModule does),
+     AC_MSG_ERROR(No dlopen or equivalent found)
+  )
+fi
+
+dnl -------------------------------------------------------------------
+dnl Output files
+dnl -------------------------------------------------------------------
+
+AC_OUTPUT(Makefile)
+
+dnl -------------------------------------------------------------------
+dnl end
+dnl -------------------------------------------------------------------
+

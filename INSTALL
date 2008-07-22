@@ -1,0 +1,70 @@
+Real Quick Install
+==================
+
+If you are interested in the moto command line tools only then this
+will work for you.
+
+% configure
+% make install
+
+Quick Install
+=============
+
+To make the most out of moto you should have Apache and MySQL already 
+installed. To use moto in combination with these packages type 
+the following :
+
+% configure --with-apache --with-mysql
+% make install
+
+Additionally, if you would like to use Moto with PostgreSQL:
+
+% configure --with-apache --with-mysql --with-pgsql
+
+Or if your Apache or MySQL installations were installed with a 
+--prefix specified :
+
+% configure --with-apache=<path to apache> --with-mysql=<path to mysql>
+% make install
+
+By default all moto components will be installed in /usr/local/moto.
+To install moto elsewhere on your system:
+
+% configure --with-apache --with-mysql --prefix=<path to moto>
+% make install 
+
+When using a prefix you must specify a full path. Bad things can
+happen when a relative path is specified
+
+Installing mod_moto
+===================
+
+Upon completion of the installation steps specified above, 
+copy the mod_moto.so file from the mod subdirectory 
+of your moto installation to the libexec directory of your apache 
+installation and add the following directives to your httpd.conf:
+
+LoadModule moto_module libexec/mod_moto.so
+AddHandler moto .moto 
+
+Then restart apache. All pages with .moto extensions will be
+interpreted by mod_moto.
+
+Further Reading
+===============
+
+For latest installation instructions or support go to
+http://www.projectmoto.org/
+
+Additional Help
+===============
+
+If you have trouble installing moto, or need support to get things 
+working, feel free to sign up to the moto users mailing list.  To 
+subscribe send a blank message to:
+
+   users-subscribe@projectmoto.org
+
+To post a message to the list, send an email to:
+
+   users@projectmoto.org

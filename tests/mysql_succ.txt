@@ -1,0 +1,31 @@
+#Connecting to database
+#Creating test tables
+#Listing tables
++---------------+
+|Tables_in_test |
++---------------+
+|test1          |
+|test2          |
++---------------+
+#Comparing sizes
+i=2 rset.rows()=2
+#Inserting data
+#Verifying insert
++---------------+---------------+
+|name           |value          |
++---------------+---------------+
+|foo            |bar            |
+|maka           |sl'ack'a       |
++---------------+---------------+
+#Updating data
+Rows updated = 2
+#Verifying update
++---------------+---------------+
+|name           |value          |
++---------------+---------------+
+|foo            |ragga          |
+|maka           |ragga          |
++---------------+---------------+
+#Dropping test tables
+
+

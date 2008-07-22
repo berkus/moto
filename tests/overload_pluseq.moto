@@ -1,0 +1,55 @@
+${
+
+	use "codex.util";	
+
+	IntSet i1 = new IntSet();
+	IntSet i2 = new IntSet();
+	IntSet i3;
+	IntSet i4;
+	IntSet i5 = new IntSet();
+	IntSet i6 = new IntSet();
+
+	i1+=1;
+	i1+=2;
+	i1+=3;
+	i2+=1;
+	i2+=2;
+	i2+=4;
+
+	print i1.size() + "\n";
+	print i2.size() + "\n";
+
+	i1-=2;
+	i2-=4;
+	i2-=1;
+
+	print i1.size() + "\n";
+	print i2.size() + "\n";
+
+	i3 = (i1, i2, i1 + i2);
+	i4 = (i2, i3, i1 + i2 + i3);
+	i1 += i2 += i3 += i4;
+	i2 += i1 += i3 += i4;
+
+	i5 += 1;
+	i6 += 3;
+
+	i1 -= i5;
+	i2 -= i6;
+	i3 -= i5 -= i6;
+	i4 -= i6 -= i5;
+
+	print i1.size() + "\n";
+	print i2.size() + "\n";
+	print i3.size() + "\n";
+	print i4.size() + "\n";
+
+	int x, y;
+	IntSet b = new IntSet();
+	for (
+		IntSet a = new IntSet(); b += (x+=2), a.size() < 10; a += x++) {
+		print a.size() + "\n";
+	}
+	print b.size() + "\n";
+
+}$

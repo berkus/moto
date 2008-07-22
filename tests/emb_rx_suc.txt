@@ -1,0 +1,67 @@
+true - true
+false - false
+
+true - true
+true - true
+true - true
+
+true - true
+true - true
+false - false
+
+false - false
+false - false
+true - true
+true - true
+
+true - true
+true - true
+true - true
+
+true - true
+
+
+
+true - true
+false - false 
+true - true
+3 - 3
+
+
+true - true
+4 - 4
+false - false
+
+Regex Parsing Issues From Moto
+true - true
+true - true
+true - true
+
+true - true
+true - true
+
+true - true
+true - true
+true - true
+
+true - true
+true - true
+
+true - true
+true - true
+
+true - true
+true - true
+true = true
+false = false
+true = true
+false = false
+true = true
+false = false
+true = true
+false = false
+true = true
+false = false
+true = true
+false = false
+

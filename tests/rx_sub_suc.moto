@@ -1,0 +1,41 @@
+${ {
+	Regex rx = /([a-zA-Z]+)@(([a-zA-Z]+[.])*[a-zA-Z]+)/;
+	String substitution = "<a href=\"mailto:$0\">$1 at $2</a>";
+	
+	String i1 = "dhakim@webcodex.com";
+	String i2 = "email me at dhakim@webcodex.com";
+	String i3 = "dhakim@webcodex.com is my email";
+	String i4 = "dhakim@webcodex.com is my email, my email is dhakim@webcodex.com";
+
+	String tmp;
+	
+	tmp=i1; print "'"+tmp+"'"; print " =>\n\t"; print sub(tmp,rx,substitution); print "\n";
+	tmp=i2; print "'"+tmp+"'"; print " =>\n\t"; print sub(tmp,rx,substitution); print "\n";
+	tmp=i3; print "'"+tmp+"'"; print " =>\n\t"; print sub(tmp,rx,substitution); print "\n";
+	tmp=i4; print "'"+tmp+"'"; print " =>\n\t"; print sub(tmp,rx,substitution); print "\n";
+	
+} }$
+
+${ {
+	Regex rx = /foo/;
+	String substitution = "!";
+	
+	String i0 = "";
+	String i1 = "bar";
+	String i2 = "foofoofoo";
+	String i3 = "barfoofoofoo";
+	String i4 = "foofoofoobar";
+	String i5 = "foofoofoobarfoofoofoo";
+	String i6 = "foofoobarfoofoobarfoofoo";	
+
+	String tmp;
+
+	tmp=i0; print "'"+tmp+"'"; print " =>\n\t"; print sub(tmp,rx,substitution); print "\n";	
+	tmp=i1; print "'"+tmp+"'"; print " =>\n\t"; print sub(tmp,rx,substitution); print "\n";
+	tmp=i2; print "'"+tmp+"'"; print " =>\n\t"; print sub(tmp,rx,substitution); print "\n";
+	tmp=i3; print "'"+tmp+"'"; print " =>\n\t"; print sub(tmp,rx,substitution); print "\n";
+	tmp=i4; print "'"+tmp+"'"; print " =>\n\t"; print sub(tmp,rx,substitution); print "\n";
+	tmp=i5; print "'"+tmp+"'"; print " =>\n\t"; print sub(tmp,rx,substitution); print "\n";
+	tmp=i6; print "'"+tmp+"'"; print " =>\n\t"; print sub(tmp,rx,substitution); print "\n";
+		
+} }$

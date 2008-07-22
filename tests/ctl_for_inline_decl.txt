@@ -1,0 +1,243 @@
+Simple for loop
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+Value of i is now 10
+Value of i is now 0
+For loop with inline decl
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+Value of i is now 0
+For loop with inline decl and internal block
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+Value of i is now 0
+For loop with inline decl, internal block and internal decl
+5
+5
+5
+5
+5
+5
+5
+5
+5
+5
+Value of i is now 0
+Double for loop with same variable
+Iteration 0
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+Iteration 1
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+Iteration 2
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+Iteration 3
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+Iteration 4
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+Iteration 5
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+Iteration 6
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+Iteration 7
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+Iteration 8
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+Iteration 9
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+Double for loop with internal variable initialized with external variable
+(called by friends slo' down loop...)
+Iteration 0
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+Iteration 1
+1
+2
+3
+4
+5
+6
+7
+8
+9
+Iteration 2
+2
+3
+4
+5
+6
+7
+8
+9
+Iteration 3
+3
+4
+5
+6
+7
+8
+9
+Iteration 4
+4
+5
+6
+7
+8
+9
+Iteration 5
+5
+6
+7
+8
+9
+Iteration 6
+6
+7
+8
+9
+Iteration 7
+7
+8
+9
+Iteration 8
+8
+9
+Iteration 9
+9
+Loop without increment part
+0123456789
+Loop with default initializer
+0123456789
+
+Inline syntax...
+Line 0: 0000000000
+Line 1: 1111111111
+Line 2: 2222222222
+Line 3: 3333333333
+Line 4: 4444444444
+Line 5: 5555555555
+Line 6: 6666666666
+Line 7: 7777777777
+Line 8: 8888888888
+Line 9: 9999999999

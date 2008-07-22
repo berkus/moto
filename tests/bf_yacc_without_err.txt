@@ -1,0 +1,7 @@
+bf_yacc_without_err.moto:1: $endif without $if
+bf_yacc_without_err.moto:2: $else without $if
+bf_yacc_without_err.moto:3: $elseif without $if
+bf_yacc_without_err.moto:4: $endswitch without $switch
+bf_yacc_without_err.moto:5: $endwhile without $while
+bf_yacc_without_err.moto:6: $endfor without $for
+bf_yacc_without_err.moto:7: $case not within $switch

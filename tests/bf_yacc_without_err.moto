@@ -1,0 +1,7 @@
+$endif
+$else
+$elseif(true)
+$endswitch
+$endwhile
+$endfor
+$case('a')

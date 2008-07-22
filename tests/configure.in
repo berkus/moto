@@ -1,0 +1,65 @@
+dnl -------------------------------------------------------------------
+dnl Process this file with autoconf to produce a configure script
+dnl $RCSfile: configure.in,v $
+dnl $Revision: 1.2 $
+dnl $Author: kocienda $
+dnl $Date: 2000/04/14 20:08:08 $
+dnl -------------------------------------------------------------------
+
+AC_INIT(mototest.c)
+
+dnl -------------------------------------------------------------------
+dnl Check that we are where we're supposed to be 
+dnl Set the moto root dir
+dnl -------------------------------------------------------------------
+
+AC_PATH_END_CHECK($0,tests)
+ROOT_DIR=$ac_cv_path_END_CHECK
+AC_SUBST(ROOT_DIR)
+CONFIG_ERR=$ROOT_DIR/config.err
+
+dnl -------------------------------------------------------------------
+dnl Define C flags
+dnl -------------------------------------------------------------------
+
+AC_FLAGS_C
+CPPFLAGS=$ac_cv_flags_CPP
+DEFSFLAGS=$ac_cv_flags_DEFS
+CFLAGS=$ac_cv_flags_C
+AC_SUBST(CPPFLAGS)
+AC_SUBST(DEFS)
+AC_SUBST(CFLAGS)
+
+dnl -------------------------------------------------------------------
+dnl Check for libraries
+dnl -------------------------------------------------------------------
+
+dnl -------------------------------------------------------------------
+dnl Check for header files.
+dnl -------------------------------------------------------------------
+
+AC_HEADER_STDC
+AC_CHECK_HEADERS(fcntl.h unistd.h)
+
+dnl -------------------------------------------------------------------
+dnl Check for typedefs, structures, and compiler characteristics.
+dnl -------------------------------------------------------------------
+
+AC_C_CONST
+
+dnl -------------------------------------------------------------------
+dnl Check for library functions.
+dnl -------------------------------------------------------------------
+
+AC_CHECK_FUNCS(strstr)
+
+dnl -------------------------------------------------------------------
+dnl Output files
+dnl -------------------------------------------------------------------
+
+AC_OUTPUT(Makefile)
+
+dnl -------------------------------------------------------------------
+dnl end
+dnl -------------------------------------------------------------------
+

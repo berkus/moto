@@ -1,0 +1,2 @@
+fn_recurse_err.moto:3: Uncaught Exception
+	env.c:340: RuntimeException Stack Overflow

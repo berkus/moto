@@ -1,0 +1,55 @@
+$("foo" =~ /foo/) - true
+$("foo" !~ /foo/) - false
+
+$("foo" =~ /fo*/) - true
+$("foo" =~ /fo[o]+/) - true
+$("foo" =~ /fo[^f]*/) - true
+
+$("\t" =~ /\t/) - true
+$("\t" =~ /[\t]/) - true
+$("\t" =~ /[^\t]/) - false
+
+$("" =~ /foo/) - false
+$("" =~ /./) - false
+$("" =~ /.*/) - true
+$("" =~ /.?/) - true
+
+$("." =~ /\./) - true
+$("*" =~ /\*/) - true
+$("?" =~ /\?/) - true
+
+$("happy" =~ /[a-z]*/) - true
+
+$declare(Regex foo = /foo/)
+
+$("foo" =~ foo) - true
+$("foo" !~ foo) - false 
+
+$(foo.matches("foo")) - true
+$(foo.matchPrefix("foo").endIndex(0)) - 3
+
+$declare(Regex maka = new Regex("m[aA]k."))
+$(maka.matches("mAka")) - true
+$(maka.matchPrefix("makaman").endIndex(0)) - 4
+$(maka.matches("foo")) - false
+
+Regex Parsing Issues From Moto 
+$(" " =~ /[ ]/) - true
+$(" " =~ /[\ ]/) - true
+$("\ " =~ /\ /) - true
+
+$("\n" =~ /\n/) - true
+$("\n" =~ /[\n]/) - true
+
+$("/" =~ /\//) - true
+$("/" =~ /[/]/) - true
+$("/" =~ /[\/]/) - true
+
+$("\\" =~ /\\/) - true
+$("\\" =~ /[\\]/) - true
+
+$("]" =~ /\]/) - true
+$("]" =~ /[\]]/) - true
+
+$("[" =~ /\[/) - true
+$("["=~ /[\[]/) - true

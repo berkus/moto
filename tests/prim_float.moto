@@ -1,0 +1,5 @@
+$declare(Float P = new Float(1.0F))
+$(P.getValue())
+$declare(float p = 1.0F)
+$do(P = new Float(p))
+$(P.getValue())

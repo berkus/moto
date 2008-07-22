@@ -1,0 +1,49 @@
+$* malformed use *$
+   $use()
+$* malformed declare *$
+   $declare()
+$* malformed do *$
+   $do()
+
+$* malformed print *$
+   $()
+$* malformed for *$
+   $for()
+
+$* malformed while *$
+   $while()
+
+$* malformed switch *$
+   $switch()
+
+$* malformed if *$
+   $if()
+
+$* malformed case *$
+$switch(1)
+   $case()
+$endswitch
+
+$* malformed elseif *$
+$if(true)
+   $elseif()
+$endif
+
+$if(true)
+   $* malformed declare *$
+   $declare()
+$* malformed do *$
+   $do()
+
+$* malformed print *$
+   $()
+$* malformed for *$
+   $for()
+
+$* malformed while *$
+   $while()
+
+$* malformed switch *$
+   $switch()
+
+$endif

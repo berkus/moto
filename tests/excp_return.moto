@@ -1,0 +1,152 @@
+${
+   int returnFunction1(){
+      try {
+         print "### In Try Block\n";
+         print "### About to Return\n";
+         return 1;
+      } catch (Exception e) {
+         print "### In Catch Block\n"; 
+      } finally {
+         print "### In Finally Block\n";
+      }
+   }
+
+   int returnFunction2(){
+      try {
+         print "### In Try Block\n";
+         print "### About to Return\n";
+         return 1;
+      } catch (Exception e) {
+         print "### In Catch Block\n";
+      } finally {
+         print "### In Finally Block\n";
+         return 2;
+      }
+   }
+
+   int returnFunction3(){
+      try {
+         print "### In Outer Try Block\n"; 
+			try {
+				print "### In Inner Try Block\n";
+				print "### About to Return\n";
+				return 1;
+			} catch (Exception e) {
+				print "### In Inner Catch Block\n";
+			} finally {
+				print "### In Inner Finally Block\n";
+				return 2;
+			}
+		} finally {
+			print "### In Outer Finally Block\n";
+			return 3;
+		}   
+   }
+
+   int returnFunction4(){
+      try {
+         print "### In Outer Try Block\n"; 
+			try {
+				print "### In Inner Try Block\n";
+				print "### About to Return\n";
+				return 1;
+			} catch (Exception e) {
+				print "### In Inner Catch Block\n";
+			} finally {
+				print "### In Inner Finally Block\n";
+				throw new NullPointerException();
+			}
+		} catch (Exception e) {
+			print "### In Outer Catch Block\n";
+			return 4;
+		} 
+   }
+
+   int returnFunction5(){
+      try {
+         print "### In Outer Try Block\n"; 
+			try {
+				print "### In Inner Try Block\n";
+				print "### About to Return\n";
+				return 1;
+			} catch (Exception e) {
+				print "### In Inner Catch Block\n";
+			} finally {
+				print "### In Inner Finally Block\n";
+				throw new NullPointerException();
+			}
+		} catch (Exception e) {
+			print "### In Outer Catch Block\n";
+			return 4;
+		} finally {
+			print "### In Outer Finally Block\n";
+			return 5;
+		}
+   }
+   
+   int returnFunction6(){
+      try {
+         try {
+            throw new NullPointerException();
+         } finally {
+            return 6;
+         }
+      } catch (NullPointerException e) {
+         print "### Shouldn't have dealt with NPE\n";
+         return 1;
+      }
+   }
+   
+   int returnFunction7(){
+      try {
+         try {
+            try {
+               throw new NullPointerException();
+            } finally {
+               return 1;
+            }
+         } finally {
+            throw new NullPointerException();
+         }
+      } catch (NullPointerException e) {
+         print "### Dealt with NPE\n";
+      }
+      return 7;
+   }
+   
+   int returnFunction8(){ 
+      int i;
+      for(i=0;i<10;i++){
+         try {
+            return 0;
+         } finally {
+            continue;
+         }
+         return 1;
+      }
+      return 8;
+   }
+   
+   int returnFunction9(){ 
+      int i;
+      for(i=0;i<10;i++){
+         try {
+            return 0;
+         } finally {
+            break;
+         }
+         return 1;
+      }
+      return 9;
+   }
+           
+   print "### Got "+returnFunction1()+"\n";
+   print "### Got "+returnFunction2()+"\n";
+   print "### Got "+returnFunction3()+"\n";
+   print "### Got "+returnFunction4()+"\n";
+   print "### Got "+returnFunction5()+"\n";
+   print "### Got "+returnFunction6()+"\n";    
+   print "### Got "+returnFunction7()+"\n"; 
+   print "### Got "+returnFunction8()+"\n";
+   print "### Got "+returnFunction9()+"\n";         
+}$

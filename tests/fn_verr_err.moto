@@ -1,0 +1,11 @@
+$define(int foo())
+   $return("happy")           $* Wrong type for return value *$
+$enddef
+
+$define(Stringle baz())       $* Type stringle not defined *$
+$enddef  
+
+$define(String bar(Apple a))  $* Type Apple not defined *$
+$enddef
+
+$(foo('a'))                   $* foo(char) not defined *$

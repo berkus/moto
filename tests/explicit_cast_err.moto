@@ -1,0 +1,43 @@
+${
+	print <Fuzzy>"foo";
+	print <void>"foo";
+
+	print <String>999999999999;
+	print <String>3.2;
+	print <String>3;
+	print <String>true;
+   print <String>/foo/; 
+	print <String>new Exception(); 
+
+	print <boolean>999999999999;
+	print <boolean>3.2;
+	print <boolean>3;
+	print <boolean>'a';
+	print <boolean>"foo";
+	
+	print <char>true;
+	print <char>"23";
+	
+	print <double>true;
+	print <double>"23";
+	
+	print <float>true;
+	print <float>"23";
+	
+	print <int>true;
+	print <int>"23";
+	
+	print <long>true;
+	print <long>"23";
+	
+	print <byte>true;
+	print <byte>"23";
+	
+	print <int>new int[1];
+	print <int[]>27;
+	print <byte[]>new int[1];
+	print <int[][]>new int[1];
+	print <int[]>new int[1][1];
+	
+}$
+	

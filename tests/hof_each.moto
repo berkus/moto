@@ -1,0 +1,25 @@
+${
+	use "cstdlib";
+	
+	void each(boolean[] a,void(boolean) f){ for (int i=0;i<length(a);i++) f(a[i]); }
+	void each(byte[] a,void(byte) f){ for (int i=0;i<length(a);i++) f(a[i]); }
+	void each(char[] a,void(char) f){ for (int i=0;i<length(a);i++) f(a[i]); }
+	void each(double[] a,void(double) f){ for (int i=0;i<length(a);i++) f(a[i]); }	
+	void each(float[] a,void(float) f){ for (int i=0;i<length(a);i++) f(a[i]); }		
+	void each(int[] a,void(int) f){ for (int i=0;i<length(a);i++) f(a[i]); }
+	void each(long[] a,void(long) f){ for (int i=0;i<length(a);i++) f(a[i]); }	
+	void each(Object[] a,void(Object) f){ for (int i=0;i<length(a);i++) f(a[i]); }	
+
+	boolean not(boolean b){ print "!"+b +"="+ !b+"\n"; return !b;}
+	each(<boolean[]>{true,false,false,true},&not(<boolean>?));
+	
+	global int total = 0;
+	int addToTotal(int i){ total += i; return i;}
+	each(<int[]>{0,1,2,3,4,5},&addToTotal(<int>?));
+	print "Total = "+total+"\n";
+	
+    char lowerUpper(char c){ if(isupper(c)) print <char>(c-'A'+'a'); else print c; return c;}
+	each(<char[]>{'H','e','L','L','o'},&lowerUpper(<char>?));
+	print "\n";
+
+}$

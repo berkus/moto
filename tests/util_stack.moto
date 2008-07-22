@@ -1,0 +1,18 @@
+$use("codex.util")
+
+$declare(Stack s=new Stack())
+$do(s.push(new Integer(1)))
+$do(s.push(new Integer(2)))
+$do(s.push(new Integer(3)))
+Size = $(s.size()) - 3
+$while(s.size()>0)
+   $((<Integer>s.pop()).getValue())
+$endwhile
+Size = $(s.size()) - 0
+$do(s.push(new Integer(4)))
+$do(s.push(new Integer(5)))
+$do(s.push(new Integer(6)))
+Size = $(s.size()) - 3
+$do(s.clear())
+Size = $(s.size()) - 0
+

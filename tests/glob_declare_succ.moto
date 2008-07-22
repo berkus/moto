@@ -1,0 +1,5 @@
+$declare(global int i=1)
+${global int j=27;}$
+
+$(i)
+${print j;}$

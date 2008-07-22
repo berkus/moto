@@ -1,0 +1,23 @@
+$declare(global int i=1)
+${global int j=27;}$
+
+${int i=5;}$
+$declare(int j=12)
+${ 
+   void printIandJ() { 
+      print str(i) + "=1\n" + str(j)+"=27\n";
+      int i=18; int j=32;
+      print str(i) + "=18\n" + str(j)+"=32\n";
+      printGlobalIandJAgain();
+   }
+   
+   print str(i)+"=5\n";
+   print str(j)+"=12\n";
+   
+   printIandJ();
+}$ 
+
+$define(void printGlobalIandJAgain())
+$(i)=1 
+$(j)=27
+$enddef

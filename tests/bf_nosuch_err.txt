@@ -1,0 +1,3 @@
+bf_nosuch_err.moto:1: No such construct: $_foo
+bf_nosuch_err.moto:2: No such construct: $foo
+bf_nosuch_err.moto:3: No such construct: $foo21

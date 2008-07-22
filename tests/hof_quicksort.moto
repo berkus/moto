@@ -1,0 +1,98 @@
+$use("cstdlib")
+$use("codex.util")
+
+${
+
+	void quicksort( Object[] a, int(Object,Object) compfn){
+		quicksort( a, compfn, 0, length(a)-1);
+	}
+	
+	void quicksort( Object[] a, int(Object,Object) compfn, int low, int high )
+	{
+		int pivot;
+		IntStack lows = new IntStack(),highs = new IntStack();
+		
+		lows.push(low);
+		highs.push(high);
+		
+		/* Termination condition! */
+		while ( lows.size()>0 ) {
+		
+			low = lows.pop();
+			high = highs.pop();
+			
+			if(high > low) {
+				int pivot = partition( a,compfn, low, high );
+				lows.push(low);
+				highs.push( pivot - 1);
+			   
+				lows.push(pivot+1);
+				highs.push(high);
+			}
+		}
+	}
+
+	int partition(Object[] a, int(Object,Object) compfn,int low, int high )
+	{
+		int left, right;
+		Object pivot_item;
+		
+		pivot_item = a[low];
+		left = low;
+		right = high;
+		
+		while ( left < right ) {
+			while(left < right && compfn(a[left],pivot_item) <= 0 ) left++;
+			while(compfn(a[right],pivot_item) > 0 ) right--;
+			
+			if ( left < right ) 
+				{Object t = a[left]; a[left]=a[right]; a[right]=t;}
+		}
+		
+		a[low] = a[right];
+		a[right] = pivot_item;
+		return right;
+	}
+	
+	int icompare (Object a,Object b){Integer l = <Integer>a, r=<Integer>b;return l.getValue() - r.getValue();}
+	int dcompare (Object a,Object b){Date l = <Date>a, r=<Date>b;return atoi(l.format("%Y%m%d")) - atoi(r.format("%Y%m%d")) ;}
+	
+	String itos(Object a){Integer l = <Integer>a; return ""+l.getValue() ;}
+	String dtos(Object a){Date l = <Date>a; return l.format("%m-%d-%Y") ;}
+	String stos(Object a){String l = <String>a; return l ;}
+		
+	Integer[] unsorted = {
+		new Integer(3),new Integer(12),new Integer(-32),new Integer(11),
+		new Integer(31),new Integer(13),new Integer(-8),new Integer(8),
+		new Integer(23),new Integer(15),new Integer(62),new Integer(6)
+	};
+	
+	Date[] unsorted_dates = {
+		new Date("%m-%d-%Y","01-08-1976"),new Date("%m-%d-%Y","02-21-1976"),
+		new Date("%m-%d-%Y","06-17-1942"),new Date("%m-%d-%Y","04-25-2003"),
+		new Date("%m-%d-%Y","01-09-1988"),new Date("%m-%d-%Y","02-11-1956"),
+		new Date("%m-%d-%Y","06-10-1987"),new Date("%m-%d-%Y","04-23-2032")	
+	};
+	
+	String[] unsorted_strings = {"foo","bar","maka","shlaka","wham","bam","bam","thank","maka","you","mmam"};
+	
+	void printArray(Object[] a, String(Object) f) {
+		print "{"; 
+		for(int i=0;i<length(a);i++) 
+			print (i>0?",":"") + f(a[i]); 
+		print "}\n";
+	}
+	
+	printArray(unsorted_dates,&dtos(<Object>?));
+	quicksort(unsorted_dates,& dcompare(<Object> ?,<Object> ?));
+	printArray(unsorted_dates,&dtos(<Object>?));	
+		
+	printArray(unsorted,&itos(<Object>?));
+	quicksort(unsorted,& icompare(<Object> ?,<Object> ?));
+	printArray(unsorted,&itos(<Object>?));	
+	
+	printArray(unsorted_strings,&stos(<Object>?));
+	quicksort(unsorted_strings,<int(Object,Object)><Object>&strcmp(<String> ?,<String> ?));
+	printArray(unsorted_strings,&stos(<Object>?));	
+		
+}$

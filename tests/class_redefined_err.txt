@@ -1,0 +1,8 @@
+class_redefined_err.moto:4: Method Foo::bar re-defined.
+   Original definition at class_redefined_err.moto:3
+class_redefined_err.moto:7: Class Foo re-defined.
+   Original definition at class_redefined_err.moto:3
+class_redefined_err.moto:11: Class String re-defined.
+   Original definition in extension "<unknown>"
+class_redefined_err.moto:12: Method String::indexOf re-defined.
+   Original definition in extension "moto"

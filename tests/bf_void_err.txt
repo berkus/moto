@@ -1,0 +1,8 @@
+bf_void_err.moto:5: Variables cannot be declared type <void>
+bf_void_err.moto:6: Cannot print expression of type <void>
+bf_void_err.moto:7: Cannot print expression of type <void>
+bf_void_err.moto:8: Variable of type <String> cannot store type <void>
+bf_void_err.moto:9: Expressions cannot be cast to <void>
+bf_void_err.moto:10: Expressions cannot be cast to <void>
+bf_void_err.moto:10: Variable of type <String> cannot store type <Object>
+bf_void_err.moto:11: Variable of type <String> cannot store type <void>

@@ -1,0 +1,94 @@
+${
+
+   void substringEquivalenceTest(String s){
+      int i;
+      print "### Testing equivalence of substring(i,length) and substring(i)\n";
+      for (i=0;i<=s.length();i++)
+         print "'"+s.substring(i,s.length())+"' = '"+s.substring(i)+"'\n";
+   }
+
+   void indexOfTest(String s){
+      int i;
+      print "### Testing indexOf(char c)\n";
+      for(i=0;i<=9;i++)
+         print <char>(i+'0') + " first appears at index " + s.indexOf(<char>(i+'0'))+ " in '"+s+"' \n";
+   }
+
+   void lastIndexOfTest(String s){
+      int i;
+      print "### Testing lastIndexOf(char c)\n";
+      for(i=0;i<=9;i++)
+         print <char>(i+'0') + " appears last at index " + s.lastIndexOf(<char>(i+'0'))+ " in '"+s+"' \n";
+   }
+
+   int i;
+   String test1 = "test";
+   String test2 = "";
+   String test3 = "123456789";
+
+   /* Test equivalence of substrings */
+
+   substringEquivalenceTest("test");
+   substringEquivalenceTest("");
+ 
+   /* Test toUpper */
+
+   print "'"+test1.toUpperCase()+"'\n";
+   print "'"+test2.toUpperCase()+"'\n";
+
+   /* Test indexOf and lastIndexOf */
+
+   indexOfTest("12345");
+   indexOfTest("456456");
+   indexOfTest("");
+   lastIndexOfTest("12345");
+   lastIndexOfTest("456456");
+   lastIndexOfTest("");
+
+   /* Test charAt */
+   print "'";
+   for(i=0;i<test3.length();i++)
+      print test3.charAt(i);
+   print "' = '"+test3+"'\n";
+
+   print "'";
+   for(i=0;i<test2.length();i++)
+      print test2.charAt(i);
+   print "' = '"+test2+"'\n";
+
+   /* Test replaceChar */
+   for(i=0;i<=9;i++){
+      print "'"+test3.replaceChar(<char>(i+'0'),'A') + "' is '" + test3+"' with '"+<char>(i+'0')+"' replaced by 'A'\n";
+   }
+
+   /* Test trim */
+   String trimtest1="";
+   String trimtest2=" \n\t\r";
+   String trimtest3=" fuzzy";
+   String trimtest4="wuzzy ";
+   print "'"+trimtest1.trim()+"' = ''\n";
+   print "'"+trimtest2.trim()+"' = ''\n";
+   print "'"+trimtest3.trim()+"' = 'fuzzy'\n";
+   print "'"+trimtest4.trim()+"' = 'wuzzy'\n";
+
+   /* endsWith test */
+   for (i=0;i<=test1.length();i++)
+      print "'"+test1+"' ends with '"+test1.substring(i)+"' = "+test1.endsWith(test1.substring(i))+"\n";
+   for (i=0;i<=test2.length();i++)   
+      print "'"+test2+"' ends with '"+test2.substring(i)+"' = "+test2.endsWith(test2.substring(i))+"\n";
+   print "'"+test2+"' ends with 'fudge' = "+test2.endsWith("fudge")+"\n";
+
+   /* startsWith test */
+   for (i=0;i<=test1.length();i++)
+      print "'"+test1+"' starts with '"+test1.substring(0,i)+"' = "+test1.startsWith(test1.substring(0,i))+"\n";
+   for (i=0;i<=test2.length();i++)
+      print "'"+test2+"' starts with '"+test2.substring(0,i)+"' = "+test2.startsWith(test2.substring(0,i))+"\n";
+   print "'"+test2+"' starts with 'fudge' = "+test2.startsWith("fudge")+"\n";
+
+   /* reverse test */
+
+   print "'"+test3.reverse()+"' = '987654321'\n";
+   print "'"+test2.reverse()+"' = ''\n"; 
+
+   
+}$

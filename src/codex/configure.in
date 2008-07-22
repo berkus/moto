@@ -1,0 +1,76 @@
+dnl -------------------------------------------------------------------
+dnl Process this file with autoconf to produce a configure script
+dnl $RCSfile: configure.in,v $
+dnl $Revision: 1.12 $
+dnl $Author: shayh $
+dnl $Date: 2002/12/19 22:20:00 $
+dnl -------------------------------------------------------------------
+
+AC_INIT(state.c)
+AC_CONFIG_HEADER(config.h)
+
+dnl -------------------------------------------------------------------
+dnl Check that we are where we're supposed to be 
+dnl Set the moto root dir
+dnl -------------------------------------------------------------------
+
+AC_PATH_END_CHECK($0,src/codex)
+ROOT_DIR=$ac_cv_path_END_CHECK
+AC_SUBST(ROOT_DIR)
+CONFIG_ERR=$ROOT_DIR/config.err
+
+dnl -------------------------------------------------------------------
+dnl Define C compiler and flags
+dnl -------------------------------------------------------------------
+
+AC_PROG_CC
+if test -z "$ac_cv_prog_CC"; then
+        $CONFIG_ERR cc
+        exit 1
+fi
+
+AC_FLAGS_C
+CPPFLAGS=$ac_cv_flags_CPP
+DEFSFLAGS=$ac_cv_flags_DEFS
+CFLAGS=$ac_cv_flags_C
+
+dnl -------------------------------------------------------------------
+dnl Check for libraries
+dnl -------------------------------------------------------------------
+
+dnl -------------------------------------------------------------------
+dnl Check for header files.
+dnl -------------------------------------------------------------------
+
+AC_HEADER_STDC
+AC_CHECK_HEADERS(stdint.h inttypes.h fcntl.h limits.h sys/time.h unistd.h)
+
+dnl -------------------------------------------------------------------
+dnl Check for typedefs, structures, and compiler characteristics.
+dnl -------------------------------------------------------------------
+
+AC_C_CONST
+AC_TYPE_OFF_T
+AC_TYPE_SIZE_T
+
+dnl -------------------------------------------------------------------
+dnl Check for library functions.
+dnl -------------------------------------------------------------------
+
+AC_FUNC_MEMCMP
+AC_FUNC_MMAP
+dnl AC_FUNC_SETVBUF_REVERSED
+AC_FUNC_STRFTIME
+AC_FUNC_VPRINTF
+AC_CHECK_FUNCS(strtod strtol uname flock)
+
+dnl -------------------------------------------------------------------
+dnl Output files
+dnl -------------------------------------------------------------------
+
+AC_OUTPUT(Makefile)
+
+dnl -------------------------------------------------------------------
+dnl end
+dnl -------------------------------------------------------------------
+

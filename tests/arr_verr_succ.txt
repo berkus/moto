@@ -1,0 +1,14 @@
+
+   12 = 12
+   f = 'f'
+1= 1
+c= 'c'
+
+   c = 'c'
+ 
+
+
+called dodo(int[])
+called dodo(int[][])
+the length of empty is 0
+

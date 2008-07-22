@@ -1,0 +1,41 @@
+${	
+		
+	class Shape {
+		String type;
+
+		double circleArea(double diameter) { return diameter*diameter*3.14*.25*.5; }
+		double etriangleArea(double sidelength) { return sidelength*sidelength*.5 ; }
+		double squareArea(double sidelength){ return sidelength*sidelength; }
+	
+		double circlePerimeter(double diameter) { return diameter*3.14; }
+		double etrianglePerimeter(double sidelength) { return sidelength*3 ; }
+		double squarePerimeter(double sidelength){ return sidelength*4; }
+	
+		double(double) area;
+		double(double) perimeter;
+				
+		Shape(String type){
+			switch(type){
+				case "square": { 
+					area = squareArea; 
+					perimeter = squarePerimeter; 
+				}
+				case "triangle": { 
+					area = etriangleArea; 
+					perimeter = etrianglePerimeter; 
+				}
+				case "circle": { 
+					area = circleArea; 
+					perimeter = circlePerimeter; 
+				}
+			}
+		}
+	}
+	
+	print "Square perimeter : "+ (new Shape("square")).perimeter(3) +"\n";
+	print "Square area : "+ (new Shape("square")).area(3)+"\n";
+	print "Triangle perimeter : "+ (new Shape("triangle")).perimeter(3)+"\n";
+	print "Triangle area : "+ (new Shape("triangle")).area(3)+"\n";
+	print "Circle perimeter : "+ (new Shape("circle")).perimeter(3)+"\n";
+	print "Circle area : "+ (new Shape("circle")).area(3);					
+}$

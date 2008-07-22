@@ -1,0 +1,32 @@
+${
+
+int i = 20, j =10;
+
+i = 20,j = 20;
+
+print i--, j++;
+print "\n";
+print i;
+print "\n";
+
+while (++i, j-- > 0) {
+	print i + " - " + j + "\n";
+}
+
+j = 0;
+for (i = 0; j++, i < 20; i++) {
+	print i + " - " + j + "\n";
+}
+
+}$
+$declare(int ii=20,ij=10)
+$do(ii=20,ij=20)
+$(ii--,ij++)
+$(ii)
+$while(++ii,ij-- > 0)
+	$(ii)-$(ij)
+$endwhile
+$do(ij=0)
+$for(ii=0;ij++,ii<20;ii++)
+	$(ii)-$(ij)
+$endfor

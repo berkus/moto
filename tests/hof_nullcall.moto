@@ -1,0 +1,21 @@
+${
+	global String() tt;
+
+	try {
+		print tt();
+	} catch(Exception e){
+		print e.getMessage()+"\n";
+		print e.getStackTrace()+"\n";
+	}
+
+	setIt();
+	print tt();
+
+	void setIt(){
+	   tt = &f();
+	}
+
+	String f(){
+	   return "F";
+	}
+}$

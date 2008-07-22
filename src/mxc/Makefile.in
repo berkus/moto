@@ -1,0 +1,83 @@
+#======================================================================
+#
+# Makefile for the moto extension compiler
+#
+# $RCSfile: Makefile.in,v $
+# $Revision: 1.9 $
+# $Author: dhakim $
+# $Date: 2002/02/27 05:34:26 $
+#
+#======================================================================
+# Standard Variables
+#
+
+include @ROOT_DIR@/make.vars
+
+#----------------------------------------------------------------------
+# Flags
+
+CPPFLAGS = @CPPFLAGS@
+DEFS = @DEFS@
+CFLAGS = @CFLAGS@
+LDFLAGS = @LDFLAGS@
+ARFLAGS = crs
+LIBS = @LIBS@ -lmotol -lcodex @LEXLIB@
+LEXFLAGS = -I
+YACCFLAGS = -d
+LOCAL_CLEAN_FILES = mxc *.o lex.yy.c mx.tab.c mx.tab.h lex.yy.h
+
+#----------------------------------------------------------------------
+# Variables
+
+OBJECTS = lex.yy.o mx.tab.o mxext.o mxcg.o mfn.o cfn.o mxcerr.o main.o
+SCRIPT = mxc
+SCRIPT_SH = ${SCRIPT}.sh
+PROGRAM = mxcg
+PROPERTIES = mxcg.properties
+
+#----------------------------------------------------------------------
+# Custom Make Rules
+
+all: ${PROGRAM} ${SCRIPT} 
+
+${PROGRAM}: ${OBJECTS} ${PROPERTIES}
+	${CC} ${LDFLAGS} -L${LIB_DIR} -o ${PROGRAM} ${OBJECTS} ${LIBS}
+	cp ${PROGRAM} ${BIN_DIR}
+	cp ${PROPERTIES} ${BIN_DIR}
+
+${SCRIPT}: ${SCRIPT_SH}
+	cp ${SCRIPT_SH} ${SCRIPT}
+	chmod a+x ${SCRIPT}
+	cp ${SCRIPT} ${BIN_DIR}
+
+${SCRIPT_SH}:
+
+dep:
+
+install: all
+	${MKDIR} ${INST_BIN_DIR}
+	
+lex.yy.o: lex.yy.c
+
+lex.yy.c: mx.l
+	${LEX} ${LEXFLAGS} mx.l
+	
+mx.tab.o: mx.tab.c
+
+mx.tab.c: mx.y
+	${YACC} ${YACCFLAGS} mx.y
+
+mx.l: mx.tab.h
+
+mx.tab.h: mx.y
+	${YACC} ${YACCFLAGS} mx.y
+
+#----------------------------------------------------------------------
+# Standard Rules
+
+include @ROOT_DIR@/make.xrules
+
+#======================================================================
+# end
+#======================================================================
+

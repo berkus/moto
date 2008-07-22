@@ -1,0 +1,8 @@
+foo! MAX_INT: 2147483647
+foo! MAX_LONG: 9223372036854775807
+foo! MAX_FLOAT: 3.403000e+38
+foo! CHAR: A
+foo! BOOLEAN: true
+foo! STRING: bar
+foo! NULL: null
+foo! ANOTHER STRING: whoa!

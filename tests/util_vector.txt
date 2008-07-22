@@ -1,0 +1,85 @@
+PRE: {'Foo','Maka','Bar',null}
+> v.get(-1)=ArrayBoundsException
+> v.get(0)='Foo'
+> v.get(1)='Maka'
+> v.get(2)='Bar'
+> v.get(3)=null
+> v.get(4)=ArrayBoundsException
+> v.get(5)=ArrayBoundsException
+Foo = Foo
+Maka = Maka
+Bar = Bar
+null = null
+PRE: {'Foo','Maka','Bar',null}
+> v.removeAt(0)
+POST: {'Maka','Bar',null}
+> v.removeAt(1)
+POST: {'Maka',null}
+> v.removeAt(1)
+POST: {'Maka'}
+> v.removeAt(1)
+ArrayBoundsException
+> v.removeAt(0)
+POST: {}
+> v.removeAt(0)
+ArrayBoundsException
+> v.removeAt(-1)
+ArrayBoundsException
+PRE: {}
+> v.insert('first',-1)
+ArrayBoundsException
+> v.insert('second',0)
+POST: {'second'}
+> v.insert('third',1)
+POST: {'second','third'}
+> v.insert('first',0)
+POST: {'first','second','third'}
+> v.insert('fourth',4)
+ArrayBoundsException
+> v.insert('fourth',3)
+POST: {'first','second','third','fourth'}
+> v.insert('2.5',2)
+POST: {'first','second','2.5','third','fourth'}
+> v.insert(null,1)
+POST: {'first',null,'second','2.5','third','fourth'}
+PRE: {'first',null,'second','2.5','third','fourth'}
+> v.setAt('1.5',1)
+POST: {'first','1.5','second','2.5','third','fourth'}
+> v.setAt('1',0)
+POST: {'1','1.5','second','2.5','third','fourth'}
+> v.setAt('pre',-1)
+ArrayBoundsException
+> v.setAt('post 1',6)
+ArrayBoundsException
+> v.setAt('post 2',7)
+ArrayBoundsException
+PRE: {'1','1.5','second','2.5','third','fourth'}
+> v.clear()
+POST: {}
+> v.clear()
+POST: {}
+> new Vector(<String[]>{ "foo" ,"bar","maka","maka"})
+POST: {'foo','bar','maka','maka'}
+> v[-1] =ArrayBoundsException
+> v[0] ='foo'
+> v[1] ='bar'
+> v[2] ='maka'
+> v[3] ='maka'
+> v[4] =ArrayBoundsException
+> v[-1] = '-1'
+ArrayBoundsException
+> v[0] = '0'
+POST: {'0','bar','maka','maka'}
+> v[1] = '1'
+POST: {'0','1','maka','maka'}
+> v[2] = '2'
+POST: {'0','1','2','maka'}
+> v[3] = '3'
+POST: {'0','1','2','3'}
+> v[4] = '4'
+ArrayBoundsException
+> v[3] = null
+POST: {'0','1','2',null}
+v: {'0','1','2',null}
+w: {'0','1','2',null}
+truetruefalse

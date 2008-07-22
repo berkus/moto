@@ -1,0 +1,56 @@
+$declare(int i = 1)
+$switch(i)
+	zero
+	$case(1)
+		one
+	$case(2)
+		two
+	$case(3)
+		three
+$endswitch
+$do(i = 5)
+$switch(i)
+	default
+	$case(1)
+		one
+	$case(2)
+		two
+	$case(3)
+		three
+$endswitch
+$switch("baz")
+	default
+	$case("foo")
+		foo
+	$case("bar")
+		bar
+	$case("baz")
+		baz
+$endswitch
+$switch("x")
+	default
+	$case("foo")
+		foo
+	$case("bar")
+		bar
+	$case("baz")
+		bar
+$endswitch
+$switch('c')
+        default
+        $case('a')
+                a
+        $case('b')
+                b
+        $case('c')
+                c
+$endswitch
+$switch('x')
+        default
+        $case('a')
+                a
+        $case('b')
+                b
+        $case('c')
+                c
+$endswitch

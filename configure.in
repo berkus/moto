@@ -1,0 +1,151 @@
+dnl -------------------------------------------------------------------
+dnl Process this file with autoconf to produce a configure script
+dnl $RCSfile: configure.in,v $
+dnl $Revision: 1.39 $
+dnl $Author: dhakim $
+dnl $Date: 2003/07/16 00:32:17 $
+dnl -------------------------------------------------------------------
+
+AC_INIT(rconfig.h.in)
+
+dnl -------------------------------------------------------------------
+dnl Check that we are where we're supposed to be 
+dnl Set the root dir
+dnl -------------------------------------------------------------------
+
+AC_CONFIG_HEADER(rconfig.h)
+AC_PATH_SET_ROOT($0)
+ROOT_DIR=$ac_cv_path_ROOT
+AC_SUBST(ROOT_DIR)
+AC_DEFINE_UNQUOTED(ROOT_DIR, "$ROOT_DIR")
+CONFIG_ERR=$ROOT_DIR/config.err
+
+dnl -------------------------------------------------------------------
+dnl Set the moto version
+dnl -------------------------------------------------------------------
+
+MOTO_MAJOR_VERSION=0
+MOTO_MINOR_VERSION=20
+MOTO_MICRO_VERSION=0
+MOTO_VERSION=$MOTO_MAJOR_VERSION.$MOTO_MINOR_VERSION.$MOTO_MICRO_VERSION
+
+VERSION=$MOTO_VERSION
+PACKAGE=moto
+
+AC_SUBST(MOTO_MAJOR_VERSION)
+AC_SUBST(MOTO_MINOR_VERSION)
+AC_SUBST(MOTO_MICRO_VERSION)
+AC_SUBST(MOTO_VERSION)
+
+AC_DEFINE_UNQUOTED(MOTO_MAJOR_VERSION,$MOTO_MAJOR_VERSION)
+AC_DEFINE_UNQUOTED(MOTO_MINOR_VERSION,$MOTO_MINOR_VERSION)
+AC_DEFINE_UNQUOTED(MOTO_MICRO_VERSION,$MOTO_MICRO_VERSION)
+AC_DEFINE(MOTO_VERSION)
+
+dnl -------------------------------------------------------------------
+dnl Check the host system configuration
+dnl -------------------------------------------------------------------
+
+AC_CANONICAL_HOST
+case "$host" in
+*linux*) AC_DEFINE(LINUX_OS, , Define if compiling for the linux operating system.  ) ;;
+*solaris*) AC_DEFINE(SOLARIS_OS, ,  Define if compiling for the solaris operating system.  ) ;;
+*apple*) AC_DEFINE(DARWIN_OS, ,  Define if compiling for the mac os x operating system.  ) ;;
+esac
+
+AC_PROG_CC
+if test -z "$ac_cv_prog_CC"; then 
+	$CONFIG_ERR cc
+	exit 1
+fi
+AC_CHECK_GCCLIB
+
+dnl -------------------------------------------------------------------
+dnl Check for Apache
+dnl -------------------------------------------------------------------
+
+AC_APACHE
+AC_SUBST(APACHE_ROOT_DIR)
+
+dnl -------------------------------------------------------------------
+dnl Check for MySQL
+dnl -------------------------------------------------------------------
+
+AC_MYSQL
+AC_SUBST(MYSQL_ROOT_DIR)
+
+dnl -------------------------------------------------------------------
+dnl Check for PostgreSQL
+dnl -------------------------------------------------------------------
+
+AC_PGSQL
+AC_SUBST(PGSQL_ROOT_DIR)
+
+dnl -------------------------------------------------------------------
+dnl Check for programs
+dnl -------------------------------------------------------------------
+
+AC_DECL_YYTEXT
+AC_CHECK_PROGS(LEX, flex lex)
+if test -z "$ac_cv_prog_LEX"; then 
+	$CONFIG_ERR lex
+	exit 1
+fi
+
+AC_CHECK_PROGS(YACC, bison yacc)
+if test -z "$ac_cv_prog_YACC"; then 
+	$CONFIG_ERR yacc
+	exit 1
+fi
+
+AC_CHECK_PROG(AR, ar, ar)
+if test -z "$ac_cv_prog_AR"; then 
+	$CONFIG_ERR ar
+	exit 1
+fi
+
+AC_PROG_RANLIB
+if test -z "$ac_cv_prog_RANLIB"; then 
+	$CONFIG_ERR ranlib
+	exit 1
+fi
+
+AC_CHECK_PROGS(SED, sed)
+if test -z "$ac_cv_prog_SED"; then 
+	$CONFIG_ERR sed
+	exit 1
+fi
+
+dnl -------------------------------------------------------------------
+dnl Top-level configuration stuff
+dnl -------------------------------------------------------------------
+
+AC_DEFINE(SHARED_MALLOC)
+
+AC_PREFIX_DEFAULT
+
+AC_LAYOUT
+AC_DEFINE_UNQUOTED(INST_ROOT_DIR, "$INST_ROOT_DIR", Define the path to the moto installation directory.)
+AC_DEFINE_UNQUOTED(INST_MX_DIR, "$INST_MX_DIR", Define the default path look for moto extensions.)
+
+AC_PROG_MAKE_SET
+
+AC_CONFIG_SUBDIRS(src/codex src/moto src/mmc src/mod src/mxc src/tools)
+AC_CONFIG_SUBDIRS(mx/cstdlib mx/codex/io mx/codex/http mx/codex/db/pgsql mx/codex/db/mysql mx/codex/util mx/moto)
+AC_CONFIG_SUBDIRS(tests)
+	
+dnl -------------------------------------------------------------------
+dnl Output files
+dnl -------------------------------------------------------------------
+
+AC_OUTPUT(Makefile make.vars make.xrules, [
+DIRS='lib include mod bin'
+for d in $DIRS; do
+	test ! -d $d && mkdir $d
+done
+])
+
+dnl -------------------------------------------------------------------
+dnl end
+dnl -------------------------------------------------------------------
+

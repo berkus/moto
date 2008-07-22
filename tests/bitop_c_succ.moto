@@ -1,0 +1,26 @@
+${
+	char one=1;
+	char sixteen=16;
+	char two=2;
+	char three=3;
+	char five=5;
+	char seven=7;
+}$
+
+$(<int>one<<0) = 1
+$(<int>one<<1) = 2
+$(<int>one<<2) = 4
+$(<int>one<<3) = 8
+$(<int>one<<4) = 16
+$(<int>sixteen>>1) = 8 
+$(<int>sixteen>>2) = 4
+$(<int>sixteen>>3) = 2
+$(<int>sixteen>>4) = 1
+$(<int>~one) = -2
+$(<int>~(~one)) = 1
+$(<int>three & two) = 2
+$(<int>five & two) = 0
+$(<int>five | two) = 7
+$(<int>seven | two) = 7
+$(<int>five ^ two) = 7
+$(<int>seven ^ two) = 5

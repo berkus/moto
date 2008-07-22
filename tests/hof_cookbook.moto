@@ -1,0 +1,123 @@
+$use("cstdlib")
+$use("codex.util")
+
+${
+	/* Some common functions we'll want */
+	void println(Object o) { print <String>o +"\n"; }
+	
+	void outputNV(Object n,SymbolTable s) { 
+		print <String>n +" => "+<String>s.get(<String>n)+"\n"; }
+	
+	void outputNA(Object n,SymbolTable s) { 
+		print <String>n +" => {"+join(<String[]>s.get(<String>n),",")+"} \n"; } 
+	
+	void fill(SymbolTable s, String[] names, Object[] values){
+		for(int i=0;i<length(names);i++) s.put(names[i],values[i]); }
+	
+	void valueToKey(Object oldkey, SymbolTable src, SymbolTable dest) { 
+		dest.put(<String>src.get(<String>oldkey),oldkey); }
+		
+	{
+		print "\n# 5. Hashes\n\n"; 
+		
+		SymbolTable age = new SymbolTable();
+		String[] names = {"Nat","Jules","Josh"};
+		Integer[] values = {new Integer(24), new Integer(25), new Integer(17)};
+		
+		// Fill the age hash 
+		fill(age,names,values);
+	}
+	
+	{
+		print "\n# 5.1. Adding an Element to a Hash\n\n";
+		
+		SymbolTable food_color = new SymbolTable();
+		String[] names = {"Apple","Banana","Lemon","Carrot"};
+		String[] values = {"red", "yello","yellow","orange"};
+		
+		// Fill the food_color hash 
+		fill(food_color,names,values);
+		
+		// Add a new food
+		food_color.put("Rasberry","pink");
+		
+		// Output the keys
+		print "Known foods:\n";
+		food_color.keys().each(println);
+	
+		print "\n# 5.2. Testing for the Presence of a Key in a Hash\n\n";
+		
+		print food_color.contains("Banana") + "\n"; // true
+		print food_color.contains("Martini") + "\n"; // false
+		
+		print "\n# 5.3. Deleting from a Hash\n\n";
+		
+		food_color.remove("Banana");
+		
+		print "\n# 5.4. Traversing a Hash\n\n";
+		print "\n# 5.5. Printing a Hash\n\n";
+		 
+		food_color.keys().each(outputNV(?,food_color));
+		
+		// Or if you'd like to sort the keys first
+		
+		Vector v = new Vector();
+		food_color.keys().each(v.add);
+		v.sort(<int(Object,Object)>strcmp);
+		v.elements().each(outputNV(?,food_color));
+	
+	}
+	
+	{
+		print "\n# 5.6. Retrieving from a Hash in Insertion Order\n\n";
+		
+		SymbolTable food_color = new SymbolTable();
+		Vector order = new Vector();
+		
+		String[] names = {"Apple","Banana","Lemon","Carrot"};
+		String[] values = {"red", "yello","yellow","orange"};
+		
+		// Fill the food_color hash 
+		for(int i=0;i<length(names);i++) { food_color.put(names[i],values[i]); order.add(names[i]); }
+		
+		// Retrieving from the Hash in Insertion Order 
+		order.elements().each(outputNV(?,food_color));
+	}
+	
+	{
+		print "\n# 5.7. Hashes with Multiple Values Per Key\n\n";
+		
+		SymbolTable ttys = new SymbolTable();
+		String[] names = {"Dave","Stefano","Cory"};
+		String[][] values = {{"tty1", "tty2","tty3"},{"tty4","tty5"},{"tty6"}};
+		
+		// Fill the ttys hash 
+		fill(ttys,names,values);
+		
+		// Output the ttys hash sorted by username
+		Vector v = new Vector();
+		ttys.keys().each(v.add);
+		v.sort(<int(Object,Object)>strcmp);
+		
+		v.elements().each(outputNA(?,ttys));
+	
+	}
+	
+	{
+		print "\n# 5.8. Inverting a Hash\n\n";
+		
+		SymbolTable surname = new SymbolTable();
+		String[] names = {"Mickey","Babe"};
+		String[] values = {"Mantle","Ruth"};
+		
+		// Fill the surname hash 
+		fill(surname,names,values);
+		
+		// namesur will be surname inverted
+		SymbolTable namesur = new SymbolTable();
+		surname.keys().each(valueToKey(?,surname,namesur));
+		
+		// output namesur
+		namesur.keys().each(outputNV(?,namesur)); 
+	}
+}$

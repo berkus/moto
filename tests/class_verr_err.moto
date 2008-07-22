@@ -1,0 +1,15 @@
+${
+
+	class foo {
+ 		String bar;
+		int maka[];
+		foo foo(String bar,int maka){
+			this.bar = bar;
+			this.foo = maka; // No Such Member
+		}
+		bar(int fuzzy){ maka[0]=fuzzy; }
+	}
+
+	print true.maka; 	// Cannot Dereference Ints
+	print "hello".maka;	// No Such Member
+}$

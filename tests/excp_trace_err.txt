@@ -1,0 +1,10 @@
+Uncaught Exception
+   message:Kaboom!
+
+Exception thrown in evilTwo(excp_trace_err.moto:9)
+   called from function evilOne(excp_trace_err.moto:3)
+   called from function evilTwo(excp_trace_err.moto:8)
+   called from function evilOne(excp_trace_err.moto:3)
+   called from function evilTwo(excp_trace_err.moto:8)
+   called from function evilOne(excp_trace_err.moto:3)
+   called from function <main>(excp_trace_err.moto:12)

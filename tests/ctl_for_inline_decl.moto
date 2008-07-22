@@ -1,0 +1,62 @@
+<$
+
+	print "Simple for loop" + "\n";
+	int i = 0;
+	for (i = 0; i < 10; i++) print i + "\n";
+	print "Value of i is now " + i + "\n";
+	i = 0;
+	print "Value of i is now " + i + "\n";
+
+	print "For loop with inline decl" + "\n";
+	for (int i = 0; i < 10; i++) print i + "\n";
+	print "Value of i is now " + i + "\n";
+
+	print "For loop with inline decl and internal block" + "\n";
+	for (int i = 0; i < 10; i++) { 
+		print i + "\n";
+	}
+	print "Value of i is now " + i + "\n";
+
+	print "For loop with inline decl, internal block and internal decl" + "\n";
+	for (int i = 0; i < 10; i++) {
+		int i = 5; 
+		print i + "\n";
+	}
+	print "Value of i is now " + i + "\n";
+
+	print "Double for loop with same variable" + "\n";
+	for (int i = 10; i > 0; i--) {
+		print "Iteration " + (10 - i) + "\n";
+		for (int i = 0; i < 10; i++) {
+			print i + "\n";
+		}
+	}
+
+	print "Double for loop with internal variable initialized with external variable" + "\n";
+	print "(called by friends slo' down loop...)" + "\n";
+	for (int i = 0; i < 10; i++) {
+		print "Iteration " + i + "\n";
+		int a = i;
+		for (int i = a++; i < 10; i++) {
+			print i + "\n";
+		}
+	}
+
+	print "Loop without increment part\n";
+	for (int i = 0; i < 10;) {
+		print i++;
+	}
+	print "\n";
+
+	print "Loop with default initializer\n";
+	for (int i; i < 10; i++) {
+		print i;
+	}
+ 
+$>
+
+Inline syntax...
+$for(int i=0;i<10;i++)
+	Line $(i): $declare(int j)$for(int j=0;j<10;j++)$(i)$endfor$("")
+$endfor
+

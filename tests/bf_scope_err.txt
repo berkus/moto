@@ -1,0 +1,3 @@
+bf_scope_err.moto:5: Variable 's' not declared before used
+bf_scope_err.moto:11: Variable 't' not declared before used
+bf_scope_err.moto:13: Variable 'u' not declared before used

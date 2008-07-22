@@ -1,0 +1,11 @@
+abb count is 10
+bba count is 9
+abb count is 8
+bba count is 7
+abb count is 6
+bba count is 5
+abb count is 4
+bba count is 3
+abb count is 2
+bba count is 1
+

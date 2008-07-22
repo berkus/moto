@@ -1,0 +1,4 @@
+$(" " =~ /[/) - Unmatched '[' in character class  
+$(" " =~ /(/) - Unmatched '(' in subexpression 
+$(" " =~ /[\]/) - Unmatched '[' in character class 
+$(" " =~ /\/) - Unmatched '\' in character class

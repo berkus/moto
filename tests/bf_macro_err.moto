@@ -1,0 +1,10 @@
+#define ANOTHER_BAD_MACRO $(s)
+#include("bf_macro_err.incl")
+#readdefs("bf_macro_err.lib")
+
+$BAD_MACRO
+
+$ANOTHER_BAD_MACRO
+
+$BAD_MACRO_W_ARGS(12)
+$BAD_MACRO_THAT_CALLS_ANOTHER_BAD_MACRO

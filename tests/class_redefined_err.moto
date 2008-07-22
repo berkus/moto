@@ -1,0 +1,14 @@
+${
+   class Foo {
+      int bar(int i){return i++;}
+      int bar(int i){return i--;} 	// Method redefined
+   }
+
+   class Foo { 				// Moto defined type redefined  
+      int i;
+   }
+
+   class String { 			// Type from extension redefined
+      int indexOf(char c){return -1;}	// Method from extension redefined
+   }
+}$

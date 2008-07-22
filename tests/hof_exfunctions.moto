@@ -1,0 +1,71 @@
+${
+	use "cstdlib";
+	use "codex.util";
+	
+	void outs(Object s){print ">>> "+(<String> s) + "\n";}
+	
+	Vector v = new Vector(<String[]>{"foo","bar","maka"});
+	v.elements().each(&outs(<Object> ?));
+	
+	void printArray(Object[] a, String(Object) f) {
+		print "{"; 
+		for(int i=0;i<length(a);i++) 
+			print (i>0?",":"") + f(a[i]); 
+		print "}\n";
+	}
+	
+	String itos(Object a){Integer l = <Integer>a; return ""+l.getValue() ;}
+	String dtos(Object a){Date l = <Date>a; return l.format("%m-%d-%Y") ;}
+	String stos(Object a){String l = <String>a; return l ;}
+
+	int icompare (Object a,Object b){Integer l = <Integer>a, r=<Integer>b;return l.getValue() - r.getValue();}
+	int dcompare (Object a,Object b){Date l = <Date>a, r=<Date>b;return atoi(l.format("%Y%m%d")) - atoi(r.format("%Y%m%d")) ;}
+		
+	Vector unsorted_integers = new Vector(<Integer[]>{
+		new Integer(3),new Integer(12),new Integer(-32),new Integer(11),
+		new Integer(31),new Integer(13),new Integer(-8),new Integer(8),
+		new Integer(23),new Integer(15),new Integer(62),new Integer(6)
+	});
+	
+	Vector unsorted_dates = new Vector(<Date[]>{
+		new Date("%m-%d-%Y","01-08-1976"),new Date("%m-%d-%Y","02-21-1976"),
+		new Date("%m-%d-%Y","06-17-1942"),new Date("%m-%d-%Y","04-25-2003"),
+		new Date("%m-%d-%Y","01-09-1988"),new Date("%m-%d-%Y","02-11-1956"),
+		new Date("%m-%d-%Y","06-10-1987"),new Date("%m-%d-%Y","04-23-2032")	
+	});
+	
+	Vector unsorted_strings = new Vector(<String[]>{
+		"foo","bar","maka","shlaka","wham","bam","bam","thank","maka","you","mmam"});
+		
+	printArray(unsorted_dates.toArray(),&dtos(<Object>?));
+	unsorted_dates.sort(& dcompare(<Object> ?,<Object> ?));
+	printArray(unsorted_dates.toArray(),&dtos(<Object>?));	
+		
+	printArray(unsorted_integers.toArray(),&itos(<Object>?));
+	unsorted_integers.sort(& icompare(<Object> ?,<Object> ?));
+	printArray(unsorted_integers.toArray(),&itos(<Object>?));	
+	
+	printArray(unsorted_strings.toArray(),&stos(<Object>?));
+	unsorted_strings.sort(<int(Object,Object)><Object>&strcmp(<String> ?,<String> ?));
+	printArray(unsorted_strings.toArray(),&stos(<Object>?));	
+	
+	Regex emoticonRx = /[:8B][)(o]/;
+	String emoticonSub(Match m){
+		switch(m.subMatch(0)){
+			case ":)" : return " <img src=\"emoticon11.gif\"> ";
+			case "8)" : return " <img src=\"emoticon21.gif\"> ";
+			case "B)" : return " <img src=\"emoticon31.gif\"> ";
+			case ":(" : return " <img src=\"emoticon12.gif\"> ";	
+			case "8(" : return " <img src=\"emoticon22.gif\"> ";
+			case "B(" : return " <img src=\"emoticon32.gif\"> ";
+			case ":o" : return " <img src=\"emoticon13.gif\"> ";
+			case "8o" : return " <img src=\"emoticon23.gif\"> ";
+			case "Bo" : return " <img src=\"emoticon23.gif\"> ";	
+		}
+	}
+	
+	print sub( "bar:(maka8(shlaka", emoticonRx, &emoticonSub(<Match> ?)) + "\n";
+	print sub( "bar:(maka8(shlakaBo", emoticonRx, &emoticonSub(<Match> ?)) + "\n";
+	print sub( ":)bar:(maka8(shlaka", emoticonRx, &emoticonSub(<Match> ?)) + "\n";	
+}$
+	

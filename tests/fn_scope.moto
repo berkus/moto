@@ -1,0 +1,14 @@
+${
+   int hello(int i){
+      int i=1;                /* Shadow the argument */
+      print "hello "+str(i);
+   }
+   hello(5);
+}$
+
+$define(int goodbye(int i))
+   $declare(int i=1)          $* Shadow the argument *$
+   goodbye $(i)
+$enddef
+
+$do(goodbye(5))

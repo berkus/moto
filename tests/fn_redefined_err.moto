@@ -1,0 +1,5 @@
+${ String foo(int bar){return str(bar++);} }$
+${ String foo(int bar){return str(bar--);} }$
+${ String str(int i){return "foo";} }$
+${ String baz(int bar){return str(bar++);} }$
+${ String baz(int bar){return str(bar--);} }$

@@ -1,0 +1,38 @@
+$(
+   2*"hello"
+   - 3 % 0.0 
+   * 7 / "foo"
+) - Illegal binary operations
+$declare(
+   String s = 2
+) - Illegal assignment
+$declare(
+   float f)
+$(
+   b) - Var not declared
+$switch(
+   'a')
+$case(
+   2) - Illegal Case Type
+$case(
+   f) - Illegal Case Argument
+$endswitch
+$declare(
+   Maka m) - Type not defined
+$declare(
+   String s = "bar") - Multiply declared variable
+$if(
+   1) $endif - Illegal Conditional
+$(
+   /foo/.maka()) - Can't invoke method on type
+$(
+   s.maka()) - No such method
+$do(
+   delete 1) - Illegal delete operation
+$(
+   new Maka()) - No such constructor
+$declare(
+   String q)
+$(
+   !q 
+) - Illegal unary operation

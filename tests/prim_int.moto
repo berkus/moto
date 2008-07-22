@@ -1,0 +1,5 @@
+$declare(Integer P = new Integer(1))
+$(P.getValue())
+$declare(int p = 1)
+$do(P = new Integer(p))
+$(P.getValue())

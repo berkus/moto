@@ -1,0 +1,8 @@
+BAD_MACRO
+   $(35 + true)
+
+BAD_MACRO_W_ARGS(num)
+   $(atoi($num))
+
+BAD_MACRO_THAT_CALLS_ANOTHER_BAD_MACRO
+   $BAD_MACRO_W_ARGS(true)

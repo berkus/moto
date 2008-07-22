@@ -1,0 +1,631 @@
+#!/bin/sh
+#==============================================================================
+#
+# mmc: a script for building moto modules
+# $Author: dhakim $
+# $Id: mmc.sh.in,v 1.26 2003/04/23 02:27:35 dhakim Exp $
+#
+#==============================================================================
+# Script Functions
+#
+# say
+# echo a message, conditional on the verbosity level
+say() {
+if [ "$VERBOSE" = "ON" ]; then
+   echo $*
+fi
+}
+# cleanup
+# deletes a directory conditional on the clean level
+#
+cleanup() {
+if [ "$CLEAN" = "ON" ]; then
+   rm -rf $*
+fi
+}
+# warn
+# echo a warning message
+warn() {
+echo "*** warning: ""$*"
+}
+# err
+# echo an error message
+err() {
+echo "*** error: ""$*"
+}
+# locateprog
+# attempts to locate an executable using the $PATH environment variable
+locateprog() {
+prog=$1
+locatepath=
+SAVEIFS="$IFS"; IFS=":" 
+for dir in $EXEPATH; do
+   test -z $dir && dir=.
+   if [ -f $dir/$prog ]; then
+      locatepath="$dir/$prog"
+      break
+   fi
+done   
+if [ -n "$locatepath" ]; then
+   say "$prog... $locatepath"
+else
+   echo "Cannot find path to $prog. Exiting"
+   exit 1
+fi
+IFS="$SAVEIFS"
+}
+#
+#==============================================================================
+# Task list
+
+#  0: Set up variables and find programs
+#  1. Read options
+#  2. Tell 'em what we're gonna do
+#  3. Locate executables
+#  3. Build file list
+#  4. Create temporary directory
+#  5. Compile moto files
+#  6. Generate module shell
+#  7. Build dependency list
+#  8. Compile with APXS
+#  9. Clean up
+# 10. Tell 'em what we've done
+
+#==============================================================================
+#  0: Set up variables and find programs
+
+# Global variables ------------------------------------------------------------
+
+# The moto root directory
+INST_BIN_DIR=@INST_BIN_DIR@
+INST_LIB_DIR=@INST_LIB_DIR@
+INST_INC_DIR=@INST_INC_DIR@
+
+# The directory containing the Apache installation
+AP_BIN_DIR=@APACHE_BIN_DIR@
+AP_LIBEXEC_DIR=@APACHE_LIBEXEC_DIR@
+
+# The directory containing libgcc
+
+GCC_LIB_DIR=@GCCLDPATH@
+if [ "$GCC_LIB_DIR" != "" ]; then
+   GCC_LIBRARY="$GCC_LIB_DIR/libgcc.a"
+fi
+
+# The directory with this script
+EXEPATH="$PATH:$AP_BIN_DIR:$INST_BIN_DIR"
+
+# The directory stub to use for creating the output directory name
+OUTSTUB=/tmp/mmc
+
+# The verbosity level
+VERBOSE=ON
+
+# Wipeout temp directory 
+CLEAN=ON
+
+# Install compiled module into libexec directory
+INSTALLDSO=OFF
+INSTALLPATH=
+
+# Do not show print help when using mmc
+PRINTHELP=FALSE
+
+# Do not overwrite compiled module when it exists in target directory
+OVERWRITE=OFF
+
+# The file list
+FILES=
+
+# The include dependency list
+INCLUDEDEPS=
+
+# The archive dependency list
+ARCHIVEDEPS=
+
+# The include path dependency list
+INCLUDEPATHDEPS=
+
+# The dynamic library path dependency list
+LIBRARYPATHDEPS=
+
+# The module name to build
+MODNAME=
+
+# The extra paths to search for extensions in
+XPATHS=
+
+# The program name string
+PROGNAME='mmc: The Moto Module Compiler'
+
+# The usage help
+printusage() {
+echo "Usage: mmc [options] <file>
+try 'mmc -h' for help"
+}
+
+# The full help list
+printhelp() {
+echo "Usage: mmc [options] <file>
+
+  -a [Announcement]     - Add the following announcement to the Server:
+                          response header
+  -d                    - Do not delete the /tmp/<mod name> directory after
+                          compilation
+  -e [.ext]             - Compile files ending with the specified extensions
+                          in addition to all .moto files in the specified 
+                          path. (use quotes around the ext, '.ext')
+  -f                    - Force overwrite of existing module in target path
+  -h                    - This help screen
+  -i                    - Install compiled module into libexec directory
+  -I [Path]             - Install compiled module into specified path
+  -n [Module Name]      - Specifies the name of the module to be created
+  -q                    - Execute in quiet mode
+  -X [Paths]            - Prepends the specified paths to the list
+                          of paths in which to look for moto extensions
+"
+}
+
+# Step variables --------------------------------------------------------------
+
+STEP1=ON
+STEP2=ON
+STEP3=ON
+STEP4=ON
+STEP5=ON
+STEP6=ON
+STEP7=ON
+STEP8=ON
+STEP9=ON
+STEP10=ON
+
+#==============================================================================
+#  1. Read options
+
+if [ $STEP1 = "ON" ]; then
+
+# Read options
+while getopts a:de:fhiI:n:qX: arg
+do
+   case "$arg" in
+      a) ANNOUNCE=$OPTARG;;
+      d) CLEAN=OFF;;
+      e) XTENSIONS=$OPTARG;;
+      f) OVERWRITE=ON;;
+      h) PRINTHELP=TRUE;;
+      i) INSTALLDSO=ON;;
+      I) INSTALLPATH=$OPTARG;;
+      n) MODNAME=$OPTARG;;
+      q) VERBOSE=OFF;;
+      X) XPATHS=$OPTARG;;
+   esac
+done
+
+if [ "$PRINTHELP" = TRUE ]; then
+   printhelp
+   exit 10
+fi
+
+if [ -z "$MODNAME" ]; then
+   printusage
+   exit 11
+elif ( [ ! -z "$MODNAME" ] && [ "$CLEAN" = ON ] && [ "$INSTALLDSO" = OFF ] && [ -z "$INSTALLPATH" ] ); then
+   echo "you have to specify also: -d, -i or -I [path]"
+   echo "try 'mmc -h' for help"
+   exit 12
+fi
+
+if [ $# -lt 2 ]; then
+   printusage
+   exit 13
+fi
+
+if [ "$OVERWRITE" = OFF ]; then
+   PLEASEEXIT=OFF
+   if ( [ "$INSTALLDSO" = ON ] && [ -e "$AP_LIBEXEC_DIR/$MODNAME.so" ] ); then
+      echo "file $AP_LIBEXEC_DIR/$MODNAME.so exists"
+      echo "use -f to overwrite"
+      PLEASEEXIT=ON
+   fi
+   if ( [ "$INSTALLPATH" != "" ] && [ -e "$INSTALLPATH/$MODNAME.so" ] ); then
+      echo "file $INSTALLPATH/$MODNAME.so exists"
+      echo "use -f to overwrite"
+      PLEASEEXIT=ON
+   fi
+   if [ "$PLEASEEXIT" = ON ]; then
+      PLEASEEXIT=OFF
+      exit 14
+   fi
+fi
+
+shiftcount=`expr $OPTIND - 1`
+shift $shiftcount
+
+fi
+
+#==============================================================================
+#  2. Tell 'em what we're gonna do
+
+if [ $STEP2 = "ON" ]; then
+
+say
+say ">>> $PROGNAME"
+say
+
+fi
+
+#==============================================================================
+#  3. Locate executables
+
+if [ $STEP3 = "ON" ]; then
+
+say "### Locating executables..."
+
+# The 'realpath' program
+locateprog realpath
+REALPATH="$locatepath"
+REALPATH=`$REALPATH $REALPATH`
+
+# The 'ftw' program
+locateprog ftw
+FTW="$locatepath"
+FTW=`$REALPATH $FTW`
+
+# The 'fchk' program
+locateprog fchk
+FCHK="$locatepath"
+FCHK=`$REALPATH $FCHK`
+
+# The 'moto' program
+locateprog moto
+MOTO="$locatepath"
+MOTO=`$REALPATH $MOTO`
+
+# The 'mxtool' program
+locateprog mxtool
+MXTOOL="$locatepath"
+MXTOOL=`$REALPATH $MXTOOL`
+
+# The 'mgen' program
+locateprog mgen
+MGEN="$locatepath"
+MGEN=`$REALPATH $MGEN`
+
+# The 'mgen.properties' file
+locateprog mgen.properties
+MGENPROPS="$locatepath"
+MGENPROPS=`$REALPATH $MGENPROPS`
+
+# The 'apxs' program
+APXS="@APXS@"
+
+# The uniq program
+locateprog uniq
+UNIQ="$locatepath"
+
+# The sort program
+locateprog sort
+SORT="$locatepath"
+
+# The cat program
+locateprog cat
+CAT="$locatepath"
+
+# The tr program
+locateprog tr
+TR="$locatepath"
+
+# The sed program
+locateprog sed
+SED="$locatepath"
+
+say
+
+fi
+
+#==============================================================================
+#  3. Build file list
+
+if [ $STEP3 = "ON" ]; then
+
+ARG=`echo $1 | $SED "s/\/$//"`
+ARG=`$REALPATH $ARG`
+if [ "$?" -ne 0 ]; then
+   echo $ARG
+   exit 31;
+else
+   if [ -d "$ARG" ]; then
+      say "Building module from directory..."
+      say "$ARG"
+      cd $ARG
+      FILES=`$FTW -r -e .moto $ARG`
+      for ext in $XTENSIONS; do
+         FILES="$FILES `$FTW -r -e $ext $ARG`"
+      done 
+      if [ -z "$FILES" ]; then
+         err "No moto files in $ARG"
+         echo
+         exit 32;
+      fi
+   else
+      say "Building module from file..."
+      cd `dirname $ARG`
+      FILES=`basename $ARG`
+      say "$ARG"
+   fi
+fi
+
+say
+
+fi
+
+#==============================================================================
+#  4. Create temporary directory
+
+if [ $STEP4 = "ON" ]; then
+
+say "### Creating temporary directory..."
+
+# try to clean up previous temporary directories for this module
+OLDDIRS=`echo "$OUTSTUB""_""$MODNAME"".*"`
+rm -rf $OLDDIRS
+
+# make directory
+OUTDIR=`echo "$OUTSTUB""_""$MODNAME""."$$`
+TMP=`$FCHK $OUTDIR`
+if [ "$?" -eq 0 ]; then
+   rm -rf $OUTDIR
+   if [ "$?" -ne 0 ]; then
+      echo "Can not create output directory: '$OUTDIR'."
+      echo "This directory already exists, and you have insufficient" 
+      echo "privileges to move or delete it." 
+      exit 41;
+   fi
+fi   
+
+say "$OUTDIR"
+mkdir -p $OUTDIR
+if [ "$?" -ne 0 ]; then
+   echo "Can not create output directory: '$OUTDIR'."
+   exit 42;
+fi
+
+say
+
+fi
+
+#==============================================================================
+#  5. Generate C files
+
+if [ $STEP5 = "ON" ]; then
+
+say "### Generating C files..."
+FN_NAME_H="$OUTDIR""/""mod_fn.h"
+count=0
+for f in $FILES; do
+   TMP=`$FCHK $f`
+   if [ "$?" -eq 0 ]; then
+      say "$f"      
+      OUT="$OUTDIR""/""$MODNAME""_""$count"".c"
+      if [ -z "$XPATHS" ]; then
+         $MOTO -c $f > $OUT
+      else 
+         $MOTO -X $XPATHS -c $f > $OUT
+      fi
+      if [ "$?" -ne 0 ]; then
+         err "compilation error"
+         cat $OUT
+         cleanup $OUTDIR
+         exit 51
+      fi
+      FN_NAME=`echo $f | $SED -e "s/.moto$//" | $SED -e "s/\//_/g"`
+      for ext in $XTENSIONS; do
+         FN_NAME=`echo $FN_NAME | $SED -e "s/$ext$//" | $SED -e "s/\//_/g"`
+      done
+      echo "#define exec_""$FN_NAME"" exec_""$MODNAME""_""$count" >> $FN_NAME_H 
+      count=`expr $count + 1`
+   else
+      err "File not found: $f"
+      exit 52
+   fi
+done   
+
+say
+
+fi
+
+#==============================================================================
+#  6. Generate module shell
+
+if [ $STEP6 = "ON" ]; then
+
+say "### Generating module shell..."
+
+OUT="$OUTDIR""/""mod_""$MODNAME"".c"
+say "mod_""$MODNAME"".c"      
+$MGEN -p $MGENPROPS $MODNAME $FILES > $OUT
+if [ "$?" -ne 0 ]; then
+   err "mgen failure"
+   cleanup $OUTDIR
+   exit 61
+fi
+
+say
+
+fi
+
+#==============================================================================
+#  7. Build dependency list
+
+if [ $STEP7 = "ON" ]; then
+
+say "### Building dependency list..."
+
+OUT="$OUTDIR""/""mod_""$MODNAME"".dep"
+TMP="$OUTDIR""/""mod_""$MODNAME"".tmp"
+for f in $FILES; do
+   TMP=`$FCHK $f`
+   if [ "$?" -eq 0 ]; then
+      say "$f"      
+      if [ -z "$XPATHS" ]; then
+         $MOTO -u $f >> $OUT
+      else
+         $MOTO -X $XPATHS -u $f >> $OUT
+      fi
+      if [ "$?" -ne 0 ]; then
+         err "dependency check error"
+         cleanup $OUTDIR
+         exit 71
+      fi
+   fi
+done   
+
+$CAT $OUT | $SORT | $UNIQ > $TMP
+mv $TMP $OUT
+USES=`$CAT $OUT`
+if [ -z "$XPATHS" ]; then
+   ARCHIVEDEPS=`$MXTOOL -e -a $USES`
+   INCLUDEPATHDEPS=`$MXTOOL -e -I $USES | sed -e s/^/-I/g`
+   LIBRARYPATHDEPS=`$MXTOOL -L $USES | sed -e s/^/-L/g`   
+   LIBRARYDEPS=`$MXTOOL -l $USES` 
+else
+   ARCHIVEDEPS=`$MXTOOL -X $XPATHS -e -a $USES`
+   INCLUDEPATHDEPS=`$MXTOOL -X $XPATHS -e -I $USES | sed -e s/^/-I/g`
+   LIBRARYPATHDEPS=`$MXTOOL -X $XPATHS -L $USES | sed -e s/^/-L/g`
+   LIBRARYDEPS=`$MXTOOL -X $XPATHS -l $USES`
+fi
+rm -f $TMP
+
+say 
+
+fi
+
+#==============================================================================
+#  8. Compile with APXS
+
+if [ $STEP8 = "ON" ]; then
+
+say "### Compiling with APXS..."
+
+MODSO="mod_""$MODNAME"".so"
+MODOPTION=`echo "$MODNAME" | sed -e "s/\(.\).*/\1/" \
+           -e y/abcdefghijklmnopqrstuvwxyz/ABCDEFGHIJKLMNOPQRSTUVWXYZ/``\
+           echo "$MODNAME" | sed -e "s/\(.\)\(.*\)/\2Option/"`
+CFLAGS='-Dsymbolic -D__SMP__ -DAPACHE -Drdynamic' 
+if [ -n $ANNOUNCE ]; then
+    CFLAGS="$CFLAGS -DMODULE_VERSION=\"\\\"$ANNOUNCE\\\"\""
+fi
+MFLAGS='-DHAVE_FN_NAME_H -DSHARED_MALLOC -D LOG_LEVEL=ERROR' 
+IPATH="-I$INST_INC_DIR"
+
+#
+# LPATH and LIBS should work nicely together but because of a bug
+# in apxs's interaction with ld on solaris things can't be so clean
+# 
+
+# LPATH="-L$INST_LIB_DIR @GCCLDPATH@" 
+# LIBS='-lmotom -lcodex @GCCLIB@'
+
+LIBS="$INST_LIB_DIR/libmotom.a $INST_LIB_DIR/libcodex.a $GCC_LIBRARY"
+
+CWD=`pwd`
+cd $OUTDIR
+$APXS -o $MODSO $CFLAGS $MFLAGS $IPATH $INCLUDEPATHDEPS $LIBRARYPATHDEPS \
+   -c *.c $ARCHIVEDEPS $LIBS $LIBRARYDEPS
+   if [ "$?" -ne 0 ]; then
+      err "compilation error"
+      cleanup $OUTDIR
+      exit 81
+   fi
+cd $CWD
+
+say
+
+fi
+
+#==============================================================================
+#  9. Clean up
+
+if [ $STEP9 = "ON" ]; then
+
+   if [ "$INSTALLDSO" = "ON" ]; then
+      say "Copying module to Apache libexec directory..."
+      CMD="cp -f $OUTDIR/$MODSO $AP_LIBEXEC_DIR"
+      echo $CMD
+      $CMD
+      if [ "$?" -ne 0 ]; then
+         warn "Unable to copy module to libexec directory."
+         warn "You will need to copy it there by hand." 
+      else
+         echo "Module $MODSO installed in $AP_LIBEXEC_DIR/"
+      fi
+   fi
+
+   if [ "$INSTALLPATH" != "" ]; then
+      say "Copying module to $INSTALLPATH directory..."
+      CMD="cp -f $OUTDIR/$MODSO $INSTALLPATH/$MODSO"
+      echo $CMD
+      $CMD
+      if [ "$?" -ne 0 ]; then
+          warn "Unable to copy module to $INSTALLPATH directory."
+          warn "You will need to copy it there by hand."
+      else
+         echo "Module $MODSO copied to $INSTALLPATH/"
+      fi
+   fi
+
+   if [ "$CLEAN" = ON ]; then
+      say "### Cleaning up..."
+      cleanup $OUTDIR
+   else
+      echo "### Not cleaning - temporary directory and all files are left"
+      echo "### in $OUTDIR/"
+      echo "### If you want to install module by-hand do:"
+      echo "cp $OUTDIR/$MODSO $AP_LIBEXEC_DIR/"
+   fi
+
+   say
+
+fi
+
+#==============================================================================
+# 10. Tell 'em what we've done
+
+if [ $STEP10 = "ON" ]; then
+
+cat <<EOF
+##################################################################
+
+Done.
+
+To run this module...
+
+Add the following directives to your httpd.conf file:
+
+LoadModule ${MODNAME}_module libexec/$MODSO
+<IfModule mod_${MODNAME}.c>
+   <Location /[your location]>
+      $MODOPTION Location /[your location]
+      SetHandler $MODNAME
+   </Location>
+</IfModule>
+
+Once you have added these directives, restart Apache. All
+pages within the subtree you compiled will be available
+off of
+
+http://[your machine]/[your location]/
+
+Note that if you compiled only a single moto page the URL
+will be
+
+http://[your machine]/[your location]/[your page].moto
+
+##################################################################
+<<< $PROGNAME
+EOF
+
+fi
+
+#==============================================================================
+# end

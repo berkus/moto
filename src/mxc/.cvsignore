@@ -1,0 +1,11 @@
+mxc.sh
+make.vars
+mxcg
+config.log
+config.h
+config.status
+mx.tab.c
+mx.tab.h
+Makefile
+lex.yy.c
+mxc

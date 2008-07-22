@@ -1,0 +1,17 @@
+${
+   try {
+      doit();
+   }
+   catch (Exception e){
+      print e.getStackTrace();
+   }
+
+   int doit(){
+      return killme();
+   }
+   int killme(){
+      int q[] = new int[3];
+      q[4] = 3;
+      return q[4];
+   }
+}$

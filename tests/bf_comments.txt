@@ -1,0 +1,4 @@
+bf_comments.moto:3: Variable 'idQuestion' not declared before used
+bf_comments.moto:3: No such function: getValue(<String>)
+bf_comments.moto:3: No such function: atoi(<int>, <String>)
+bf_comments.moto:3: Variable of type <Object> cannot store type <int>

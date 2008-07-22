@@ -1,0 +1,88 @@
+${
+   boolean bt = true;
+   boolean bf = false;
+   char c = 'a';
+   double d = 1.0;
+   float f = 1.0F;
+   int i = 1;
+   long l = 99999999999L;
+   byte y = 27;
+   String s = null;
+   char[] ca = "foo".toArray();
+   byte[] ya = "bar".getBytes();
+   char[] eca = "".toArray();
+   byte[] eya = "".getBytes();
+ 
+   /* Generate Strings by string addition */
+
+   String sbt = ""+bt;
+   String sbf = ""+bf;
+   String sc = ""+c;
+   String sd = ""+d;
+   String sf = ""+f;
+   String si = ""+i;
+   String sl = ""+l;
+   String sy = ""+y;
+   String sca = ""+ca;
+   String scy = ""+ya;
+   String seca = ""+eca;
+   String seya = ""+eya;
+ 
+   print "'" + sbt + "'\n";
+   print "'" + sbf + "'\n";
+   print "'" + sc + "'\n";
+   print "'" + sd + "'\n";
+   print "'" + sf + "'\n";
+   print "'" + si + "'\n";
+   print "'" + sl + "'\n";
+   print "'" + sy + "'\n";
+   print "'" + sca + "'\n";
+   print "'" + scy + "'\n";
+   print "'" + seca + "'\n";
+   print "'" + seya + "'\n";
+  
+   /* Generate Strings by calling the str() functions */
+
+   print "'" + str(bt) + "'\n";  
+   print "'" + str(bf) + "'\n";
+   print "'" + str(c) + "'\n";
+   print "'" + str(d) + "'\n";
+   print "'" + str(f) + "'\n";
+   print "'" + str(i) + "'\n";
+   print "'" + str(l) + "'\n";
+   print "'" + str(y) + "'\n";
+   print "'" + str(ca) + "'\n";
+   print "'" + str(ya) + "'\n";
+   print "'" + str(eca) + "'\n";
+   print "'" + str(eya) + "'\n";
+ 
+   /* Generate Strings by calling String constructors */
+
+   print "'" + new String(bt) + "'\n";
+   print "'" + new String(bf) + "'\n";
+   print "'" + new String(c) + "'\n";
+   print "'" + new String(d) + "'\n";
+   print "'" + new String(f) + "'\n";
+   print "'" + new String(i) + "'\n";
+   print "'" + new String(l) + "'\n";
+   print "'" + new String(y) + "'\n";
+   print "'" + new String(ca) + "'\n";
+   print "'" + new String(ya) + "'\n";
+   print "'" + new String(eca) + "'\n";
+   print "'" + new String(eya) + "'\n";
+
+   /* Effectively coerce to String just by printing */
+
+   print "'"; print bt ; print "'\n";
+   print "'"; print bf ; print "'\n";
+   print "'"; print c ; print "'\n";
+   print "'"; print d ; print "'\n";
+   print "'"; print f ; print "'\n";
+   print "'"; print i ; print "'\n";
+   print "'"; print l ; print "'\n";
+   print "'"; print y ; print "'\n";
+   print "'"; print ca ; print "'\n";
+   print "'"; print ya ; print "'\n";
+   print "'"; print eca ; print "'\n";
+   print "'"; print eya ; print "'\n";
+}$

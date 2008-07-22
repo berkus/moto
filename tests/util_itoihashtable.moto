@@ -1,0 +1,2 @@
+$use("codex.util")
+$declare(ItoIHashtable ii = new ItoIHashtable())

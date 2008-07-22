@@ -1,0 +1,4 @@
+rx_err.moto:1: Invalid regular expression /[/: Unmatched '['
+rx_err.moto:2: Invalid regular expression /(/: Unmatched '('
+rx_err.moto:3: Invalid regular expression /[\]/: Unmatched '['
+rx_err.moto:4: Invalid regular expression /\/: Escape '\' not followed

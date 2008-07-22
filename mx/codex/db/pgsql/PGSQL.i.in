@@ -1,0 +1,245 @@
+Extension: PGResultSet
+
+@MXLIBCRYPT@
+@MXLIBSSL@
+@MXLIBCRYPTO@
+
+Archive: "@PGSQL_LIBRARY_DIR@/libpq.a"
+
+Include: "pgconn.h"
+Include: "pgrset.h"
+Include: "tabulardata.h"
+
+IncludePath: "@PGSQL_INCLUDE_DIR@"
+
+LibraryPath: "@PGSQL_LIBRARY_DIR@"
+
+Interface:
+
+/** Returns the String at column <i>column</i> of the current row.
+Column numbers start with 0. If <i>column</i> < 0 or <i>column</i> >=the number of columns in the result set an exception will be thrown.
+**/
+tracked String PGResultSet::getString(int column) =>
+   char* pgrset_getString(PGResultSet* this, int column);
+
+/** Returns the byte[] at column <i>column</i> of the current row.
+Column numbers start with 0. If <i>column</i> < 0 or <i>column</i> >=the number of columns in the result set an exception will be thrown.
+**/
+tracked byte[] PGResultSet::getBytes(int column) =>
+   UnArray* pgrset_getBytes(PGResultSet *this, int column);
+
+/** Returns the int at column <i>column</i> of the current row.
+Column numbers start with 0. If <i>column</i> < 0 or <i>column</i> >=the number of columns in the result set an exception will be thrown.
+**/
+int PGResultSet::getInt(int column) =>
+   int pgrset_getInt(PGResultSet* this, int column);
+
+/** Returns the float at column <i>column</i> of the current row.
+Column numbers start with 0. If <i>column</i> < 0 or <i>column</i> >=the number of columns in the result set an exception will be thrown.
+**/
+float	PGResultSet::getFloat(int column) =>
+   float pgrset_getFloat(PGResultSet* this, int column);
+
+/** Returns the char at column <i>column</i> of the current row.
+Column numbers start with 0. If <i>column</i> < 0 or <i>column</i> >=the number of columns in the result set an exception will be thrown.
+**/
+char PGResultSet::getChar(int column) =>
+   char pgrset_getChar(PGResultSet* this, int column);
+
+/** Returns the double at column <i>column</i> of the current row.
+Column numbers start with 0. If <i>column</i> < 0 or <i>column</i> >=the number of columns in the result set an exception will be thrown.
+**/
+double PGResultSet::getDouble(int column) =>
+   double pgrset_getDouble(PGResultSet* this, int column);
+
+/** Returns the long at column <i>column</i> of the current row.
+Column numbers start with 0. If <i>column</i> < 0 or <i>column</i> >=the number of columns in the result set an exception will be thrown.
+**/
+long PGResultSet::getLong(int column) =>
+   int64_t pgrset_getLong(PGResultSet *this, int column);
+
+/** Returns the String at the column named <i>column</i> of the current row.
+Column numbers start with 0. If <i>column</i> is not present in this result set
+an exception will be thrown.
+**/
+tracked String PGResultSet::getString(String column) =>
+   char* pgrset_getStringByColumnName(PGResultSet *this, char *column);
+
+/** Returns the byte[] at the column named <i>column</i> of the current row.
+Column numbers start with 0. If <i>column</i> is not present in this result set
+an exception will be thrown.
+**/
+tracked byte[] PGResultSet::getBytes(String column) =>
+   UnArray* pgrset_getBytesByColumnName(PGResultSet *this, char *column);
+
+/** Returns the int at the column named <i>column</i> of the current row.
+Column numbers start with 0. If <i>column</i> is not present in this result set
+an exception will be thrown.
+**/
+int PGResultSet::getInt(String column) =>
+   int pgrset_getIntByColumnName(PGResultSet *this, char *column);
+
+/** Returns the float at the column named <i>column</i> of the current row.
+Column numbers start with 0. If <i>column</i> is not present in this result set
+an exception will be thrown.
+**/
+float PGResultSet::getFloat(String column) =>
+   float pgrset_getFloatByColumnName(PGResultSet *this, char *column);
+
+/** Returns the double at the column named <i>column</i> of the current row.
+Column numbers start with 0. If <i>column</i> is not present in this result set
+an exception will be thrown.
+**/
+double PGResultSet::getDouble(String column) =>
+   double pgrset_getDoubleByColumnName(PGResultSet *this, char *column);
+
+/** Returns the long at the column named <i>column</i> of the current row.
+Column numbers start with 0. If <i>column</i> is not present in this result set
+an exception will be thrown.
+**/
+long PGResultSet::getLong(String column) =>
+  int64_t pgrset_getLongByColumnName(PGResultSet *this, char *column);
+
+/** Returns the char at the column named <i>column</i> of the current row.
+Column numbers start with 0. If <i>column</i> is not present in this result set
+an exception will be thrown.
+**/
+char PGResultSet::getChar(String column) =>
+   char pgrset_getCharByColumnName(PGResultSet *this, char *column);
+
+/** Returns the byte at the column named <i>column</i> of the current row.
+Column numbers start with 0. If <i>column</i> is not present in this result set
+an exception will be thrown.
+**/
+byte PGResultSet::getByte(String column) =>
+   char pgrset_getCharByColumnName(PGResultSet *this, char *column);
+
+/** Returns a Date object for column <i>column</i> of the current row.
+Column numbers start with 0. If <i>column</i> is not present in this result set
+an exception will be thrown.
+**/
+tracked Date PGResultSet::getDate(String column) =>
+   Date* pgrset_getDateByColumnName(PGResultSet *this, char *column);
+
+/** Returns a Date object for column <i>column</i> of the current row.
+Column numbers start with 0. If <i>column</i> is not present in this result set
+an exception will be thrown.
+**/
+tracked Date PGResultSet::getDate(int column) =>
+  Date* pgrset_getDate(PGResultSet *this, int column);
+
+void PGResultSet::~PGResultSet() =>
+   void pgrset_free(PGResultSet *this);
+
+/** Returns the number of rows in this result set **/
+int PGResultSet::rows() =>
+   int pgrset_rows(PGResultSet *this);
+
+/** Depracated. Use rows() instead. **/
+int PGResultSet::size() =>
+   int pgrset_rows(PGResultSet *this);
+
+/** Returns the current row number **/
+int PGResultSet::row() =>
+   int pgrset_row(PGResultSet *this);
+
+/** Sets the current row to the absolute index of <i>row</i> **/
+boolean PGResultSet::moveToRow(int row) =>
+   int pgrset_moveToRow(PGResultSet *this, int row);
+
+/** Moves the cursor a relative number of rows, either positive or negative **/
+boolean PGResultSet::moveRow(int offset) =>
+   int pgrset_moveRow(PGResultSet *this, int offset);
+
+/** Sets the current row to the next row and returns true if there was a
+next row to be set to. If the result set was just retrieved then this method
+sets the current row to the first row **/
+boolean PGResultSet::next() =>
+   int pgrset_next(PGResultSet *this);
+
+/** Sets the current row to the previous row and returns true if there was a
+previous row to be set to. **/
+boolean PGResultSet::prev() =>
+   int pgrset_prev(PGResultSet *this);
+
+/** Releases all resources associated with the PGResultSet **/
+void PGResultSet::close() =>
+   void pgrset_close(PGResultSet *this);
+
+/** Returns a column index for a given column name **/
+int PGResultSet::getColumnIndex(String colname) =>
+   int pgrset_getColumnIndex(PGResultSet *this, char *colname);
+
+/** Returns a TabularData object created from this result set. PGResultSets
+cannot be persisted (cached) in the session or context. But by creating a 
+TabularData object from a result set you can persist that effectively cacheing
+the result of a query. **/
+TabularData PGResultSet::store() =>
+   TabularData* pgrset_store(PGResultSet *this);
+
+/** Returns the number of columns in this result set **/
+int PGResultSet::columns() =>
+   int pgrset_columns(PGResultSet *this);
+
+/** Depracated. Use columns() instead. **/
+int PGResultSet::getColumns() =>
+  int pgrset_columns(PGResultSet *this);
+
+String PGResultSet::getColumnName(int col) =>
+   char* pgrset_getColumnName(PGResultSet *rset, int col);
+
+String PGResultSet::getColumnType(int col) =>
+   char* pgrset_getColumnType(PGResultSet *rset, int col);
+
+Extension: PGConnection
+
+Include: "pgconn.h"
+Include: "pgrset.h"
+ 
+Interface:
+
+/** Creates a connection to a Postgres database <i>db</i> at the specified host
+as the specified user with the specified password **/
+tracked PGConnection PGConnection::PGConnection(String host, String db, String user, String password) =>
+   PGConnection* pgconn_create(const char *host, const char *db, const char *user, const char *password);
+
+void PGConnection::~PGConnection() =>
+   void pgconn_free(PGConnection *this);
+
+/** Executes a query against the database and returns the results as a ResultSet **/
+tracked PGResultSet PGConnection::query(String query) =>
+   PGResultSet* pgconn_query(PGConnection *this, const char *query);
+
+/** Executes an INSERT or an UPDATE or a DELETE against the database and returns 
+the number of rows affected **/
+int PGConnection::update(String query) =>
+   int pgconn_update(PGConnection *this, const char *query);
+
+/** Returns the OID for the most recent insert **/
+int PGConnection::insertID() =>
+   int pgconn_insertID(PGConnection *conn);
+
+/** Returns a ResultSet listing all the tables in the current database **/
+tracked PGResultSet PGConnection::listTables() =>
+   PGResultSet* pgconn_listTables(PGConnection *conn);
+
+/** Returns a ResultSet listing all the tables in the current database 
+whose names match the specified pattern (done with SQL LIKE so % are wildcards)
+**/
+tracked PGResultSet PGConnection::listTablesMatching(String pattern) =>
+   PGResultSet* pgconn_listTablesMatching(PGConnection *conn, const char *pattern);
+
+/** Escapes a String so it is suitable for insertion into a String column e.g.:
+<br>
+$do(rset =conn.query("SELECT id FROM deck WHERE name= '"+conn.escape(getValue("_name"))+"'"))
+**/
+tracked String PGConnection::escape(String s) =>
+   char* pgconn_escape(PGConnection *this, char *string);
+
+/** Escapes a byte[] converting it into a String suitable for insertion into a blob column
+<br>
+$do("INSERT INTO tblImg (idImg,source) VALUES (0,'"+conn.escape(getRequest().getMIMEPart(
+"_image").getBody())+"')"))**/
+tracked String PGConnection::escape(byte[] arr) =>
+   char* pgconn_escapeBytes(PGConnection *this, UnArray *arr);
+

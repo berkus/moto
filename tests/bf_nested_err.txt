@@ -1,0 +1,6 @@
+bf_nested_err.moto:3: use within sub-scope
+bf_nested_err.moto:4: global within sub-scope
+bf_nested_err.moto:5: function definition within sub-scope
+bf_nested_err.moto:10: $use within sub-scope
+bf_nested_err.moto:11: global within sub-scope
+bf_nested_err.moto:12: $define within sub-scope

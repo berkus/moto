@@ -1,0 +1,135 @@
+Extension: HTTPRequest
+
+Include: "httpd.h"
+Include: "module.h"
+Include: "state.h"
+
+IncludePath: "@APACHE_INCLUDE_DIR@"
+
+Interface:
+
+HTTPRequest HTTPRequest::HTTPRequest() =>
+        HTTPRequest* getRequest();
+
+/** Retrieves the HTTPRequest Object representing the current HTTP request **/
+HTTPRequest getRequest() =>
+        HTTPRequest* getRequest();
+
+/** Returns the full path of the file on disk corresponding to the current HTTP request **/
+tracked String HTTPRequest::getFileName() =>
+	char* req_getFileName(HTTPRequest* this);
+
+tracked String HTTPRequest::getPathInfo() =>
+        char* req_getPathInfo(HTTPRequest* this);
+
+/** Returns everything after the host:port in the URL up to but not including the 
+first '?' **/
+tracked String HTTPRequest::getURI() =>
+        char* req_getURI(HTTPRequest* this);
+
+/** Returns the method by which this request was made e.g. "GET" or "POST" **/
+tracked String HTTPRequest::getMethod() =>
+        char* req_getMethod(HTTPRequest* this);
+
+/** Returns the hostname this request was made to e.g. www.webcodex.com **/
+tracked String HTTPRequest::getHostname() =>
+        char* req_getHostName(HTTPRequest* this);
+
+/** Returns the protocol by which this request was made e.g. "HTTP/1.1" **/
+tracked String HTTPRequest::getProtocol() =>
+        char* req_getProtocol(HTTPRequest* this);
+
+/** Returns the value of an arbitraty HTTP request header **/
+tracked String HTTPRequest::getHeader(String header) =>
+	char* req_getHeader(HTTPRequest* r,char* header);
+
+/** Returns the IP Address of the client making this request as a String **/
+tracked String HTTPRequest::getClientIPAddress() =>
+	char* req_getClientIP(HTTPRequest* r);
+ 
+/** Returns an enumeration of all MIMEParts sent by the browser
+after a multipart form submission (for file uploads) **/
+tracked Enumeration HTTPRequest::getMIMEParts() =>
+	Enumeration* req_getMIMEParts(HTTPRequest* r);
+
+/** Gets a specific MIME part with the specified name. Not that it
+is possible multiple MIME parts sent by the browser have the same
+name. In this case only the last MIME part sent with that name is
+returned **/
+MIMEEntity HTTPRequest::getMIMEPart(String name) =>
+	MIMEEntity* req_getMIMEPart(HTTPRequest* r,char* name);
+
+/** Returns an Enumeration of all the cookies set by the browser
+to the server with this request. Each Object in this enumeration
+is a Cookie **/
+tracked Enumeration HTTPRequest::getCookies() =>
+        Enumeration* req_getCookies(HTTPRequest* r);
+
+/** Returns the Cookie object with the specified name that was
+sent by the browser to the server with this request. If no
+cookie with that name was sent than this method returns null **/
+Cookie HTTPRequest::getCookie(String name) =>
+        MIMEEntity* req_getCookie(HTTPRequest* r,char* name);
+
+/** Stops execution of the current page and sends a Location
+header in the HTTPResponse to the specified <i>uri</i> **/
+void sendRedirect(String uri) =>
+        void sendRedirect(char* uri);
+
+/** URL encodes the supplied string by replacing reserved
+characters ';', '/', '?', ':', '@', '=' and '&amp;', ascii control
+character, non-ascii characters, and other known to be unsafe
+characters ' ', '&lt;', '&gt;', '"', '#', '%', '{', '}', '|', '\',
+'^', '~', '[', ']', '`' with a '%' followed by the character's
+hex value. **/
+
+tracked String urlEncode(String s) =>
+        char* urlEncode(char* s);
+
+/** URL decodes the supplied string by replacing substrings
+of the form '%XX' with the corresponding hex character **/
+
+tracked String urlDecode(String s) =>
+        char* urlDecode(char* s);
+        
+Extension: ModuleConfig
+
+Include: "httpd.h"
+Include: "module.h"
+
+Interface:
+
+/** Returns the value of the specified config option from httpd.conf **/ 
+tracked String getConfigOption(String name) => 
+	char* getConfigOption(char* name);
+
+Extension: HTTPResponse
+
+Include: "httpd.h"
+Include: "module.h"
+
+Interface:
+
+HTTPResponse HTTPResponse::HTTPResponse() =>
+        HTTPResponse* getResponse();
+
+/** Returns the current HTTP response (the one that will be set to the client
+upon the conclusion of execution of the current page) **/
+HTTPResponse getResponse() =>
+	HTTPResponse* getResponse();
+
+/** Set an arbitrary HTTP response header <i>name</i> to the value <i>value</i> **/
+void HTTPResponse::setHeader(String name, String value) =>
+	void res_setHeader(HTTPResponse* r, char* name, char* value);
+
+/** Attempt to set the cookie <i>c</i> on the client's browser **/
+void HTTPResponse::setCookie(Cookie c) =>
+	void res_setCookie(HTTPResponse* r, Cookie* c);
+
+/** Send the HTTP Headers built up so far **/
+void HTTPResponse::sendHeaders() =>
+	void res_sendHeaders(HTTPResponse* r);
+
+/** Flush the current output buffer **/
+void HTTPResponse::flushOutput() =>
+	void res_flushOutput(HTTPResponse* r);

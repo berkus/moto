@@ -1,0 +1,6 @@
+class_yacc_err.moto:1: $endclass without $class
+class_yacc_err.moto:3: 'this' not used within method defintion
+class_yacc_err.moto:4: Malformed $do statement, expected $do(<expr>)
+class_yacc_err.moto:6: $class within sub-scope
+class_yacc_err.moto:9: Malformed $class statement, expected $class(<name>)
+class_yacc_err.moto:10: Unterminated $class statement

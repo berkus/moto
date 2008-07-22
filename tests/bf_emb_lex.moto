@@ -1,0 +1,8 @@
+${ case: 'a'; }$
+${ else; }$
+${ break; }$
+${ continue; }$
+${ while(true) }$
+${ if(true) }$
+${ for(;true;) }$
+${ print "}$

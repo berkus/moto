@@ -1,0 +1,25 @@
+$use("cstdlib")
+$use("codex.util")
+
+${
+	double(double) square = pow(?,2);
+	double(double) twoToThePow = pow(2,?);
+	double() four = &square(2);
+	double() eight = &twoToThePow(3);
+	
+	print "square(3) = "+ square(3) + "\n";
+	print "twoToThePow(4) = "+ twoToThePow(4) + "\n";
+	print "four() = "+ four() + "\n";
+	print "eight() = "+ eight() + "\n";
+		
+	SymbolTable s = new SymbolTable();
+	
+	void(Object) setFoo = s.put("foo",?);
+	setFoo("bar");
+	print "The value of foo is: "+<String>s.get("foo") +"\n";
+
+	void() setFooMaka = &setFoo("maka");
+	setFooMaka();
+	print "The value of foo is: "+<String>s.get("foo") +"\n";	
+	 
+}$

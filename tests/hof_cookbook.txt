@@ -1,0 +1,52 @@
+
+# 5. Hashes
+
+
+# 5.1. Adding an Element to a Hash
+
+Known foods:
+Rasberry
+Banana
+Carrot
+Apple
+Lemon
+
+# 5.2. Testing for the Presence of a Key in a Hash
+
+true
+false
+
+# 5.3. Deleting from a Hash
+
+
+# 5.4. Traversing a Hash
+
+
+# 5.5. Printing a Hash
+
+Rasberry => pink
+Carrot => orange
+Apple => red
+Lemon => yellow
+Apple => red
+Carrot => orange
+Lemon => yellow
+Rasberry => pink
+
+# 5.6. Retrieving from a Hash in Insertion Order
+
+Apple => red
+Banana => yello
+Lemon => yellow
+Carrot => orange
+
+# 5.7. Hashes with Multiple Values Per Key
+
+Cory => {tty6} 
+Dave => {tty1,tty2,tty3} 
+Stefano => {tty4,tty5} 
+
+# 5.8. Inverting a Hash
+
+Ruth => Babe
+Mantle => Mickey

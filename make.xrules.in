@@ -1,0 +1,30 @@
+#======================================================================
+#
+# $RCSfile: make.xrules.in,v $
+# $Revision: 1.1 $
+# $Author: dhakim $
+# $Date: 2002/02/26 10:51:26 $
+#
+# Makefile.in boilerplate 
+#
+#======================================================================
+
+clean:
+	rm -f ${CLEAN_FILES} core
+
+distclean:
+	${MAKE} clean
+	rm -f Makefile \
+	config.h \
+	config.cache \
+	config.log \
+	config.status
+
+maintainer-clean:
+	rm -f configure
+	${MAKE} distclean;
+	
+#======================================================================
+# end	rules
+#======================================================================
+

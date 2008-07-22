@@ -1,0 +1,8 @@
+fn_yacc_err.moto:1: Malformed $define statement, expected $(<type> <name>(<args>))
+fn_yacc_err.moto:2: $enddef without $define
+fn_yacc_err.moto:3: Malformed $return statement, expected $return(<expr>)
+fn_yacc_err.moto:4: $return not within function or method defintion
+fn_yacc_err.moto:7: $define within sub-scope
+fn_yacc_err.moto:11: return not within function or method definition
+fn_yacc_err.moto:14: function definition within sub-scope
+fn_yacc_err.moto:18: Unterminated $define statement

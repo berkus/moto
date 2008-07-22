@@ -1,0 +1,7 @@
+$use("codex.util")
+$declare(IntSet is = new IntSet())
+$do(is.add(1))
+$do(is.add(3))
+$do(is.add(5))
+$do(is.add(7))
+$do(is.add(11))

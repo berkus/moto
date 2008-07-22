@@ -1,0 +1,15 @@
+bf_lex.moto:1: $case not within $switch
+bf_lex.moto:2: $endswitch without $switch
+bf_lex.moto:3: $else without $if
+bf_lex.moto:4: $elseif without $if
+bf_lex.moto:5: $endif without $if
+bf_lex.moto:6: $endwhile without $while
+bf_lex.moto:7: $endfor without $for
+bf_lex.moto:8: $break not within loop
+bf_lex.moto:9: $continue not within loop
+bf_lex.moto:14: Unterminated string
+bf_lex.moto:14: Unmatched '('
+bf_lex.moto:13: Unterminated $switch statement
+bf_lex.moto:12: Unterminated $for loop
+bf_lex.moto:11: Unterminated $if statement
+bf_lex.moto:10: Unterminated $while loop

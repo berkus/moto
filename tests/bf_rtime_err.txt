@@ -1,0 +1,2 @@
+bf_rtime_err.moto:2: Uncaught Exception
+	motoi.c:1565: NullPointerException 

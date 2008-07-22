@@ -1,0 +1,36 @@
+${
+   void outputException(Exception e){
+      print "caught exception '"+e.toString()+"'\n   thrown at "+e.getFile()+":"
++e.getLine()+"\n"; 
+      // print "message recieved '"+e.getMessage()+"'\n";
+   }
+}$
+${
+   String ns = null;
+   int[] ia = new int[3];
+   
+   try {   
+      ns.length();
+   } catch (NullPointerException e) {
+      outputException(<Exception>e);
+   }
+
+   try {
+      ia[4]=3;
+   } catch (ArrayBoundsException e) {
+      outputException(<Exception>e);
+   }
+
+   try {
+      ia = null;
+      print ia[4];
+   } catch (NullPointerException e) {
+      outputException(<Exception>e);
+   }
+
+   try {
+      print 1/0;
+   } catch (MathException e) {
+      outputException(<Exception>e);
+   }
+}$

@@ -1,0 +1,10 @@
+${
+   class Foo{
+      int maka(){
+         this = null;
+         this++;
+         delete this;
+         this = 27;
+      }
+   }
+}$

@@ -1,0 +1,21 @@
+true - true
+true - true 
+ - nothing 
+ - nothing
+true - true
+true - true
+false - false
+false - false
+false - false
+false - false
+- nothing
+- nothing
+ - nothing
+ - nothing
+true- true
+true- true
+
+a and b are 1  
+a is 1 and be is not 1
+a is not 1 and b is not 1
+a is not 1 and b is 1 

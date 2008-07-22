@@ -1,0 +1,113 @@
+#======================================================================
+#
+# Makefile for Codex C library
+#
+# $RCSfile: Makefile.in,v $
+# $Revision: 1.25 $
+# $Author: dhakim $
+# $Date: 2003/02/27 19:46:59 $
+#
+#======================================================================
+# Standard Variables
+#
+
+
+include @ROOT_DIR@/make.vars
+
+#----------------------------------------------------------------------
+# Variables
+
+LIBRARY = libcodex.a
+OBJECTS = cdate.o \
+	dfa.o \
+	enumeration.o \
+	err.o \
+	exception.o \
+	excpfn.o \
+	fileio.o \
+	hashset.o \
+	hashtable.o \
+	intenumeration.o \
+	inthashtable.o \
+	intset.o \
+	intstack.o \
+	intboundedqueue.o \
+	intqueue.o \
+	itoihashtable.o \
+	jumptable.o \
+	kmpstring.o \
+	log.o \
+	magic.o \
+	mdfa.o \
+	mman.o \
+	mmmap.o \
+	mxarr.o \
+	mxstring.o \
+	nfa.o \
+	number.o \
+	blockpool.o \
+	objectpool.o \
+	path.o \
+	properties.o \
+	cdx_regex.o \
+	cdx_function.o \
+	runtime.o \
+	sharedmem.o \
+	sort.o \
+	stack.o \
+	stacktrace.o \
+	state.o \
+	stringbuffer.o \
+	stringset.o \
+	strptime.o \
+	symboltable.o \
+	sysmalloc.o \
+	tnfa.o \
+	tabulardata.o \
+	tokenizer.o \
+	util.o \
+	vector.o 
+
+#----------------------------------------------------------------------
+# Flags
+
+CPPFLAGS = @CPPFLAGS@
+DEFS = @DEFS@
+CFLAGS = @CFLAGS@
+
+#----------------------------------------------------------------------
+# Rules
+
+all: ${LIBRARY}
+
+${LIBRARY}: ${OBJECTS}
+	${AR} ${ARFLAGS} ${LIBRARY} ${OBJECTS}
+	${RANLIB} ${LIBRARY}
+	${INSTALL} ${LIBRARY} ${LIB_DIR}
+	cp *.h ${INC_DIR}		
+
+dep:
+	@echo "Building dependency list..."
+	@perl ${RPATH}/dep
+
+install: all
+	${MKDIR} ${INST_LIB_DIR}
+	${MKDIR} ${INST_INC_DIR}
+	${INSTALL} ${LIBRARY} ${INST_LIB_DIR}
+	${RANLIB} ${INST_LIB_DIR}/${LIBRARY}
+	cp *.h ${INST_INC_DIR}
+
+#----------------------------------------------------------------------
+# Standard Rules
+
+include @ROOT_DIR@/make.xrules
+
+#----------------------------------------------------------------------
+# Generated rules
+
+include dep.mk
+
+#======================================================================
+# end
+#======================================================================
+ 

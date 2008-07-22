@@ -1,0 +1,3 @@
+$use("cstdlib")
+$declare(char c = 'a')
+$(isalnum('a'))

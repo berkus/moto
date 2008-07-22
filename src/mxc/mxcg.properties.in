@@ -1,0 +1,200 @@
+STANDARD_INCLUDES 
+
+	#ifdef HAVE_RCONFIG_H
+	#include <rconfig.h>
+	#endif
+	#ifdef HAVE_CONFIG_H
+	#include <config.h>
+	#endif
+	
+	#include <stdlib.h>
+	#include <string.h>
+
+        #include "integer.h"
+
+	#include "memsw.h"  
+	#include "excpfn.h" 
+	#include "motoerr.h"
+	#include "motocodes.h"
+	#include "env.h"
+	#include "mx.h"
+
+STANDARD_DEFINES
+	
+	#define moto_return_ptr(ptr) ((*(void**)retptr)=(ptr))
+	#define moto_return_boolean(ptr) ((*(unsigned char*)retptr)=((ptr)==0?0:1))
+	#define moto_return_char(ptr) ((*(char*)retptr)=(ptr))
+	#define moto_return_byte(ptr) ((*(signed char*)retptr)=(ptr))
+	#define moto_return_int(ptr) ((*(int32_t*)retptr)=(ptr))
+	#define moto_return_long(ptr) ((*(int64_t*)retptr)=(ptr))
+	#define moto_return_float(ptr) ((*(float*)retptr)=(ptr))
+	#define moto_return_double(ptr) ((*(double*)retptr)=(ptr))
+
+USAGE_DOCS
+        <HTML>
+            <BODY BGCOLOR=#FFFFFF>
+               <EXTENSIONS>
+            </BODY>
+        </HTML>
+
+EXTENSION_START
+        <table width=95% cellpadding=0 cellspacing=0 bgcolor="#000066"><tr><td>
+           <table cellpadding=1 cellspacing=1 width=100%>
+              <tr ><td bgcolor="#000066">
+                 <font size=+1 color="#FFFFFF"><B><EXTNAME></B></font>
+              </td></tr>
+
+EXTENSION_END
+           </table>
+        </td></tr></table> <br clear=all>
+
+CONSTRUCTORS
+        <tr><td bgcolor="#CCCCFF"> <B>Constructors</B> </td></tr>
+
+METHODS
+        <tr><td bgcolor="#CCCCFF"> <B>Methods</B> </td></tr>
+
+METHODOPERATORS
+        <tr><td bgcolor="#CCCCFF"> <B>Operators</B> </td></tr>
+
+RELATEDFUNCTIONS
+        <tr><td bgcolor="#CCCCFF"> <B>Related Functions</B> </td></tr>
+
+FUNCTIONOPERATORS
+        <tr><td bgcolor="#CCCCFF"> <B>Related Operators</B> </td></tr>
+
+PROTOTYPE
+        <tr><td bgcolor="#FFFFFF"><PROTO><p><DESC> </td></tr>
+
+EXPORT_FUNCTIONS
+	
+	#include "mx.h"
+	
+	static int __MOTO_symbolCount = <SYMBOLCOUNT>;
+	static char *__MOTO_symbols[] = {
+	<SYMBOLS>
+	};
+	
+	static int __MOTO_archiveCount = <ARCHIVECOUNT>;
+	static char *__MOTO_archives[] = {
+	<ARCHIVES>
+	};
+	
+	static int __MOTO_includeCount = <INCLUDECOUNT>;
+	static char *__MOTO_includes[] = {
+	<INCLUDES>
+	};
+	
+	static int __MOTO_includePathCount = <INCLUDEPATHCOUNT>;
+	static char *__MOTO_includePaths[] = {
+	<INCLUDEPATHS>
+	};
+
+	static int __MOTO_libraryCount = <LIBRARYCOUNT>;	
+	static char *__MOTO_libraries[] = {
+	<LIBRARIES>
+	};
+	
+	static int __MOTO_libraryPathCount = <LIBRARYPATHCOUNT>;	
+	static char *__MOTO_libraryPaths[] = {
+	<LIBRARYPATHS>
+	};
+	
+	void __MOTO_<TARGET>_get_record(MotoExtension *x) {   
+		int i;   
+		(*x).symbols = (char **)malloc(__MOTO_symbolCount * sizeof(char *) + 1);   
+		for (i = 0; i < __MOTO_symbolCount; i++)    
+			(*x).symbols[i] = (char *)estrdup(__MOTO_symbols[i]);   
+		(*x).symbolCount = __MOTO_symbolCount;   
+		
+		(*x).includes = (char **)malloc(__MOTO_includeCount * sizeof(char *) + 1);   
+		for (i = 0; i < __MOTO_includeCount; i++) 
+			(*x).includes[i] = (char *)estrdup(__MOTO_includes[i]);   
+		(*x).includeCount = __MOTO_includeCount;
+		
+		(*x).includePaths = (char **)malloc(__MOTO_includePathCount * sizeof(char *) + 1);   
+		for (i = 0; i < __MOTO_includePathCount; i++)   
+			(*x).includePaths[i] = (char *)estrdup(__MOTO_includePaths[i]);   
+		(*x).includePathCount = __MOTO_includePathCount;
+		
+		(*x).archives = (char **)malloc(__MOTO_archiveCount * sizeof(char *) + 1);   
+		for (i = 0; i < __MOTO_archiveCount; i++)    
+			(*x).archives[i] = (char *)estrdup(__MOTO_archives[i]);   
+		(*x).archiveCount = __MOTO_archiveCount; 
+
+		(*x).libraries = (char **)malloc(__MOTO_libraryCount * sizeof(char *) + 1);   
+		for (i = 0; i < __MOTO_libraryCount; i++)    
+			(*x).libraries[i] = (char *)estrdup(__MOTO_libraries[i]);   
+		(*x).libraryCount = __MOTO_libraryCount;
+		
+		(*x).libraryPaths = (char **)malloc(__MOTO_libraryPathCount * sizeof(char *) + 1);   
+		for (i = 0; i < __MOTO_libraryPathCount; i++)  
+			(*x).libraryPaths[i] = (char *)estrdup(__MOTO_libraryPaths[i]);  
+		(*x).libraryPathCount = __MOTO_libraryPathCount;     
+	}     
+	
+CFILE
+	
+	/* EXTENSION: <NAME> */
+	#define <SYMBOL>
+	#include "headers.mx.h"	
+	
+	/* PROTOTYPES */
+	<PROTOTYPES>	
+	
+	/* FUNCTIONS */
+	<FUNCTIONS>
+	
+FUNCTION_PROTOTYPE	
+	
+	void <FN>
+	(MotoEnv *env, int argc, void **argv, void *retptr);
+
+FUNCTION_BODY	
+	
+	void <FN>
+	(MotoEnv *env, int argc, void **argv, void *retptr) {
+	<CALL>
+	}
+
+DESTRUCTOR_PROTOTYPE
+	
+	void __MOTO_D_<EN>
+	(void *arg);
+
+DESTRUCTOR_BODY
+
+	void __MOTO_D_<EN>
+	(void *arg) {
+	   <DN>(arg);
+	}
+	
+MAKEFILE
+	
+	include <ROOT_DIR>/make.vars		
+
+	OBJECTS = <OBJECTS>
+	LINK=.library
+	LIBRARY=libmx_<TARGET>.a
+	SOFILE=libmx_<TARGET>.so
+	SOMFILE=${SOFILE}.1
+	SOMMFILE=${SOMFILE}.0
+	LIBS=<LIBS>	
+	FILES=<FILES>
+
+	CPPFLAGS= -I${INC_DIR} <INCLUDEPATHS> -DHAVE_CONFIG_H
+    LDFLAGS= @MX_LDFLAGS@
+	CFLAGS = -g -O2 -Wall -fPIC <SHARED_MALLOC> ${EXCFLAGS} 
+
+	all: ${SOFILE}
+	
+	${SOFILE}: ${OBJECTS}
+		rm -f ${LINK} ${SOMFILE} ${SOFILE}
+		${CC} ${LDFLAGS} <LIBRARYPATHS> -o ${SOMMFILE} *.o ${LIBS} <ARCHIVES>
+		ln -s ${SOMMFILE} ${SOMFILE}
+		ln -s ${SOMFILE} ${SOFILE}
+		ln -s ${SOMFILE} ${LINK}
+		${AR} ${ARFLAGS} ${LIBRARY} *.o 
+		${RANLIB} ${LIBRARY} 
+
+	install: all		

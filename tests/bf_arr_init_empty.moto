@@ -1,0 +1,69 @@
+${
+   void output(double[] A){
+		print '{'; for(int i=0;i<length(A);i++) {print (i!=0?",":"")+A[i];} print "}\n";}
+   void output(float[] A){
+		print '{'; for(int i=0;i<length(A);i++) {print (i!=0?",":"")+A[i];} print "}\n";}
+   void output(char[] A){
+		print '{'; for(int i=0;i<length(A);i++) {print (i!=0?",":"")+A[i];} print "}\n";}
+   void output(int[] A){
+		print '{'; for(int i=0;i<length(A);i++) {print (i!=0?",":"")+A[i];} print "}\n";}
+   void output(long[] A){
+		print '{'; for(int i=0;i<length(A);i++) {print (i!=0?",":"")+A[i];} print "}\n";}
+   void output(boolean[] A){
+		print '{'; for(int i=0;i<length(A);i++) {print (i!=0?",":"")+A[i];} print "}\n";}
+   void output(String[] A){
+		print '{'; for(int i=0;i<length(A);i++) {print (i!=0?",":"")+A[i];} print "}\n";}
+   void output(byte[] A){
+		print '{'; for(int i=0;i<length(A);i++) {print (i!=0?",":"")+A[i];} print "}\n";}
+   void output(Object[] A){
+		print '{'; for(int i=0;i<length(A);i++) {print (i!=0?",":"")+A[i];} print "}\n";}
+								
+   void output(int[][] numbers){
+		int i,j;
+		print '{';
+		for (i = 0; i < length(numbers); i++) {
+			print '{';
+			for (j = 0; j < length(numbers[i]); j++) {
+				print (j!=0?",":"")+numbers[i][j] ;
+			}
+			print "}";
+		}
+		print "}\n";   
+   }
+   void output(int[][][] numbers){
+		int i,j,k;
+		print '{';
+		for (i = 0; i < length(numbers); i++) {
+			print '{';
+			for (j = 0; j < length(numbers[i]); j++) {
+			print '{';
+				for (k = 0; k < length(numbers[i][j]); k++) {
+					print (k!=0?",":"") +numbers[i][j][k] ;
+				}
+				print "}";
+			}
+			print "}";
+		}   
+		print "}\n";
+   }
+   
+   // Basic tests
+   
+   int[] d1 = {};
+   int[][] d2 = {{},{ },{}};
+   int[][][] d3 = {{{}},{{},{}},{{},{},{ }}};
+   int[][][] d4 = {{},{ },{}};
+   int[][][] d5 = {};
+   
+   output(d1);
+   output(d2);
+   output(d3);
+   output(d4);
+   output(d5);
+     
+   output(<int[]>{ });
+   output(<int[][]>{{ },{},{ }});
+   output(<int[][][]>{{{ }},{{ },{4,5}},{{ },{},{ }}});
+   output(<int[][][]>{{ },{{ },{4,5}},{ }});
+   
+}$

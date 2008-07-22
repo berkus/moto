@@ -1,0 +1,38 @@
+$use("codex.util")
+$declare(SymbolTable st = new SymbolTable())
+${
+st.put("foo","bar");
+st.put("maka","slaka");
+st.put("bingo","null");
+print <String>st.get("foo") + " = bar\n";
+print <String>st.get("maka") + " = shlaka\n";
+print <String>st.get("bingo") + " = null\n";
+print <String>st.get("boingo") + " = null\n";
+print st.contains("maka") + " = true\n";
+print st.contains("bingo") + " = true\n";
+print st.contains("boingo") + " = false\n";
+print st.size() + " = 3\n";
+
+Enumeration e = st.keys();
+while(e.hasNext()){
+	print <String>e.next()+",";
+}
+print "= maka,foo,bingo,\n";
+
+e = st.values();
+while(e.hasNext()){
+        print <String>e.next()+",";
+}
+print "= shlaka,bar,null,\n";
+
+st.remove("maka");
+print st.size() + " = 2\n";
+print st.contains("maka") + " = false\n";
+st.remove("bingo");
+print st.size() + " = 1\n";
+print st.contains("bingo") + " = false\n";
+st.remove("boingo");
+print st.size() + " = 1\n";
+st.remove("foo");
+print st.size() + " = 0\n";
+}$

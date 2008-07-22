@@ -1,0 +1,14 @@
+${boolean b=true; print b; // true
+}$
+${char c='c'; print c; // c
+}$
+${double d=7.0; print d; // 7.000000e+00
+}$
+${float f=7.0f; print f; // 7.000000
+}$
+${int i=7; print i; // 7
+}$
+${long l=7L; print l; // 7 
+}$
+${String s="hello"; print s; // hello
+}$

@@ -1,0 +1,80 @@
+${
+   int i;
+   for(i=0;i<5;i++){
+      try {
+         print "### In Try Block on iteration "+i+"\n";
+         if(i<2) continue; else break;
+      } catch (Exception e) {
+         print "### In Catch Block\n"; 
+      } finally {
+         print "### In Finally Block on iteration "+i+"\n";
+      }
+   }
+
+   i=0;
+   while(i<5){
+      try {
+         print "### In Try Block on iteration "+i+"\n";
+         if(i<2) continue; else break;
+      } catch (Exception e) {
+         print "### In Catch Block\n";
+      } finally {
+         print "### In Finally Block on iteration "+i+"\n";
+         i++;
+      }
+   }
+   
+   for(i=0;i<5;i++){
+      try {
+         print "### In Try Block on iteration "+i+"\n";
+         if(i<2) continue; else break;
+      } catch (Exception e) {
+         print "### In Catch Block\n"; 
+      } finally {
+         print "### In Finally Block on iteration "+i+"\n";
+         if(i<3) continue;
+      }
+   }
+
+   i=0;
+   while(i<5){
+      try {
+         print "### In Try Block on iteration "+i+"\n";
+         if(i<2) continue; else break;
+      } catch (Exception e) {
+         print "### In Catch Block\n";
+      } finally {
+         print "### In Finally Block on iteration "+i+"\n";
+         i++;
+         if(i<=3) continue;
+      }
+   }
+   
+   for(i=0;i<5;i++){
+      try {
+         print "### In Try Block on iteration "+i+"\n";
+         throw new NullPointerException();
+      } catch (Exception e) {
+         print "### In Catch Block on iteration "+i+"\n"; 
+         if(i<2) continue; else break;
+      } finally {
+         print "### In Finally Block on iteration "+i+"\n";
+         if(i<3) continue;
+      }
+   }
+
+   i=0;
+   while(i<5){
+      try {
+         print "### In Try Block on iteration "+i+"\n";
+         throw new NullPointerException();
+      } catch (Exception e) {
+         print "### In Catch Block on iteration "+i+"\n";
+         if(i<2) continue; else break;
+      } finally {
+         print "### In Finally Block on iteration "+i+"\n";
+         i++;
+         if(i<=3) continue;
+      }
+   }
+}$

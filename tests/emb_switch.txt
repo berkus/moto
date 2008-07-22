@@ -1,0 +1,8 @@
+Embedded switch with no default
+baz
+Embedded switch with default
+zip
+Embedded switch with default only
+zip
+Embedded empty switch
+

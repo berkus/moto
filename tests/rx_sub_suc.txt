@@ -1,0 +1,24 @@
+'dhakim@webcodex.com' =>
+	<a href="mailto:dhakim@webcodex.com">dhakim at webcodex.com</a>
+'email me at dhakim@webcodex.com' =>
+	email me at <a href="mailto:dhakim@webcodex.com">dhakim at webcodex.com</a>
+'dhakim@webcodex.com is my email' =>
+	<a href="mailto:dhakim@webcodex.com">dhakim at webcodex.com</a> is my email
+'dhakim@webcodex.com is my email, my email is dhakim@webcodex.com' =>
+	<a href="mailto:dhakim@webcodex.com">dhakim at webcodex.com</a> is my email, my email is <a href="mailto:dhakim@webcodex.com">dhakim at webcodex.com</a>
+
+
+'' =>
+	
+'bar' =>
+	bar
+'foofoofoo' =>
+	!!!
+'barfoofoofoo' =>
+	bar!!!
+'foofoofoobar' =>
+	!!!bar
+'foofoofoobarfoofoofoo' =>
+	!!!bar!!!
+'foofoobarfoofoobarfoofoo' =>
+	!!bar!!bar!!

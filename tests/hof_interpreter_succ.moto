@@ -1,0 +1,37 @@
+$use("cstdlib")
+$use("codex.util")
+${
+	/* Assignments of function typed expressions */
+	
+	def int(String) myatoi = &atoi(<String> ?); 
+	print myatoi("23");
+	
+	void doTenTimes(String s, int(String) f) { 
+		for(int i=0;i<10;i++){ print f(s) + "\n";} 
+	}
+	
+	doTenTimes("2",&atoi(<String> ?));
+	
+	void each(String[] a, int(String) f) {
+		for(int i=0;i<length(a);i++)
+			print f(a[i]) + "\n";
+	}
+	
+	void printEach(Object[] a, String(Object) f){
+		for(int i=0;i<length(a);i++) print f(a[i]);
+	}
+	
+	String printDate(Object d){
+		Date date = <Date>d;
+		return (1900+date.getYear())+"/"+(1+date.getMonth())+"/"+date.getDayOfMonth();
+	}
+	
+	each(<String[]>{"10","9","8","7","6"},myatoi);
+	
+	def void (String[], int(String)) foreach = & each(<String[]> ?, <int(String)> ?);
+	
+	foreach(<String[]>{"10","9","8","7","6"},myatoi);
+	
+	printEach(<Date[]>{new Date()}, &printDate(<Object> ?));
+	
+}$

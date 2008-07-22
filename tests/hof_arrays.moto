@@ -1,0 +1,18 @@
+${
+    int one() {return 1;}
+    int two() {return 2;}
+    int three() {return 3;}
+    
+    int()[] ifa = new int()[3];
+    int()[][] ifaa = new int()[3][];
+    int(String[])[] isafa = new int(String[])[3]; 
+    
+    // Identifier form
+    ifa = <int()[]>{&one(),&two(),&three()};
+    print ifa[0]()+"-"+ifa[1]()+"-"+ifa[2]()+"\n";
+
+	// Short form
+    ifa = <int()[]>{one,two,three};
+    print ifa[0]()+"-"+ifa[1]()+"-"+ifa[2]()+"\n";
+  
+}$

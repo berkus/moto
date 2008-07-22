@@ -1,0 +1,182 @@
+${
+   void output(double[] A){
+		print '{'; for(int i=0;i<length(A);i++) {print (i!=0?",":"")+A[i];} print "}\n";}
+   void output(float[] A){
+		print '{'; for(int i=0;i<length(A);i++) {print (i!=0?",":"")+A[i];} print "}\n";}
+   void output(char[] A){
+		print '{'; for(int i=0;i<length(A);i++) {print (i!=0?",":"")+A[i];} print "}\n";}
+   void output(int[] A){
+		print '{'; for(int i=0;i<length(A);i++) {print (i!=0?",":"")+A[i];} print "}\n";}
+   void output(long[] A){
+		print '{'; for(int i=0;i<length(A);i++) {print (i!=0?",":"")+A[i];} print "}\n";}
+   void output(boolean[] A){
+		print '{'; for(int i=0;i<length(A);i++) {print (i!=0?",":"")+A[i];} print "}\n";}
+   void output(String[] A){
+		print '{'; for(int i=0;i<length(A);i++) {print (i!=0?",":"")+A[i];} print "}\n";}
+   void output(byte[] A){
+		print '{'; for(int i=0;i<length(A);i++) {print (i!=0?",":"")+A[i];} print "}\n";}
+   void output(Object[] A){
+		print '{'; for(int i=0;i<length(A);i++) {print (i!=0?",":"")+A[i];} print "}\n";}
+								
+   void output(int[][] numbers){
+		int i,j;
+		print '{';
+		for (i = 0; i < length(numbers); i++) {
+			print '{';
+			for (j = 0; j < length(numbers[i]); j++) {
+				print (j!=0?",":"")+numbers[i][j] ;
+			}
+			print "}";
+		}
+		print "}\n";   
+   }
+   void output(int[][][] numbers){
+		int i,j,k;
+		print '{';
+		for (i = 0; i < length(numbers); i++) {
+			print '{';
+			for (j = 0; j < length(numbers[i]); j++) {
+			print '{';
+				for (k = 0; k < length(numbers[i][j]); k++) {
+					print (k!=0?",":"") +numbers[i][j][k] ;
+				}
+				print "}";
+			}
+			print "}";
+		}   
+		print "}\n";
+   }
+   
+   // Basic tests
+   
+   int[] d1 = {3,6,9};
+   int[][] d2 = {{2,4},{6,8,10},{12,14,16,18}};
+   int[][][] d3 = {{{1}},{{2,3},{4,5}},{{6,7,8},{9,10,11},{12,13,14}}};
+   
+   output(d1);
+   output(d2);
+   output(d3);
+   
+   output(<int[]>{3,6,9});
+   output(<int[][]>{{2,4},{6,8,10},{12,14,16,18}});
+   output(<int[][][]>{{{1}},{{2,3},{4,5}},{{6,7,8},{9,10,11},{12,13,14}}});
+   
+   // Tests involving casts
+   
+   int[] dc1 = {3.1,6.2,9.3};
+   int[][] dc2 = {{'a','b','c'},{'d'}};
+   output(dc1);
+   output(dc2);
+   
+   // Tests on different subtypes
+   
+	double da[] = {0,1.1,2.2,3.3};
+	float fa[] = {0,1.1,2.2,3.3};
+	char ca[] = {65,'B','C'};
+	int ia[] = {0,1,2.1,'D'-'A',4};
+	long la[] = {0,1,2.1,'D'-'A',99999999999};
+	boolean ba[] = {true,true,false,false,1<2,3>4};
+	String sa[] = {"Foo","Bar",new String(<char[]>{'M','a','c','a'})};
+	byte ya[] = {-2,-1,0,1,2};
+
+   output(da);
+   output(fa);
+   output(ca);
+   output(ia);
+   output(la);
+   output(ba);
+   output(sa);
+   output(ya);
+}$
+
+$* Inline variants of the same tests *$ 
+
+$declare(int[] id1 = {3,6,9})
+$declare(int[][] id2 = {{2,4},{6,8,10},{12,14,16,18}})
+$declare(int[][][] id3 = {{{1}},{{2,3},{4,5}},{{6,7,8},{9,10,11},{12,13,14}}})
+   
+$do(output(id1))
+$do(output(id2))
+$do(output(id3))
+   
+$do(output(<int[]>{3,6,9}))
+$do(output(<int[][]>{{2,4},{6,8,10},{12,14,16,18}}))
+$do(output(<int[][][]>{{{1}},{{2,3},{4,5}},{{6,7,8},{9,10,11},{12,13,14}}}))
+   
+$* Tests involving casts *$
+   
+$declare(int[] idc1 = {3.1,6.2,9.3})
+$declare(int[][] idc2 = {{'a','b','c'},{'d'}})
+$do(output(idc1))
+$do(output(idc2))
+
+${
+	int i,j,k;
+	int[][][] numbers = <int[][][]>{
+		{	
+			{1,2,3},
+			{4,5,6}
+		},
+		{
+			{7,8},
+			{9,10}
+		},
+		{
+			{11,12},
+			{13,14}
+		}
+	};
+
+
+	int[][][] morenumbers = {
+		{	
+			{1,2.2,3},
+			{4,5,6}
+		},
+		{
+			{7,8},
+			{9,10}
+		},
+		{
+			{11,12},
+			{'a','b',1234}
+		}
+	};
+
+	for (i = 0; i < length(morenumbers); i++) {
+		for (j = 0; j < length(morenumbers[i]); j++) {
+			for (k = 0; k < length(morenumbers[i][j]); k++) {
+				print morenumbers[i][j][k] + "\n";
+			}
+		}
+	}
+	
+	String[][][] divina_commedia = <String[][][]>{
+		{	
+			{"Nel","mezzo"},
+			{"del","cammin","di"}
+		},
+		{
+			{"nostra","vita"},
+			{"mi","ritrovai"}
+		},
+		{
+			{"per","una"},
+			{"selva","oscura"}
+		}
+	};
+
+	for (i = 0; i < length(divina_commedia); i++) {
+		for (j = 0; j < length(divina_commedia[i]); j++) {
+			for (k = 0; k < length(divina_commedia[i][j]); k++) {
+				print divina_commedia[i][j][k] + "\n";
+			}
+		}
+	}
+
+	int floats[] = <int[]>{1,2,<int>3.5};
+	for (i = 0; i < length(floats); i++) {
+		print floats[i] + " ";
+	}
+
+}$

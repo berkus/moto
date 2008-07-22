@@ -1,0 +1,16 @@
+${
+	use "codex.util";
+
+	try {
+
+		SymbolTable i = new SymbolTable();
+		i["foo"] = "bar";
+
+		SymbolTable e;
+		e["foo"] = "bar";
+
+	} catch (NullPointerException e) {
+		print e.getMessage();
+	}
+
+}$

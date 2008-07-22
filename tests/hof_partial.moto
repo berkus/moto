@@ -1,0 +1,17 @@
+$use("cstdlib")
+$use("codex.util")
+
+${
+	double(double) square = pow(?,2);
+	double(double) twoToThePow = pow(2,?);
+
+	print "square(3) = "+ square(3) + "\n";
+	print "twoToThePow(4) = "+ twoToThePow(4) + "\n";
+	
+	SymbolTable s = new SymbolTable();
+	
+	void(Object) setFoo = s.put("foo",?);
+	setFoo("bar");
+	print "The value of foo is: "+<String>s.get("foo") +"\n";
+	 
+}$

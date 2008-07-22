@@ -1,0 +1,16 @@
+config.cache
+config.log
+config.h
+config.status
+moto.tab.c
+Makefile
+moto.tab.h
+lex.yy.c
+lex.eyy.c
+motopp.tab.c
+motopp.tab.h
+lex.pp.c
+readdefs.tab.c
+readdefs.tab.h
+lex.ryy.c
+moto

@@ -1,0 +1,52 @@
+
+
+### In un-embedded TRY block
+
+   ### In un-embedded CATCH block
+
+   caught exception 'Exception : Exception from un-embedded TRY block'
+   thrown at excp_succ.moto:10
+### In un-embedded FINALLY block
+
+### In TRY block
+### In CATCH block for NullPointerExceptions
+caught exception 'NullPointerException'
+   thrown at excp_succ.moto:22
+### In FINALLY block
+### In TRY block 1
+### In FINALLY block 1
+
+### In TRY block 2
+### In CATCH block 2
+caught exception 'Exception : Exception from TRY block 2'
+   thrown at excp_succ.moto:49
+### In FINALLY block 2
+
+### In TRY block 3
+### In inner TRY block 3
+### In inner CATCH block 3
+caught exception 'Exception : Exception from inner TRY block 3'
+   thrown at excp_succ.moto:63
+### In inner FINALLY block 3
+### In CATCH block 3
+caught exception 'Exception : Exception from inner CATCH block 3'
+   thrown at excp_succ.moto:67
+### In FINALLY block 3
+
+### In TRY block 4
+### In inner TRY block 4
+### In inner CATCH block 4
+caught exception 'Exception : Exception from inner TRY block 4'
+   thrown at excp_succ.moto:84
+### In inner FINALLY block 4
+### In CATCH block 4
+caught exception 'Exception : Exception from inner FINALLY block 4'
+   thrown at excp_succ.moto:90
+### In FINALLY block 4
+### First exception should be a MathException
+caught exception 'MathException'
+   thrown at excp_succ.moto:107
+### Last exception should be a NullPointerException
+caught exception 'NullPointerException'
+   thrown at excp_succ.moto:104
+

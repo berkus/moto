@@ -1,0 +1,19 @@
+$define()             $* Malformed $define *$
+$enddef               $* $enddef without $define *$
+$return()             $* Malformed $return *$
+$return(1)            $* $return w/out $define *$
+
+$define(int foo())
+   $define(int bar()) $* $define inside of a definition *$
+   $enddef
+$enddef
+
+${ return 12 ; }$     $* return outside of a definition *$
+${ 
+   int foo(){ 
+      int bar(){}     // nested definition  
+   }
+}$
+
+$define(int foo())    $* $define without enddef *$
+

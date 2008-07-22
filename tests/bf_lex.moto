@@ -1,0 +1,14 @@
+$case('a')
+$endswitch
+$else
+$elseif(true)
+$endif
+$endwhile
+$endfor
+$break
+$continue
+$while(true)
+$if(true)
+$for(;true;)
+$switch(a)
+$(")

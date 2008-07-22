@@ -1,0 +1,24 @@
+${
+
+	use "codex.util";	
+
+	IntSet i1 = new IntSet();
+	IntSet i2 = new IntSet();
+
+	i1+=1;
+	i1+=2;
+	i1+=3;
+	i2+=1;
+	i2+=2;
+	i2+=4;
+
+	IntSet i3 = i1 + i2;
+	print i3.size() + "\n";
+
+	i3 = i3 - i1;
+	print i3.size() + "\n";
+
+	i3 = i2 + i1;
+	print i3.size() + "\n";
+	
+}$

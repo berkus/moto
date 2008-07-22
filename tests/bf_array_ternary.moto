@@ -1,0 +1,4 @@
+${
+   int foo[] = true ? new int[24] : new int [2];
+   print foo[1]=12;
+}$

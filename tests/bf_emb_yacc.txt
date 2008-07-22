@@ -1,0 +1,7 @@
+bf_emb_yacc.moto:2: Malformed use statement, expected use <string literal>;
+bf_emb_yacc.moto:7: Malformed print statement, expected print <expr>;
+bf_emb_yacc.moto:9: Malformed for statement, expected for((<expr>)?;<expr>;(<expr>)?) <statement>
+bf_emb_yacc.moto:12: Malformed while statement, expected while(<expr>) <statement>
+bf_emb_yacc.moto:15: Malformed switch statement, expected switch(<expr>) <case statement list>
+bf_emb_yacc.moto:18: Malformed if statement, expected if(<expr>) <statement> (else <statement>)?
+bf_emb_yacc.moto:21: Malformed case, expected case <literal>: <statement list>

@@ -1,0 +1,83 @@
+${
+   use "codex.db.pgsql";
+
+   String pad(String txt,int size){
+      char[] r = new char[size];
+      int i;
+      for(i=0;i<size;i++){
+         if(i<txt.length()) r[i]=txt.charAt(i);
+         else r[i]=' ';
+      }
+      return new String(r);
+   }
+
+   /* Display the table and return the number of rows iterated over */
+   int printResult(PGResultSet rset){
+      int i=0,j;
+
+      for(j=0;j<rset.columns();j++)
+         print (j==0?"+":"")+"---------------+";
+      print "\n";
+      for(j=0;j<rset.columns();j++)
+         print (j==0?"|":"")+pad(rset.getColumnName(j),15) + "|";
+      print "\n";
+      for(j=0;j<rset.columns();j++)
+         print (j==0?"+":"")+"---------------+";
+      print "\n";
+
+      while(rset.next()){
+         for(j=0;j<rset.columns();j++)
+            print (j==0?"|":"")+pad(rset.getString(j),15)+ "|";
+         print "\n";
+         i++;
+      }
+
+      for(j=0;j<rset.columns();j++)      
+         print (j==0?"+":"")+"---------------+";     
+      print "\n";
+      
+      return i;
+   }
+   
+   String DBHost = "localhost";
+   String DBName = "test";
+   String DBUser = "postgres";
+   String DBPassword = "postgres";
+
+   print "#Connecting to database\n";
+
+   PGConnection conn = new PGConnection(
+      DBHost,DBName,DBUser,DBPassword);
+
+   print "#Creating test tables\n";
+   
+   conn.update("CREATE TABLE test1(id int)");
+   conn.update("CREATE TABLE test2(name varchar(64), value varchar(64))");
+
+   print "#Listing tables\n";
+
+   PGResultSet rset = conn.listTables();
+   int i = printResult(rset);
+
+   print "#Comparing sizes\n";
+   print "i="+i+" rset.rows()="+rset.rows()+"\n";
+
+   print "#Inserting data\n";
+   conn.update("INSERT INTO test2 (name,value) VALUES ('foo','bar')");
+   conn.update("INSERT INTO test2 (name,value) VALUES ('maka','"+
+      conn.escape("sl'ack'a")+"')"); 
+
+   print "#Verifying insert\n";
+   printResult(rset=conn.query("SELECT * FROM test2"));
+
+   print "#Updating data\n";
+   i = conn.update("UPDATE test2 SET value='ragga'");
+   print "Rows updated = "+i+"\n";
+
+   print "#Verifying update\n";
+   printResult(rset=conn.query("SELECT * FROM test2"));
+
+   print "#Dropping test tables\n";
+   conn.update("DROP TABLE test1");
+   conn.update("DROP TABLE test2");
+}$   

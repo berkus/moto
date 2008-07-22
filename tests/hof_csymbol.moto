@@ -1,0 +1,68 @@
+${
+    String sfunc(){ return "happy"; }
+    int ifunc(){ return 23; }
+    String[] safunc() { return <String[]>{"we","got","the","funk"}; }
+
+    String sfunci(int i){ return "happy * "+i; }
+    int ifunci(int i){ return 23 * i; }
+    String[] safunci(int i) { return <String[]>{"we","got","the","funk","*",""+i}; }
+        
+    int() iffunc() { return &ifunc(); }
+    String() sffunc() { return &sfunc(); }
+    String[]() saffunc() { return &safunc(); }    
+    
+	void test(String() f) {print f() + "\n"; }
+	void test(int() f) {print f() + "\n"; }
+	void test(String[]() f) {print "{"+join(f(),",") + "}"+"\n"; }
+
+	void test(String(int) f) {print f(3) + "\n"; }
+	void test(int(int) f) {print f(3) + "\n"; }
+	void test(String[](int) f) {print "{"+join(f(3),",") + "}"+"\n"; }
+		
+	void test(int()() f) {print f()() + "\n"; }
+	void test(String()() f) {print f()() + "\n"; }
+	void test(String[]()() f) {print "{"+join(f()(),",") + "}"+"\n"; }
+
+	void test(int i,int()() f) {print i+"-"+f()() + "\n"; }
+	void test(int i,int() f,String()() g) {print i+"-"+f()+"-"+ g()() + "\n"; }
+	void test(String[]() f,String[]()() g) {print "{"+join(f(),",") + "}"+"-"+"{"+join(g()(),",") + "}"+"\n"; }
+					
+	test(&sfunc()); // Identifier form
+	test(sfunc); // Short form	
+	test(&ifunc()); // Identifier form
+	test(ifunc); // Short form
+	test(&safunc()); // Identifier form
+	test(safunc); // Short form
+		
+	test(&sfunci(<int>?)); // Cast Identifier form
+	test(&sfunci(?)); // Identifier form
+	test(sfunci(<int>?)); // Cast short form
+	test(sfunci(?)); // Uncast short form
+	test(sfunci); // Short form
+	
+	test(&ifunci(<int>?)); // Cast Identifier form
+	test(&ifunci(?)); // Identifier form
+	test(ifunci(<int>?)); // Cast short form
+	test(ifunci(?)); // Uncast short form
+	test(ifunci); // Short form
+					
+	test(&safunci(<int>?)); // Cast Identifier form
+	test(&safunci(?)); // Identifier form
+	test(safunci(<int>?)); // Cast short form
+	test(safunci(?)); // Uncast short form
+	test(safunci); // Short form
+						
+	test(&iffunc()); // Identifier form
+	test(iffunc); // Short form	
+	test(&sffunc()); // Identifier form
+	test(sffunc); // Short form	
+	test(&saffunc()); // Identifier form
+	test(saffunc); // Short form
+			
+	test(ifunc(),&iffunc()); // Identifier form
+	test(ifunc(),iffunc); // Short form
+	test(32,&ifunc(),&sffunc()); // Identifier form
+	test(32,ifunc,sffunc); // Short form
+	test(&safunc(),&saffunc());	// Identifier form
+	test(safunc,saffunc); // Short form
+}$

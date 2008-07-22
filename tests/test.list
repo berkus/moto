@@ -1,0 +1,261 @@
+#
+# Smoke Tests
+#
+smk_succ
+emb_smk
+#
+# Initialization Tests
+#
+init_succ
+emb_init
+#
+# Character Constant Tests
+#
+char_dec
+char_hex
+char_oct
+
+emb_char
+#
+# Preprocessor Tests
+#
+pp_define
+pp_incl
+pp_defs
+pp_args
+pp_chain
+pp_ifdef
+pp_ifndef
+pp_ifdefined
+pp_eq
+pp_ne
+pp_and
+pp_or
+pp_overload
+#
+# Relational Tests
+#
+eq_suc
+rel_succ
+#
+# Arithmetic Tests
+#
+add_succ
+sub_succ
+mul_succ
+div_succ
+mod_succ
+mod_err
+str_cat
+#
+# Control Structure Tests
+#
+ctl_if
+emb_ctl_if
+ctl_break
+ctl_continue
+ctl_switch_succ
+emb_switch
+ctl_for
+ctl_for_break
+ctl_for_continue
+ctl_for_inline_decl
+emb_for
+ctl_while
+ctl_while_break
+ctl_while_continue
+emb_while
+ctl_casenoop
+#
+# Dynamic Loading Tests
+#
+dyn_use
+dyn_fn
+dyn_new
+dyn_method
+#
+# Coerce To String Tests
+#
+co_str_succ
+#
+# C Standard Library Tests
+#
+c_suc
+#
+# Primitive Object Wrapper Tests
+#
+prim_bool
+prim_char
+prim_int
+prim_long
+prim_float
+prim_double
+emb_prim
+#
+# Regular expression tests
+#
+rx_suc
+emb_rx_suc
+rx_err
+rx_match_succ
+rx_search_suc
+rx_sub_suc
+#
+# Bug fix tests
+#
+bf_gccbufferoverflow
+bf_unmatched
+bf_unembed
+bf_comments
+bf_lex
+bf_yacc_malformed_err
+bf_yacc_unterm_err
+bf_yacc_without_err
+bf_emb_yacc
+bf_emb_empty_suc
+bf_verr
+bf_verr2
+bf_void_err
+bf_null_err
+bf_emb_verr
+bf_prec
+bf_scope_suc
+bf_scope_err
+bf_macro_err
+bf_nosuch_err
+bf_nested_err
+bf_badlineno
+bf_incdec
+bf_array_ternary
+bf_maxint
+bf_arr_init_empty
+#
+# Utility Object Tests
+#
+util_stack
+util_date
+util_intset
+util_hashset
+util_stringset
+util_intstack
+util_hashtable
+util_symboltable
+util_itoihashtable
+util_inthashtable
+util_vector
+util_stringbuffer
+util_tokenizer
+moto_string
+#
+# Function tests
+#
+fn_yacc_err
+fn_verr_err
+fn_succ
+fn_scope
+fn_recurse_succ
+fn_indrecurse_succ
+fn_redefined_err
+
+#
+# Global Variable Tests
+#
+glob_declare_succ
+glob_scope_succ
+glob_shadow_succ
+
+#
+# Array Tests
+#
+
+arr_verr_succ
+arr_verr_err
+arr_subtype_suc
+arr_init_suc
+arr_init_err
+
+#
+# Class Tests
+#
+
+class_yacc_err
+class_verr_err
+class_succ
+class_redefined_err
+class_selfreference_succ
+class_complex_succ
+class_tree_succ
+class_subtype
+
+#
+# Type Leniency
+#
+
+implicit_casts
+explicit_cast_err
+
+#
+# Bitops
+#
+
+bitop_succ
+bitop_i_succ
+bitop_l_succ
+bitop_c_succ
+bitop_y_succ
+
+#
+# Exceptions
+#
+
+excp_yacc_err
+excp_succ
+excp_types
+excp_return
+excp_break_and_continue
+excp_stacktrace
+excp_trace_suc
+excp_trace_err
+#
+# Comma Operator
+#
+
+comma_succ
+comma_types_suc
+
+#
+# Higher Order Functions
+#
+hof_verr_err
+hof_succ
+hof_csymbol
+hof_arrays
+hof_quicksort
+hof_fsub
+hof_each
+hof_stacktrace
+hof_exfunctions
+hof_tracked
+hof_nullcall
+hof_members
+hof_shortform
+hof_method
+hof_partial
+hof_partialpartial
+hof_membermethods
+hof_cookbook
+
+#
+# Operator overloading
+#
+overload_pluseq
+overload_rel
+overload_math
+overload_incdec
+overload_arrindex
+overload_err
+
+#
+# Operand evaluation order
+#
+assign_ops

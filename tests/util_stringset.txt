@@ -1,0 +1,130 @@
+3 elements : {bar,maka,foo}
+3 elements : {bar,maka,foo}
+
+### Testing whether sset contains "foo"
+sset: 3 elements : {bar,maka,foo}
+sset contains "foo" = true
+
+### Testing whether sset contains "buggy"
+sset: 3 elements : {bar,maka,foo}
+sset contains "buggy" = false
+2 elements : {bar,maka}
+2 elements : {bar,maka}
+2 elements : {bar,maka}
+
+### Testing whether s1 equals s2
+s1: 2 elements : {bar,maka}
+s2: 2 elements : {bar,maka}
+s1 equals s2 = true
+5 elements : {bar,maka,foo,ragga,shlaka}
+2 elements : {fuzzy,wuzzy}
+
+### Testing whether s1 equals s2
+s1: 2 elements : {bar,maka}
+s2: 5 elements : {bar,maka,foo,ragga,shlaka}
+s1 equals s2 = false
+
+### Testing s1 union s2
+s1: 0 elements : {}
+s2: 2 elements : {bar,maka}
+union(s1,s2) = 2 elements : {bar,maka}
+s1 += s2 = 2 elements : {bar,maka}
+s1 + s2 = 2 elements : {bar,maka}
+s1.clone().addSet(s2) = 2 elements : {bar,maka}
+true true true
+
+### Testing s1 union s2
+s1: 2 elements : {bar,maka}
+s2: 2 elements : {bar,maka}
+union(s1,s2) = 2 elements : {bar,maka}
+s1 += s2 = 2 elements : {bar,maka}
+s1 + s2 = 2 elements : {bar,maka}
+s1.clone().addSet(s2) = 2 elements : {bar,maka}
+true true true
+
+### Testing s1 union s2
+s1: 2 elements : {bar,maka}
+s2: 5 elements : {bar,maka,foo,ragga,shlaka}
+union(s1,s2) = 5 elements : {bar,maka,foo,ragga,shlaka}
+s1 += s2 = 5 elements : {bar,maka,foo,ragga,shlaka}
+s1 + s2 = 5 elements : {bar,maka,foo,ragga,shlaka}
+s1.clone().addSet(s2) = 5 elements : {bar,maka,foo,ragga,shlaka}
+true true true
+
+### Testing s1 union s2
+s1: 2 elements : {bar,maka}
+s2: 2 elements : {fuzzy,wuzzy}
+union(s1,s2) = 4 elements : {bar,maka,fuzzy,wuzzy}
+s1 += s2 = 4 elements : {bar,maka,fuzzy,wuzzy}
+s1 + s2 = 4 elements : {bar,maka,fuzzy,wuzzy}
+s1.clone().addSet(s2) = 4 elements : {bar,maka,fuzzy,wuzzy}
+true true true
+
+### Testing s1 minus s2
+s1: 0 elements : {}
+s2: 2 elements : {bar,maka}
+difference(s1,s2) = 0 elements : {}
+s1 -= s2 = 0 elements : {}
+s1 - s2 = 0 elements : {}
+s1.clone().removeSet(s2) = 0 elements : {}
+true true true
+
+### Testing s1 minus s2
+s1: 2 elements : {bar,maka}
+s2: 2 elements : {bar,maka}
+difference(s1,s2) = 0 elements : {}
+s1 -= s2 = 0 elements : {}
+s1 - s2 = 0 elements : {}
+s1.clone().removeSet(s2) = 0 elements : {}
+true true true
+
+### Testing s1 minus s2
+s1: 2 elements : {bar,maka}
+s2: 5 elements : {bar,maka,foo,ragga,shlaka}
+difference(s1,s2) = 0 elements : {}
+s1 -= s2 = 0 elements : {}
+s1 - s2 = 0 elements : {}
+s1.clone().removeSet(s2) = 0 elements : {}
+true true true
+
+### Testing s1 minus s2
+s1: 2 elements : {bar,maka}
+s2: 2 elements : {fuzzy,wuzzy}
+difference(s1,s2) = 2 elements : {bar,maka}
+s1 -= s2 = 2 elements : {bar,maka}
+s1 - s2 = 2 elements : {bar,maka}
+s1.clone().removeSet(s2) = 2 elements : {bar,maka}
+true true true
+
+### Testing s1 intersect s2
+s1: 0 elements : {}
+s2: 2 elements : {bar,maka}
+intersection(s1,s2) = 0 elements : {}
+s1 *= s2 = 0 elements : {}
+s1 * s2 = 0 elements : {}
+true true true
+
+### Testing s1 intersect s2
+s1: 2 elements : {bar,maka}
+s2: 2 elements : {bar,maka}
+intersection(s1,s2) = 2 elements : {bar,maka}
+s1 *= s2 = 2 elements : {bar,maka}
+s1 * s2 = 2 elements : {bar,maka}
+true true true
+
+### Testing s1 intersect s2
+s1: 2 elements : {bar,maka}
+s2: 5 elements : {bar,maka,foo,ragga,shlaka}
+intersection(s1,s2) = 2 elements : {bar,maka}
+s1 *= s2 = 2 elements : {bar,maka}
+s1 * s2 = 2 elements : {bar,maka}
+true true true
+
+### Testing s1 intersect s2
+s1: 2 elements : {bar,maka}
+s2: 2 elements : {fuzzy,wuzzy}
+intersection(s1,s2) = 0 elements : {}
+s1 *= s2 = 0 elements : {}
+s1 * s2 = 0 elements : {}
+true true true
+

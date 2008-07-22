@@ -1,0 +1,10 @@
+$endclass 			// EndClassWithoutClass
+
+$(this) 			// illegalThis
+$do(goo.size() = 1) 		// illegalLVAL
+$if(true)
+	$class(foo) 		// illegalClassDefinition
+	$endclass
+$endif
+$class(2+2) 			// malformedClass
+$class(bar)			// unterminateClassDefinition

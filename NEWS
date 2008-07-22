@@ -1,0 +1,458 @@
+March 24, 2003 - Changes in moto 0.19.1  include:
+
+Bugs Fixed
+
+    * Fixed longstanding problems with running both PHP4 and Moto on the same apache webserver
+
+March 12, 2003 - Changes in moto 0.19.0 include:
+
+New Features
+
+    * Added First-class type support for functions
+    * Added support for defining higher order functions
+    * Added support for dynamically generating new functions through the partial application of functions and methods
+    * Added Vector::sort(int(Object)) which takes a function to compare objects
+    * Added Enumeration::each(void(Object)) which takes a function to perform on each element in the enumeration
+    * Added sub(Regex,String(Match)) which takes a function for the substitution
+    * Added split() and join() functions
+    * Better errors are reported for bad casts of arrays
+    * Provided for https redirects (Shay)
+    * Added destdir support to the main makefile facilitating the creation of RPMs (Stefano)
+
+Bugs Fixed
+
+    * Fixed a bug in PosixFileIO that caused a segfault in the MidafternoonCommander example
+    * Fixed a bug that would cause name collision in compiled code when a class had a no-arg constructor
+    * Fixed a bug that let all reference types be explicitly castable to all other reference types without first being cast to Objects
+    * Fixed a bug in the memory manager that would sometimes let collisions between the free list and the shared segment get by unnoticed
+    * Fixed --with-mysql and --with-pgsql configuration on a number of different platforms (Shay)
+    * Patched "mx/codex/db/pgsql/configure.in" file so that it figures out if OpenSSL support is needed or not and acts accordingly (Shay)
+    * Fixed compilation problems related to moto.y syntax errors on certain FreeBSD installations (thanks Jack!)
+    * Fixed a rare exception in the compiler that would in very strange cases be generated when freeing motovals
+    * Fixed a bug that would require opening a subscope to escape out of an ebedded block within function or method definitions
+
+ 
+
+Feb 3, 2003 - Changes in moto 0.18.0 include:
+
+New Features
+
+    * When moto throws an exception programmers can get a Java style Stack Trace! (Shay)
+    * Fixed bug in getColumnType and added getColumnTypeByName
+    * Added the comma operator (Stefano)
+    * Added inline declarations in for loops (Stefano)
+    * Added ability to declare arrays inline with {...} style syntax (Stefano)
+    * Significantly Upgraded Postgres SQL Driver (Shay)
+    * Added %Z parsing of timezones in date formats when linked against glibc (Shay)
+    * Added SignalsThrowExceptions config option to compiled modules
+    * Uncaught exceptions are now written out to the apache error log by both the interpreter and mmc compiled modules
+    * Much improved installation options have been added to mmc (Michal)
+
+Bugs Fixed
+
+    * Fixed a bug in the -O operation in moto so #LINE and #FILE will not be written out to generated C files when its on (Stefano)
+    * Fixed a potential segfault in the Date constructor (Shay)
+    * Fixed memory leaks in the interpreter caused when functions or methods threw exceptions
+    * Fixed the vector.insertAt method and cleaned up the Vector interface
+    * Fixed a bug in the module compiler that would let resources in compiled modules leak in the case of uncaught exceptions
+    * Allowed macro calls to span multiple lines
+    * Undefined types specified in explicit casts are reported as just another error at verification time, an exception is no longer thrown
+
+ 
+
+Jan 7, 2003 - Changes in moto 0.17.0 include:
+
+New Features
+
+    * Added a new config option Session.MatchSSIDCookie.
+
+Bugs Fixed
+
+    * Fixed a bug when freeing cookies that could cause the cookie name to be free'd twice.
+    * Fixed the memory leak in the interpreter module caused by the repeated reloading of extension libraries.
+    * Fixed casting to and from Array types.
+    * Fixed whitespace handling inside of the cast operator.
+    * Fixed IntSet object so that pages that use it can now be compiled.
+
+ 
+
+December 15, 2002 - Changes in moto 0.16.0 include:
+
+New Features
+
+    * Added finally blocks to try catch system
+    * Migrated exceptions to objects
+    * Added Exception handling (try / catch / finally) with Java semantics (break, continue, and return pass through finally blocks) to moto
+    * Added SQLException
+    * Greatly improved the functionality of the MySQL database client (Thanks Shay!)
+
+Bugs Fixed
+
+    * Fixed a bug prohibiting definition / instantiation of empty classes
+    * Fixed a bug prohibiting definition / instantiation of 0 length arrays
+    * Fixed a bug in the memory manager prohibiting allocation and de-allocation of 0 length objects
+    * Fixed a number of memory leaks that occurred in the interpreter when a runtime exception was thrown
+    * Fixed warnings in ftw and mxtool compilation
+    * Fixed MySQLConnection to return long insertIds
+    * Fixed a bug that caused a segfault when subscripting an array that null was specifically assigned to
+    * Fixed segfault when dereferencing a var from a moto defined class that’s null in compiled code
+    * Exceptions thrown from the operation of moto operators now have line numbers from the moto file from which they were thrown in both interpreted and compiled code
+    * Fixed a bug the prohibited Moto defined classes from being promoted
+    * Fixed a bug that would prohibit result sets containing text fields from being stored
+
+ 
+
+October 30, 2002 - Changes in moto 0.15.0 include:
+
+New Features
+
+    * Added the postgres sql driver and migrated the mysql database driver to codex.db.mysql
+    * Moto extension compilation and loading has been improved and refactored to allow for easier construction of moto extensions that depend on third party libraries / header files / and archives
+    * A new mxtool binary has been added to display dependencies of moto extensions
+    * Added the ability to specify a LockDir configuration option in httpd.conf where lock files will be dropped off
+
+Bugs Fixed
+
+    * Fixed a bug in the state mgmt system where certain session ids were not allowed
+    * Fixed a bug with the one arg version of substring where if the argument passed was = to the length of the string the null string, not the empty string would be returned.
+    * Fixed Regex.matchesPrefix / matchesSuffix methods ... they were reversed
+
+ 
+
+October 14, 2002 - Changes in moto 0.14.0 include:
+
+New Features
+
+    * Added -a option to mmc for displaying a module version string (Thanks Cory!)
+    * Added support for passing / returning arrays in moto extensions
+    * Added output support for character arrays
+    * Added toArray function for Vector and String
+    * Added many new String constructors
+    * Added StringBuffer.append(char []) method
+    * Added support for <?moto ... ?> XML style escapes
+    * Added a byte elementary data type
+    * Added language level support for character and byte arrays
+    * Added implicit casting of arrays to Objects
+    * Added implicit casting of reference type arrays to Object arrays
+    * Added implicit casting of arrays to Object arrays of lesser dimension
+    * Added functions to return the length of arrays
+    * Clarified the return type for MIMEEntity::getBody() to byte[]
+    * Added a variant of putFile / appendFile that takes a byte[]
+    * Added ability to get byte arrays out of a mysql result set
+    * Added ability to escape byte arrays into strings for insertion into a mysql database
+
+Bugs Fixed
+
+    * Added ability for moto to properly output ‘\0’
+    * Fixed no such function/method/constructor errors to clarify prototypes that contained arrays
+    * Fixed some issues with adding two characters together
+    * Fixed a bug in HTTPRequest::setHeader that would cause it to not properly set the Content-type
+
+ 
+
+September 24, 2002 - Changes in moto 0.13.0 include:
+
+New Features
+
+    * Added serious performance optimizations to arrays in moto
+    * Added getValues() and contains() functions to SymbolTable
+    * Added \s \S \w \W and \d \D support to regex parser
+    * Added the ability to declare multiple comma separation variables at once
+    * Added the ability to put array declarations immediately after the type
+
+Bugs Fixed
+
+    * Fixed some nasty bugs with array allocation that cropped up when allocating arrays of doubles.
+    * Fixed a bug with retrieving elements from arrays in compiled moto pages that would at times cause these elements to get cast strangely
+    * Fixed compiler warnings in mmc when instantiating moto defined classes
+    * Fixed a bug that required values following a return even for void functions
+    * Fixed a null pointer exception from being thrown on string additions when one or both strings was null
+    * Fixed a potential buffer overflow issue with mx paths in both the command line tool and the interpreter
+    * Fixed sendRedirect() so fully qualified location redirects could be used
+
+ 
+
+September 13, 2002 - Changes in moto 0.12.0 include:
+
+New Features
+
+    * Added a new codex.io extension for doing common file system operations.
+    * Now ignoring whitespace outside of character classes in regular expressions when regexes are created with the new operator.
+    * Re-implemented the regular expression searching and matching algorithms with TNFAs
+    * Added Match objects to cpature regular expression subexpression matches
+    * Added search, matchSuffix and matchPrefix methods to Regexes
+    * Added a sub() function which can be used to fand and replace regexes in a string (with backreference substitutions)
+    * Added IntHashtable.contains() function
+    * Cleaned up IntSet.toString
+    * Added a vec_data function
+    * Added a getValues function to intHashtable and cleaned up the output of toString()
+    * Added a bounded IntQueue to the codex library
+    * Added an IntQueue to the codex library
+    * Added a return delimiters method to Tokenizer
+    * Added the ability to tokenize strings on a Regex
+    * Added flushOutput() and sendHeaders() methods to HTTPResponse()
+    * HTML extension documentation now gets installed with the extensions
+
+Bugs Fixed
+
+    * Column names in the MySQL driver are now compared without case sensitivity
+    * Creating a tabular data object with 0 rows now works
+    * Taking a 0 length substring at the end of a string now works without throwing an exception
+    * Fixed the version strings in the moto interpreter and module
+    * Fixed build problems on FreeBSD systems
+
+ 
+
+August 12, 2002 - Changes in moto 0.11.0 include:
+
+New Features
+
+    * Elementary types now get automatically converted to Strings when added to Strings
+    * char typed variables can be assigned any numeric type value and any numeric typed variable can be assigned expressions of type char
+    * char typed variables can be incremented and decremented with the ++ and -- operators
+    * char typed variables can be explicitly cast to numeric types
+    * Added a urlDecode function to codex.http
+
+Bugs Fixed
+
+    * Fixed a bug with urlEncode() that would cause non-hex encodings to be generated for certain characters
+    * Fixed a bug when outputting MIN_INT (-2147483648)
+
+ 
+
+August 5, 2002 - Changes in moto 0.10.0 include:
+
+New Features
+
+    * One can now define classes in moto, these classes may contain member variables and methods.
+    * <$ ... $> syntax can now be used in addition to ${ ... }$ syntax to enter into an embedded block of moto code. This should make things much nicer for dreamweaver developers using moto
+    * Better error messages for variable assignment or return errors when one or both of the vars is an array
+
+Bugs Fixed
+
+    * Fixed the ++ and -- operators to work with array subscripts and dereferenced lvals
+    * Multiply defined functions were not being reported
+    * Fixed dynamically sized array instantiations in the compiler
+    * Fixed a segfault when arrays were operands to the ternary operator
+    * Fixed memory leak when a function was redefined
+    * Fixed memory leaks in array assignment
+    * Fixed a rare bug in the lexer under MacOS X where an EOF immediately following an embedded block might cause a segfault
+    * Fixed bugs in array verification
+    * Fixed memory leaks associated with array instantiation
+    * The configure option --with-apache should now work correctly on Debian 3 distributions
+
+ 
+
+July 24, 2002 - Changes in moto 0.9.1 include:
+
+Bugs Fixed
+
+    * Fixed a segfault when freeing optimized TabularData objects
+    * Fixed a bug found in SymbolTables, IntHashtables and Hashtables that caused unpredictable behavior when values in the Session or Context were set to null
+
+ 
+
+June 23, 2002 - Changes in moto 0.9.0 (release n) include:
+
+New Features
+
+    * Added support for declaring arrays in moto
+    * Doubled the speed of most memory allocations significantly improving the performance of the interpreter and compiled moto modules.
+    * Removed unneccessary synchronization from the memory manager further improving performance
+    * Added a configuration setting to disable server side session tracking on a per location basis
+    * Added a configuration setting to set the session timeout
+    * Added a configuration setting to set the maximum number of states per session
+    * Added a configuration setting to bind a session to the IP address of the client that created it.
+    * Added a configuration setting to identify a session by a client side cookie
+    * Randomized the generation of session ids for less predictable sid generation
+    * Added a small performance improvement to the verifier by using the function prototype cache
+
+Bugs Fixed
+
+    * Fixed a rare bug in error line number reporting
+    * Fixed a memory leak in Date creation
+    * Fixed bug with mman locking on systems that don’t have flock
+    * Fixed a bug where delete would segfault when freeing an object allocated by another apache process.
+    * Plugged memory leaks in funtions from Form.i
+    * Fixed a bug in the compiler when generating print statements for Objects
+
+ 
+
+March 25, 2002 - Changes in moto 0.9.0 (release m) include:
+
+New Features
+
+    * Added the ability to define functions in moto!
+    * Added support for a 'global' type qualifier (to declare variables that are visible for all moto functions)
+    * Added a -X option to mmc to specify extensions in outside of the install directory
+    * Added a -e option to mmc to specify files with extensions other than .moto to be compiled up and added to the module
+    * Added urlEncode function to HTTPRequest.i
+
+Bugs Fixed
+
+    * Fixed a bug that could cause moto not to make correctly on Mac OS X (if you ever saw a complaint about libmotol being out of date ... that's fixed)
+    * Fixed a bug in the cookie parser that could allow a bad cookie to crash the server
+    * Fixed a bug that caused certain versions of apache to warn that mod_moto was not compiled with -DEAPI ... it is now, for whatever good that does
+    * Fixed a bug in the order that extensions were searched. If you choose to override the default extensions by specifying your own, now you can.
+    * Fixed a bug with mmc where the C compiler would choke on large blocks of static text (mote than 4K bytes)
+    * Fixed segfault in compiled moto code for addition of two strings (where one of the strings was null caused compiled moto code to segfault)
+    * Fixed a bug where ${ }$ or ${ /* comment */ }$ was treated as a malformed statement
+    * Fixed a bug that allowed $use to be called from nested scopes
+    * Fixed a bug that prohibited configure from finding mysqlclient.a in its default location on debian linux (thanks Cyb.org!)
+
+ 
+
+March 18, 2002 - Changes in moto 0.9.0 (release l) include:
+
+New Features
+
+    * Added support for embedded blocks of moto code ${ ... }$
+    * Added much more robust compile time error reporting
+    * Line numbers in moto files get written out to generated .c filed (so you can gdb a compiled moto application and set breakpoints within a moto page)
+    * Added support for documentation comments in interface files and cleaned up the autodoc output
+    * Documented all extension APIs
+
+Bugs Fixed
+
+    * Fixed a bug in the Verifier where printing the results of increment or decrement operators on non incrementable types would cause a segfault.
+    * Fixed a bug in the interpreter where adding two strings together when one was null would throw an error and not an exception
+    * Fixed many bugs in the Lexer / Parser / Verifier where errors in expressions internal to a moto construct would be reported on the line the construct began on
+    * Fixed a bug where object pools allowed the relese of a Null object
+    * Fixed a bug where stack_clear() wouldn't set the size to 0
+    * Fixed a bug that caused the compiler to segfault when encountering a switch on Strings with no case values
+    * Fixed a bad bug with variable scoping in the interpreter that would not allow variables to shadow other variables in parent scopes
+    * Fixed bugs in the way functions / methods that returned void were handled
+    * Fixed a bug where unknown construct always displayed '$' because '_' was not matched by the lexer
+    * Fixed a bug with complex declarations (declarations with assignments) where a certain types of expressions following an assignment had to be in parens
+    * Fixed some of the memory leaks in the interpreter associated with $break and $continue
+    * Fixed a bug where intstacks were returning Enumerations instead of IntEnumerations
+
+ 
+
+March 1, 2002 - Changes in moto 0.9.0 (release k) include:
+
+New Ports
+
+    * Ported successfully to Mac OS X
+    * Ported successfully to Solaris
+    * Ported successfully to FreeBSD
+
+New Features
+
+    * Rearchitected the way --with-apache works. Apxs is now discovered and parsed for the information
+    * Configure scripts generate much more portable code
+    * Re-architected the moto and moto extension libraries so as not to have duplicate symbols
+    * Added code to the memory manager to work on fixed alignment architectures such as sparc
+    * Added optimize() method for TabularData. TabularData objects once optimized store their strings in one large buffer as opposed to seperate objects
+    * Added --enable-gcclib configuration option for people who need to link compiled modules to gcclib (for apache to load them)
+
+Bugs Fixed
+
+    * Fixed a bug / memory leak where the interpreter was trying to get it's hands on the original C symbols for free functions.
+    * Fixed a synchronization bug where compiled modules weren't making use of memory manager locking
+    * Fixed 'make test' so it works for people without . in their path
+    * Fixed installation for people without a bsd compatible install program on their system
+    * Fixed --with-mysql configuration option to autodetect libz and libm
+
+ 
+
+February 19, 2002 - Changes in moto 0.9.0 (release j) include:
+
+New Features
+
+    * Added memory debugging code to the main() for compiled pages
+    * Synchronized to mman functions
+
+Bugs Fixed
+
+    * Fixed memory leaks from the type checking phase in mod_moto .
+    * Gave variables in generated C code default values at declaration time to better mimic the behavior of the interpreter.
+    * Made the behavior of printing out null or a null string match the behavior of the compiler by just printing 'null' instead of '(null)'.
+    * All known memory leaks / potential memory corruption issues in the preprocessor have been fixed.
+    * Fixed some corner cases with regular expression parsing that would cause the parser to segfault.
+    * Added Verifier errors for invalid regular expressions.
+    * Got rid of all shift reduce conflicts in the parser.
+    * Removed all == from the configure scripts and changed all 'test -e's to 'test -f's or 'test -d's.
+    * Added and OpenBSD layout for apache configuration.
+    * Fixed the two major sources of synchronization problems with the interpreter and compiled modules.
+    * Plugged most of the memory leaks in cookie parsing.
+    * Made the SharedHeapSize config option work (it now takes the max of all specified heap sizes ... defaults to 32M).
+    * Modified setOption so when no value for a config option is given, the option value is set to 'TRUE'.
+    * Made the MXPath config option work. In fact, not only does it work now, but it works on a per directory config!
+    * Fixed all known memory leaks with file upload (multipart form submissions).
+    * Fixed the handling of multiple mime parts sent with the same name. If they are state variables they get concatenated with | in the sv value. In all cases the parts are now available in the enumeration returned by getMIMEParts() .
+    * Removed req_getMIMEPartNames() and replaced it with req_getMIMEParts().
+
+ 
+
+February 12, 2002 - Changes in moto 0.9.0 (release i) include:
+
+New Features
+
+    * Made the default MX dir be INST_MX_DIR instead of INST_ROOT_DIR/mx allowing the REDHAT layout to put moto extensions under lib/moto/mx
+    * Gave the --with-layout feature now defaults --prefix if left unspecified. UNIFIED layout now installs by default in /usr/local/moto, REDHAT layout in /usr
+    * Added a new config option for mod_moto : SignalsThrowExceptions. When set to true a SIGSEGV signal gets thrown as an exception (and thus will no longer dump core)
+    * Added negated character classes to regex matching
+    * Added escape symbol to regex matching
+    * Added support for getting and setting client side Cookies
+    * Added support for setting outgoing HTTPResponse headers
+    * Added much better documentation at the conclusion of mmc (ModOption Location)
+    * Changed regexs to Regex's and added Regex.i file to mx/moto
+    * Fixed all known functionality issues with the preprocessor (all tests now pass)
+
+Bugs Fixed
+
+    * When regex variables were defined and used more than once memory could get corrupted.
+    * The documentation that mmc printed out for installing compiled modules was just wrong.
+    * Fixed memory leaks when type verification errors were generated in math expressions.
+    * Fixed problems with the extensions path. It can now be set dynamically by using the -X option in the moto binary or using the MXPath environment variable or module option.
+
+ 
+
+February 5, 2002 - Changes in moto 0.9.0 (release h) include:
+
+New Features
+
+    * The path to moto extensions can now be configured via an environment variable or a module configuration option.
+    * Many new MySQL functions have been added to the MySQLConnection and MySQLResultSet objects having to do with retrieving database and table metadata
+    * New file operations appendFile, existsFile, putFileBytes, and appendFileBytes added to FileIO.i
+    * Added shuffle method to Vector.
+    * Added new form convience functions.
+    * Basic support for file uploads is now included
+    * The shared heap size is now configurable
+    * Added 'make install' functionality
+
+Bugs Fixed
+
+    * Fixed a bug that required the moto src dir to be named moto for configuration to work properly
+    * Fixed a bug that would cause moto to hang if an include or lib file could not be located
+    * Fixed a bug that would cause mxcg to report the wrong line number on a parse error of .i files
+    * Fixed a bug that would cause moto to return the wrong line number on pages with comments
+    * Fixed bugs that caused resultset.getXXX functions to segfault when retrieving SQL Nulls. Numeric return values now return 0 on SQL null. Char values return '\0' on SQL null.
+    * Fixed bugs that caused certain form convenience methods to crash if the value specified was NULL.
+    * Fixed an annoying bug where a syntax error on one page could effect the parsing of subsequent pages (especially in the module) most often reporting 'Unknown construct $use'
+
+ 
+
+March 4, 2001 - Changes in moto 0.9.0 (release g) include:
+
+    * Fixed install script to work against the standard Red Hat installation of Apache.
+    * Fixed a number of incompatabilities with includes installed by Red Hat 7 (memsw.h and stdlib.h were not playing nicely together).
+    * Added -d option to mmc so that /tmp/mmc directories can stick around if desired
+    * Fixed a bug where mmc got confused if multiple versions of apxs were installed
+
+ 
+
+February 18, 2001 - Changes in moto 0.9.0 (release f) include:
+
+    * Swapped out semctl for flock. It's slower but better supported and there are no more semaphore leaks. Now when running moto from the command line no locking occurs making it much faster.
+    * Fixed calls to sed in aclocal to make things more portable.
+    * Changed ar flags for portability.
+    * Added generalized TabularData object to persist result sets between page views
+    * Added metadata to MySQLResultSet allowing for retrieval of fields by column name.
+    * Fixed support for configuring compiled modules inside of Location and Directory directives
+    * Added functions to retrieve configuration settings from httpd.conf inside of Moto applications.
+    * Fixed shared_calloc
+    * Fixed installation support for MySQL. The codex.sql extentions now compile automatically if moto was configured '--with-mysql' and mmc automatically attempts to link against libmysqlclient.
+    * Made String comparisons throw exceptions if one of the Strings is null.
+    * Fixed error reporting (again) so as not to undercount line numbers when confronted with moto comments.

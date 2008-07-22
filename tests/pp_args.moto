@@ -1,0 +1,6 @@
+#define FOO(a) this is foo: $a
+#define BAR(b,c) this is bar: $b, $c
+#define BAZ(d,e,f) this is baz: $d, $e, $f
+$FOO(this is some text)
+$BAR(this is some text,this is some more text)
+$BAZ(this,is,text)

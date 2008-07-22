@@ -1,0 +1,3 @@
+Exception thrown in not(hof_stacktrace.moto:4)
+   called from function each(hof_stacktrace.moto:2)
+   called from function <main>(hof_stacktrace.moto:7)

@@ -1,0 +1,10 @@
+excp_yacc_err.moto:2: Malformed catch statement, expected $catch(<type> <name>)
+excp_yacc_err.moto:6: try without catch or finally
+excp_yacc_err.moto:8: $catch not within $try ... $endtry
+excp_yacc_err.moto:9: $finally not within $try ... $endtry
+excp_yacc_err.moto:10: $endtry without $try
+excp_yacc_err.moto:14: Malformed catch, expected catch(<exception type> <name>) {...}
+excp_yacc_err.moto:17: catch not within try block
+excp_yacc_err.moto:17: Malformed statement
+excp_yacc_err.moto:18: finally not within try block
+excp_yacc_err.moto:23: Unterminated $try block

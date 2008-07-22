@@ -1,0 +1,4 @@
+Cannot call null
+NullPointerException thrown in <main>(hof_nullcall.moto:5)
+
+F

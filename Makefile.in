@@ -1,0 +1,183 @@
+#======================================================================
+#
+# Top-level Makefile for moto
+#
+# $RCSfile: Makefile.in,v $
+# $Revision: 1.22 $
+# $Author: shayh $
+# $Date: 2003/03/04 20:59:17 $
+#
+#======================================================================
+
+SHELL = /bin/sh
+@SET_MAKE@
+
+#----------------------------------------------------------------------
+# Subdirectories to build
+
+SUBDIRS = \
+	src/codex \
+	src/moto \
+	src/mxc \
+	src/tools \
+	tests	\
+	mx/cstdlib \
+	mx/codex/util \
+	mx/codex/io \
+	mx/moto
+
+APACHE_SUBDIRS = \
+	src/mod \
+	src/mmc \
+	mx/codex/http
+
+MYSQL_SUBDIRS = \
+	mx/codex/db/mysql
+
+PGSQL_SUBDIRS = \
+	mx/codex/db/pgsql
+
+APACHE_PATH = @APACHE_ROOT_DIR@
+MYSQL_PATH = @MYSQL_INCLUDE_DIR@
+PGSQL_PATH = @PGSQL_INCLUDE_DIR@
+
+#----------------------------------------------------------------------
+# Standard targets
+
+all install clean distclean maintainer-clean: timestamp
+	touch timestamp;
+	@target=$@; \
+	list='$(SUBDIRS)'; \
+	for subdir in $$list; do \
+	  echo "Making $$target in $$subdir"; \
+	  (cd $$subdir && $(MAKE) $$target) || \
+		case "$$amf" in \
+			*=*) exit 1;; \
+			*k*) fail=yes;; \
+			*) exit 1;; \
+		esac; \
+	done; \
+	if [ -n '$(APACHE_PATH)' ]; then \
+		list='$(APACHE_SUBDIRS)'; \
+		for subdir in $$list; do \
+		  echo "Making $$target in $$subdir"; \
+		  (cd $$subdir && $(MAKE) $$target) || \
+			case "$$amf" in \
+				*=*) exit 1;; \
+				*k*) fail=yes;; \
+				*) exit 1;; \
+			esac; \
+		done; \
+	fi; \
+	if [ -n '$(MYSQL_PATH)' ]; then \
+		list='$(MYSQL_SUBDIRS)'; \
+		for subdir in $$list; do \
+		  echo "Making $$target in $$subdir"; \
+		  (cd $$subdir && $(MAKE) $$target) || \
+			case "$$amf" in \
+				*=*) exit 1;; \
+				*k*) fail=yes;; \
+				*) exit 1;; \
+			esac; \
+		done; \
+	fi; \
+	if [ -n '$(PGSQL_PATH)' ]; then \
+		list='$(PGSQL_SUBDIRS)'; \
+		for subdir in $$list; do \
+		  echo "Making $$target in $$subdir"; \
+		  (cd $$subdir && $(MAKE) $$target) || \
+			case "$$amf" in \
+				*=*) exit 1;; \
+				*k*) fail=yes;; \
+				*) exit 1;; \
+			esac; \
+		done; \
+	fi; \
+	${MAKE} local-$$target; \
+
+#----------------------------------------------------------------------
+# Custom targets
+
+auto:
+	${MAKE} autoheader
+	${MAKE} autoconf
+
+autoconf:	
+	@CWD=`pwd`;\
+	list='$(SUBDIRS)'; \
+	for subdir in $$list; do \
+	  echo "Running autoconf in $$subdir"; \
+	  (cd $$subdir ; autoconf -l $$CWD) \
+	done; \
+	list='$(APACHE_SUBDIRS)'; \
+	for subdir in $$list; do \
+	  echo "Running autoconf in $$subdir"; \
+	  (cd $$subdir ; autoconf -l $$CWD) \
+	done; \
+        list='$(MYSQL_SUBDIRS)'; \
+        for subdir in $$list; do \
+          echo "Running autoconf in $$subdir"; \
+          (cd $$subdir ; autoconf -l $$CWD) \
+        done; \
+        list='$(PGSQL_SUBDIRS)'; \
+        for subdir in $$list; do \
+          echo "Running autoconf in $$subdir"; \
+          (cd $$subdir ; autoconf -l $$CWD) \
+        done;
+	@echo "Running autoconf in local directory"
+	@autoconf
+
+autoheader:	
+	@CWD=`pwd`;\
+	list='$(SUBDIRS)'; \
+	for subdir in $$list; do \
+	  echo "Running autoheader in $$subdir"; \
+	  (cd $$subdir && autoheader) \
+	done; \
+	list='$(APACHE_SUBDIRS)'; \
+	for subdir in $$list; do \
+	  echo "Running autoheader in $$subdir"; \
+	  (cd $$subdir && autoheader) \
+	done; \
+        list='$(MYSQL_SUBDIRS)'; \
+        for subdir in $$list; do \
+          echo "Running autoconf in $$subdir"; \
+          (cd $$subdir && autoconf -l $$CWD) \
+        done; \
+        list='$(PGSQL_SUBDIRS)'; \
+        for subdir in $$list; do \
+          echo "Running autoconf in $$subdir"; \
+          (cd $$subdir && autoconf -l $$CWD) \
+        done;
+	@echo "Running autoheader in local directory"
+	@autoheader
+
+test:
+	cd tests; test -z "mototest" || ${MAKE}; ./mototest
+
+local-all:
+local-dep:
+local-install:
+
+local-clean:
+	rm -rf lib/*.a include/*.h
+
+local-distclean:
+	${MAKE} local-clean
+	rm -rf Makefile \
+	make.rules \
+	make.vars \
+	rconfig.h \
+	config.h \
+	config.cache \
+	config.log \
+	config.status \
+	
+local-maintainer-clean:
+	rm -f configure;
+	${MAKE} local-distclean
+
+#======================================================================
+# end
+#======================================================================
+

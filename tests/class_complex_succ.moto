@@ -1,0 +1,49 @@
+$use("codex.util")
+${
+   class Test{
+      int a=2;
+      char b='b';
+      float c=a+.4;
+      double d=a/3.0;
+      String e=str(c+d);
+
+      Test(int a, char b){
+         this.a=a;
+         a=a+10;
+         print "\nthis.a = "+str(this.a);
+         print "\na = "+str(a);
+         this.a++;
+         print "\nnow this.a = "+str(this.a);
+         print "\nthis.b = "+str(this.b);
+         this.b=b;
+         print "\nnow this.b = "+str(this.b);
+      }
+      
+      String toString(){
+         StringBuffer sb = new StringBuffer();
+         sb.append("\na = "+str(a));
+         sb.append("\nb = "+str(b));
+         sb.append("\nc = "+str(c));
+         sb.append("\nd = "+str(d));
+         sb.append("\ne = "+e);
+         return sb.toString();
+      }
+
+      void changeUp(){
+         print "\nfirst a = "+str(a);
+         a += 1;
+         print "\nnext a = "+str(this.a);
+         this.a *=2;
+         print "\nfinally a = "+str(a);
+         print "\n---\n";
+         print this.toString();
+      }
+   }
+
+   Test t1 = new Test();
+   print t1.toString();
+   Test t2 = new Test(30,'q');
+   print t2.toString();
+   t1.changeUp();
+   print t1.toString();
+}$

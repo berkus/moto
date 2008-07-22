@@ -1,0 +1,23 @@
+bf_emb_verr.moto:1: Illegal binary operation: <int> * <String>
+bf_emb_verr.moto:2: Variable of type <String> cannot store type <int>
+bf_emb_verr.moto:4: Variable 'b' not declared before used
+bf_emb_verr.moto:6: Case type must match that of switch: <int> != <char>
+bf_emb_verr.moto:7: Case type must match that of switch: <float> != <char>
+bf_emb_verr.moto:7: Case arguments must be literals 
+bf_emb_verr.moto:9: Type not defined: <Maka>
+bf_emb_verr.moto:10: Multiply declared variable 's'
+bf_emb_verr.moto:11: Illegal type for condition: <int>
+bf_emb_verr.moto:12: No such function: maka()
+bf_emb_verr.moto:13: No such method: Regex::maka()
+bf_emb_verr.moto:14: No such method: String::maka()
+bf_emb_verr.moto:15: Only reference types have destructors
+bf_emb_verr.moto:16: Type not defined: <Maka>
+bf_emb_verr.moto:16: No such constructor: Maka()
+bf_emb_verr.moto:17: Illegal unary operation: ! <String>
+bf_emb_verr.moto:18: Illegal value for increment
+bf_emb_verr.moto:19: Illegal value for decrement
+bf_emb_verr.moto:20: Invalid regular expression /(/: Unmatched '('
+bf_emb_verr.moto:22: Illegal ternary operands: <boolean> ? <String> : <int>
+bf_emb_verr.moto:23: Variable of type <String> cannot store type <int>
+bf_emb_verr.moto:24: No such library: foo.maka.shlaka
+bf_emb_verr.moto:26: Variable of type <String> cannot store type <int>

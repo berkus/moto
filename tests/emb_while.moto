@@ -1,0 +1,52 @@
+Embedded while block
+${int i=0; while(i<10) { print "hello "+str(i)+"\n"; i++; } print "goodbye\n"; }$
+Embedded while single statement
+${i=0; while(i<10) print "hello "+str(i++)+"\n"; print "goodbye\n";}$
+Embedded break 
+${i=0; 
+   while(true) 
+      if (i<10)
+         print "hello "+str(i++)+"\n";
+      else
+         break;
+   print "goodbye\n";
+}$
+Embedded continue
+${i=0;
+   /* Print hello 10 times then break */
+   while(true) {
+      if (i<10) {
+         print "hello "+str(i++)+"\n";
+         continue;
+      }
+      break;
+   }
+   print "goodbye\n";
+}$
+Embedded \$break
+${ i=0;
+   /* Print hello 10 times then break */
+   while(true)
+      if (i<10) {
+}$ 
+hello $(i++) 
+${
+      } else {
+}$ 
+            $break 
+${ 
+      }
+   print "goodbye\n";
+}$
+Embedded \$continue
+${i=0;
+   /* Print hello 10 times then break */
+   while(true) {
+      if (i<10) {
+         print "hello "+str(i++)+"\n";
+         }$ $continue ${
+      }
+      }$ $break ${
+   }
+   print "goodbye\n";
+}$

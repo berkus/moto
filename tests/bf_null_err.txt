@@ -1,0 +1,1 @@
+bf_null_err.moto:5: Variable of type <int> cannot store type <null>

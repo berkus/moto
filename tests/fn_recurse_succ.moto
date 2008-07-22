@@ -1,0 +1,8 @@
+${
+   void abb(int count){
+      print "count is "+str(count--)+"\n";
+      if(count>0)
+         abb(count);
+   }
+   abb(5);
+}$

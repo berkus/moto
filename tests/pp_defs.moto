@@ -1,0 +1,8 @@
+#readdefs("pp_defs.lib")
+$FOO
+$BAR
+$MAKA("fuzzy","wuzzy")
+$MAKA(
+	"fuzzy",
+	"wuzzy"
+)

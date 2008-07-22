@@ -1,0 +1,14 @@
+>>> foo
+>>> bar
+>>> maka
+{01-08-1976,02-21-1976,06-17-1942,04-25-2003,01-09-1988,02-11-1956,06-10-1987,04-23-2032}
+{06-17-1942,02-11-1956,01-08-1976,02-21-1976,06-10-1987,01-09-1988,04-25-2003,04-23-2032}
+{3,12,-32,11,31,13,-8,8,23,15,62,6}
+{-32,-8,3,6,8,11,12,13,15,23,31,62}
+{foo,bar,maka,shlaka,wham,bam,bam,thank,maka,you,mmam}
+{bam,bam,bar,foo,maka,maka,mmam,shlaka,thank,wham,you}
+bar <img src="emoticon12.gif"> maka <img src="emoticon22.gif"> shlaka
+bar <img src="emoticon12.gif"> maka <img src="emoticon22.gif"> shlaka <img src="emoticon23.gif"> 
+ <img src="emoticon11.gif"> bar <img src="emoticon12.gif"> maka <img src="emoticon22.gif"> shlaka
+
+	

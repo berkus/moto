@@ -1,0 +1,33 @@
+${
+   int foo[] = new int[12][];
+   char bar[][] = new float[3][4];
+   float baz[][][] = new float[5][1+3%2]['a'];
+   boolean fuzzy[][][][] = bar; 
+
+   bar[2] += new char[3];
+   baz = new float[2][16];
+   baz[4][1][1] = new float[2];
+
+   foo[bar] = 12;
+   bar[2][3] = 'f'[1];
+   fuzzy[1][2][3][4] = 'c';
+
+   print foo[2]['d'];
+   print bar[1];
+   print baz[2][true][6];
+   print fuzzy[1][2][3][8][29];
+
+   int fang(int maka[][], char shlaka[][]){
+      maka[0] = 1.1;
+      print maka[0];
+
+      shlaka[0] = true;
+      print shlaka[0][1][2];
+   }
+
+   char[][] wang(){
+      return new char[3][4];
+   }
+   wang()[2][1]['c'] = "hello";
+   print wang()[2];
+}$  

@@ -1,0 +1,13 @@
+${
+   void evilOne(int depth){
+      if(depth > 0) evilTwo(depth - 1);
+      throw new Exception("Wheeee");
+   }
+
+   void evilTwo(int depth){
+      if(depth > 0) evilOne(depth - 1);
+      throw new Exception("Kaboom!");
+   }
+
+   evilOne(5);
+}$

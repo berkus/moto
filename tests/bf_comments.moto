@@ -1,0 +1,4 @@
+$use("cstdlib")
+$* foo *$
+$do(idQuestion = atoi(getValue("_idQuestion"),"0"))
+$declare(String explanation="")

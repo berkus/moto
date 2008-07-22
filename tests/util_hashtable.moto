@@ -1,0 +1,2 @@
+$use("codex.util")
+$declare(Hashtable h = new Hashtable())

@@ -1,0 +1,23 @@
+Embedded for block
+${int i; for(i=0;i<10;i++) { print "hello "; print str(i)+"\n"; } print "goodbye\n"; }$
+Embedded for single statement
+${for(i=0;i<10;i++) print "hello "+str(i)+"\n"; print "goodbye\n";}$
+Embedded break
+${ i=0; for(;true;) 
+      if (i<10)
+         print "hello "+str(i++)+"\n";
+      else
+         break;
+   print "goodbye\n";
+}$
+Embedded continue
+${i=0; for(;true;) {
+      if (i<10) {
+         print "hello "+str(i++)+"\n";
+         continue;
+      }
+      break;
+   }
+   print "goodbye\n";
+}$
+

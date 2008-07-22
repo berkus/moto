@@ -1,0 +1,34 @@
+#define FOO
+#ifndef FOO
+yes
+#endif
+#ifndef FOO
+yes
+#else
+no
+#endif
+#ifndef FOO(1)
+yes
+#endif
+#ifndef FOO(1)
+yes
+#else
+no
+#endif
+#define BAR(a)
+#ifndef BAR(1)
+yes
+#endif
+#ifndef BAR(1)
+yes
+#else
+no
+#endif
+#ifndef BAR
+yes
+#endif
+#ifndef BAR
+yes
+#else
+no
+#endif

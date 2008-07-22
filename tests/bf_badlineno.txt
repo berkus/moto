@@ -1,0 +1,2 @@
+/usr/local/wa/dhakim/moto/tests/bf_badlineno.incl:6: Illegal binary operation: <int> * <String>
+   >>> in file included from bf_badlineno.moto:1

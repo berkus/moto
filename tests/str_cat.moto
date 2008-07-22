@@ -1,0 +1,7 @@
+$declare(String s1 = "now is ")
+$declare(String s2 = "the time ")
+$declare(String s3)
+$declare(String s4)
+$do(s3 = "for all good ")
+$do(s4 = "good men to come ")
+$(s1 + s2 + s3 + s4 + "to the aid " + "of their country.")

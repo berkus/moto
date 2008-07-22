@@ -1,0 +1,43 @@
+hof_verr_err.moto:5: Type not defined: <int(Foo)>
+hof_verr_err.moto:6: Type not defined: <Foo(Bar[])(Maka())>
+hof_verr_err.moto:9: Variable of type <String()> cannot store type <String>
+hof_verr_err.moto:10: Variable of type <String> cannot store type <String()>
+hof_verr_err.moto:14: Type not defined: <Foo>
+hof_verr_err.moto:14: Type not defined: <Bar>
+hof_verr_err.moto:14: Type not defined: <Maka>
+hof_verr_err.moto:18: No such function: atoi()
+hof_verr_err.moto:19: No such function: atoi(<(null)>, <(null)>)
+hof_verr_err.moto:22: Expression of type <String> not callable
+hof_verr_err.moto:23: Expression of type <boolean> not callable
+hof_verr_err.moto:24: Expression of type <char> not callable
+hof_verr_err.moto:25: Expression of type <double> not callable
+hof_verr_err.moto:26: Expression of type <float> not callable
+hof_verr_err.moto:27: Expression of type <int> not callable
+hof_verr_err.moto:28: Expression of type <int> not callable
+hof_verr_err.moto:29: Expression of type <String> not callable
+hof_verr_err.moto:30: Expression of type <int[]> not callable
+hof_verr_err.moto:31: Expression of type <Integer> not callable
+hof_verr_err.moto:32: Expression of type <null> not callable
+hof_verr_err.moto:36: Expression of type <char> cannot be cast to <String>
+hof_verr_err.moto:37: Too many arguments provided to call: <int(String)>
+hof_verr_err.moto:38: Too few arguments provided to call: <int(String)>
+hof_verr_err.moto:49: Variable of type <void(Object)> cannot store type <void(String)>
+hof_verr_err.moto:51: Variable of type <void(Object)> cannot store type <String(String)>
+hof_verr_err.moto:53: Variable of type <void(Object)> cannot store type <Object(String)>
+hof_verr_err.moto:62: Variable of type <String(Object)> cannot store type <void(Object)>
+hof_verr_err.moto:63: Variable of type <String(Object)> cannot store type <void(String)>
+hof_verr_err.moto:65: Variable of type <String(Object)> cannot store type <String(String)>
+hof_verr_err.moto:66: Variable of type <String(Object)> cannot store type <Object(Object)>
+hof_verr_err.moto:67: Variable of type <String(Object)> cannot store type <Object(String)>
+hof_verr_err.moto:69: Variable of type <String(String)> cannot store type <void(Object)>
+hof_verr_err.moto:70: Variable of type <String(String)> cannot store type <void(String)>
+hof_verr_err.moto:73: Variable of type <String(String)> cannot store type <Object(Object)>
+hof_verr_err.moto:74: Variable of type <String(String)> cannot store type <Object(String)>
+hof_verr_err.moto:76: Variable of type <Object(Object)> cannot store type <void(Object)>
+hof_verr_err.moto:77: Variable of type <Object(Object)> cannot store type <void(String)>
+hof_verr_err.moto:79: Variable of type <Object(Object)> cannot store type <String(String)>
+hof_verr_err.moto:81: Variable of type <Object(Object)> cannot store type <Object(String)>
+hof_verr_err.moto:83: Variable of type <Object(String)> cannot store type <void(Object)>
+hof_verr_err.moto:84: Variable of type <Object(String)> cannot store type <void(String)>
+hof_verr_err.moto:91: '?' may only be used as an argument to functional typed expressions
+hof_verr_err.moto:92: '?' may only be used as an argument to functional typed expressions

@@ -1,0 +1,53 @@
+Embedded for block
+hello 0
+hello 1
+hello 2
+hello 3
+hello 4
+hello 5
+hello 6
+hello 7
+hello 8
+hello 9
+goodbye
+
+Embedded for single statement
+hello 0
+hello 1
+hello 2
+hello 3
+hello 4
+hello 5
+hello 6
+hello 7
+hello 8
+hello 9
+goodbye
+
+Embedded break
+hello 0
+hello 1
+hello 2
+hello 3
+hello 4
+hello 5
+hello 6
+hello 7
+hello 8
+hello 9
+goodbye
+
+Embedded continue
+hello 0
+hello 1
+hello 2
+hello 3
+hello 4
+hello 5
+hello 6
+hello 7
+hello 8
+hello 9
+goodbye
+
+

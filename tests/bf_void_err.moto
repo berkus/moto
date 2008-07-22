@@ -1,0 +1,11 @@
+$use("codex.util")
+$declare(String s= str(1))
+$declare(Stack stk = new Stack())
+
+$declare(void v)
+$(stk.push(new Integer(1)))
+$(delete s)
+$(s=delete s)
+$(<void>s)
+$(s=<void>s)
+$(s=stk.push(new Integer(1)))

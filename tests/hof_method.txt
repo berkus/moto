@@ -1,0 +1,6 @@
+hello
+goodbye
+Cloned: hello,goodbye,hello,goodbye,so,long
+Sorted: goodbye,goodbye,hello,hello,long,so
+Unique: hello,goodbye,so,long
+

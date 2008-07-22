@@ -1,0 +1,45 @@
+${
+	double da[] = new double[1];
+	float fa[] = new float[1];
+	char ca[] = new char[1];
+	int ia[] = new int[1];
+	long la[] = new long[1];
+	boolean ba[] = new boolean[1];
+	String sa[] = new String[1];
+	byte ya[] = new byte[1];
+	Object oa[] = new Object[1];
+	char[][] c2a = new char[2][];
+
+	da[0]=2.2; print da[0]; print "= 2.2\n";
+	fa[0]=2.2; print fa[0]; print "= 2.2\n";
+	ca[0]='2'; print ca[0]; print "= 2\n";
+	ia[0]=2; print ia[0];  print "= 2\n";
+	la[0]=2; print la[0]; print "= 2\n";
+	ya[0]=2; print ya[0]; print "= 2\n";
+	ba[0] = true; print ba[0]; print "= true\n";
+	sa[0] = "hello"; print sa[0]; print "= hello\n";
+	oa[0] = "goodbye"; print <String>oa[0]; print "= goodbye\n";
+	c2a[0]= "so".toArray(); c2a[1]="long".toArray(); print c2a[0]+" "+c2a[1]; print "= so long\n";
+	
+	print length(da) + "\n";
+	print length(fa) + "\n";
+	print length(ca) + "\n";
+	print length(ia) + "\n";
+	print length(la) + "\n";
+	print length(ba) + "\n";
+	print length(sa) + "\n";
+	print length(ya) + "\n";
+	print length(oa) + "\n";
+	print length(c2a) +":"+length(c2a[0])+","+length(c2a[1])+ "\n"; 
+	print length(new int[0]) + "\n";
+	
+	Object[] osa = new String[3];
+	String[] soa = <String[]>new Object[3]; // FIXME: Should this be prohibited ?
+	
+	osa[0] = soa [0] = "foo";
+	osa[1] = soa [1] = "bar";
+	osa[2] = soa [2] = "maka";	
+	
+	print (<String[]>osa)[2] + "\n" ;
+	print <String>(<Object[]>soa)[2] + "\n" ;	
+}$

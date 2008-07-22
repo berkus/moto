@@ -1,0 +1,118 @@
+${
+   void outputException(Exception e){
+      print "caught exception '"+e.toString()+"'\n   thrown at "+e.getFile()+":"+e.getLine()+"\n";
+      // print "message recieved '"+e.getMessage()+"'\n";
+   }
+}$
+
+$try
+   $("### In un-embedded TRY block\n")
+   $throw(new Exception("Exception from un-embedded TRY block"))
+$catch(Exception e) 
+   $("### In un-embedded CATCH block\n")
+   $do(outputException(e))
+$finally 
+   $("### In un-embedded FINALLY block\n")
+$endtry 
+
+${
+
+   try {
+      print "### In TRY block\n";
+      throw new NullPointerException(); 
+   } catch (ArrayBoundsException e) {
+      print "### In CATCH block for ArrayBoundsExceptions\n";
+      outputException(<Exception>e);
+   } catch (NullPointerException e) {
+      print "### In CATCH block for NullPointerExceptions\n";
+      outputException(<Exception>e);
+   } catch (Exception e) {
+      print "### In CATCH block for generic Exceptions\n";
+      outputException(e);
+   } finally {
+      print "### In FINALLY block\n";
+   }
+
+   try { 
+      print "### In TRY block 1\n"; 
+   } catch (Exception e) {
+      print "### In CATCH block 1\n"; 
+      outputException(e);
+   } finally {
+      print "### In FINALLY block 1\n";
+   }
+
+   print "\n";
+
+   try {
+      print "### In TRY block 2\n";
+      throw new Exception("Exception from TRY block 2");
+   } catch (Exception e) {
+      print "### In CATCH block 2\n";
+      outputException(e); 
+   } finally {
+      print "### In FINALLY block 2\n";
+   }
+
+   print "\n";
+
+   try {
+      print "### In TRY block 3\n";
+      try {
+         print "### In inner TRY block 3\n";  
+         throw new Exception("Exception from inner TRY block 3");
+      } catch (Exception e) {
+         print "### In inner CATCH block 3\n";
+         outputException(e);
+         throw new Exception("Exception from inner CATCH block 3");
+      } finally {
+         print "### In inner FINALLY block 3\n";  
+      }
+   } catch (Exception e) {
+      print "### In CATCH block 3\n";
+      outputException(e);
+   } finally {
+      print "### In FINALLY block 3\n";
+   }
+
+   print "\n";
+
+   try {
+      print "### In TRY block 4\n";
+      try {
+         print "### In inner TRY block 4\n";
+         throw new Exception("Exception from inner TRY block 4");
+      } catch (Exception e) {
+         print "### In inner CATCH block 4\n";
+         outputException(e);
+      } finally {
+         print "### In inner FINALLY block 4\n";
+         throw new Exception("Exception from inner FINALLY block 4");
+      }       
+   } catch (Exception e) {
+      print "### In CATCH block 4\n";
+      outputException(e);
+   } finally {
+      print "### In FINALLY block 4\n";
+   }
+   
+   try {
+       try {
+          throw new ArrayBoundsException();
+       } finally {
+          try {
+             throw new NullPointerException();
+          } finally {
+             try {
+                throw new MathException();
+             } catch (Exception e) {
+                print "### First exception should be a MathException\n";
+                outputException(e);
+             }
+          }
+       } 
+    } catch (Exception e) {
+       print "### Last exception should be a NullPointerException\n";
+       outputException(e);
+    }   
+}$

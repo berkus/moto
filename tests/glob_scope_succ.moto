@@ -1,0 +1,9 @@
+$declare(global int i=1)
+${global int j=27;}$
+
+${ 
+   void printIandJ() { 
+      print str(i) + "\n" + str(j);
+   }
+   printIandJ();
+}$ 

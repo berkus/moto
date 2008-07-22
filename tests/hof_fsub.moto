@@ -1,0 +1,36 @@
+$use("codex.util")
+
+${
+	/* Functional Regex Substitution */
+	String fsub(String s,Regex rx, String(Match) f){
+		StringBuffer sb = new StringBuffer();
+		Tokenizer t = new Tokenizer(s,rx);
+		t.setReturnDelimiters(true);
+		
+		for(String c=t.next();c != null;c=t.next()){
+			if(rx.matches(c)) sb.append(f( rx.match(c)));
+			else sb.append(c);
+		}
+		return sb.toString();
+	}
+	
+	Regex emoticonRx = /[:8B][)(o]/;
+	String emoticonSub(Match m){
+		switch(m.subMatch(0)){
+			case ":)" : return " <img src=\"emoticon11.gif\"> ";
+			case "8)" : return " <img src=\"emoticon21.gif\"> ";
+			case "B)" : return " <img src=\"emoticon31.gif\"> ";
+			case ":(" : return " <img src=\"emoticon12.gif\"> ";	
+			case "8(" : return " <img src=\"emoticon22.gif\"> ";
+			case "B(" : return " <img src=\"emoticon32.gif\"> ";
+			case ":o" : return " <img src=\"emoticon13.gif\"> ";
+			case "8o" : return " <img src=\"emoticon23.gif\"> ";
+			case "Bo" : return " <img src=\"emoticon23.gif\"> ";	
+		}
+	}
+	
+	print fsub( "bar:(maka8(shlaka", emoticonRx, &emoticonSub(<Match> ?)) + "\n";
+	print fsub( "bar:(maka8(shlakaBo", emoticonRx, &emoticonSub(<Match> ?)) + "\n";
+	print fsub( ":)bar:(maka8(shlaka", emoticonRx, &emoticonSub(<Match> ?)) + "\n";
+
+}$

@@ -1,0 +1,88 @@
+dnl -------------------------------------------------------------------
+dnl Process this file with autoconf to produce a configure script
+dnl $RCSfile: configure.in,v $
+dnl $Revision: 1.11 $
+dnl $Author: dhakim $
+dnl $Date: 2002/09/12 22:46:26 $
+dnl -------------------------------------------------------------------
+
+AC_INIT(mod_moto.c)
+AC_CONFIG_HEADER(config.h)
+
+dnl -------------------------------------------------------------------
+dnl Check that we are where we're supposed to be 
+dnl Set the moto root dir
+dnl -------------------------------------------------------------------
+
+AC_PATH_END_CHECK($0,src/mod)
+ROOT_DIR=$ac_cv_path_END_CHECK
+AC_SUBST(ROOT_DIR)
+CONFIG_ERR=$ROOT_DIR/config.err
+
+dnl -------------------------------------------------------------------
+dnl Check for Apache
+dnl -------------------------------------------------------------------
+
+AC_APACHE
+AC_SUBST(APACHE_ROOT_DIR)
+
+dnl -------------------------------------------------------------------
+dnl Define C compiler and flags
+dnl -------------------------------------------------------------------
+
+AC_PROG_CC
+if test -z "$ac_cv_prog_CC"; then
+        $CONFIG_ERR cc
+        exit 1
+fi
+AC_CHECK_GCCLIB
+AC_FLAGS_C
+CPPFLAGS="$ac_cv_flags_CPP $ac_cv_flags_CPP_MOTO $ac_cv_flags_CPP_APACHE"
+DEFSFLAGS=$ac_cv_flags_DEFS
+CFLAGS=$ac_cv_flags_C
+AC_SUBST(CPPFLAGS)
+AC_SUBST(DEFS)
+AC_SUBST(CFLAGS)
+
+AC_SUBST(APACHE_ROOT_DIR)
+
+dnl -------------------------------------------------------------------
+dnl Check for libraries
+dnl -------------------------------------------------------------------
+
+dnl -------------------------------------------------------------------
+dnl Check for header files
+dnl -------------------------------------------------------------------
+
+AC_CHECK_HEADERS(fcntl.h sys/time.h unistd.h)
+AC_CHECK_HEADERS(stdint.h inttypes.h)
+
+dnl -------------------------------------------------------------------
+dnl Check for typedefs, structures, and compiler characteristics
+dnl -------------------------------------------------------------------
+
+AC_C_CONST
+AC_HEADER_TIME
+
+dnl -------------------------------------------------------------------
+dnl Check for library functions
+dnl -------------------------------------------------------------------
+
+AC_HEADER_STDC
+AC_CHECK_FUNCS(gettimeofday)
+AC_CHECK_FUNCS(ftw)
+if test $ac_cv_func_ftw != yes; then
+        FTWLIB=-lmotot
+fi
+AC_SUBST(FTWLIB)
+
+dnl -------------------------------------------------------------------
+dnl Output files
+dnl -------------------------------------------------------------------
+
+AC_OUTPUT(Makefile)
+
+dnl -------------------------------------------------------------------
+dnl end
+dnl -------------------------------------------------------------------
+

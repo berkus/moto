@@ -1,0 +1,28 @@
+Embedded switch with no default
+${String foo="bar"; 
+  switch(foo){
+     case "bar": print "baz";
+     case "maka": print "ok";
+     case "bling": print "bing";
+  }
+}$
+Embedded switch with default
+${foo="bang";
+  switch(foo){
+     case "bar": print "baz";
+     case "maka": print "ok";
+     case "bling": print "bing";
+     default: print "zip";
+  }
+}$
+Embedded switch with default only
+${foo="bang";
+  switch(foo){
+     default: print "zip";
+  }
+}$
+Embedded empty switch
+${foo="bang";
+  switch(foo){
+  }
+}$

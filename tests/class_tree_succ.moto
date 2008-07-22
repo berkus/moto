@@ -1,0 +1,69 @@
+${
+   class TreeNode{
+      TreeNode left=null;
+      TreeNode right=null;
+      int value;
+
+      TreeNode(int value){
+         this.value=value;
+      }
+   }
+
+   class Tree{
+      TreeNode root=null;
+
+      void insert(int value){
+         if (root==null)
+            root=new TreeNode(value);
+         else {
+            TreeNode tmp = this.locate(value);
+            if (tmp.value != value) 
+               if(value > tmp.value)
+                  tmp.right = new TreeNode(value);
+               else 
+                  tmp.left = new TreeNode(value);
+         }
+      } 
+
+      void toString(){
+         this.toString(root,0);
+      }
+
+      void toString(TreeNode cur,int depth){
+         if(cur!=null){
+         int i;
+         toString(cur.left,depth+1);
+         for(i=0;i<depth;i++) print "   ";
+         print cur.value;
+         print "\n";
+         toString(cur.right,depth+1);
+         }
+      }
+
+      TreeNode locate(int value){
+         TreeNode cur = root;
+         while(true){
+            if(value < cur.value && cur.left != null) {
+               cur = cur.left; continue; }
+            if(value > cur.value && cur.right != null) {
+               cur = cur.right; continue; }
+            break;
+         }
+         return cur;
+      }
+   }
+   Tree t = new Tree();
+   t.insert(5);
+   t.insert(3);
+   t.insert(1);
+   t.insert(7);
+   t.insert(2);
+   t.insert(0);
+   t.insert(4);
+   t.insert(9);
+   t.insert(6);
+   t.insert(8);
+   t.toString();
+}$
+   
+          
