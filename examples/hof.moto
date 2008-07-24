@@ -1,0 +1,257 @@
+$use("cstdlib")
+$use("codex.util")
+
+${
+
+	/* HOF Arrays in short form */
+
+	int one() {return 1;}
+	int two() {return 2;}
+	int three() {return 3;}
+
+	int()[] ifa = new int()[3];
+	int()[][] ifaa = new int()[3][];
+	int(String[])[] isafa = new int(String[])[3];
+
+	ifa = <int()[]>{one,two,three};
+	print ifa[0]()+"-"+ifa[1]()+"-"+ifa[2]()+"\n";
+
+	/* HOF CSymbol in short form */
+
+	String sfunc(){ return "happy"; }
+	int ifunc(){ return 23; }
+	String[] safunc() { return <String[]>{"we","got","the","funk"}; }
+
+	String sfunci(int i){ return "happy * "+i; }
+	int ifunci(int i){ return 23 * i; }
+	String[] safunci(int i) { return <String[]>{"we","got","the","funk","*",""+i}; }
+
+	int() iffunc() { return ifunc; }
+	String() sffunc() { return sfunc; }
+	String[]() saffunc() { return safunc; }
+
+	void test(String() f) {print f() + "\n"; }
+	void test(int() f) {print f() + "\n"; }
+	void test(String[]() f) {print "{"+join(f(),",") + "}"+"\n"; }
+
+	void test(String(int) f) {print f(3) + "\n"; }
+	void test(int(int) f) {print f(3) + "\n"; }
+	void test(String[](int) f) {print "{"+join(f(3),",") + "}"+"\n"; }
+
+	void test(int()() f) {print f()() + "\n"; }
+	void test(String()() f) {print f()() + "\n"; }
+	void test(String[]()() f) {print "{"+join(f()(),",") + "}"+"\n"; }
+
+	void test(int i,int()() f) {print i+"-"+f()() + "\n"; }
+	void test(int i,int() f,String()() g) {print i+"-"+f()+"-"+ g()() + "\n"; }
+	void test(String[]() f,String[]()() g) {print "{"+join(f(),",") + "}"+"-"+"{"+join(g()(),",") + "}"+"\n"; }
+
+	test(sfunc);
+	test(ifunc);
+	test(safunc);
+
+	test(sfunci);
+	test(ifunci);
+	test(safunci);
+
+	test(iffunc);
+	test(sffunc);
+	test(saffunc);
+
+	test(ifunc(),iffunc);
+	test(32,ifunc,sffunc);
+	test(safunc,saffunc);
+
+	/* HOF Each in short form */
+
+	void each(boolean[] a,void(boolean) f){ for (int i=0;i<length(a);i++) f(a[i]); }
+	void each(byte[] a,void(byte) f){ for (int i=0;i<length(a);i++) f(a[i]); }
+	void each(char[] a,void(char) f){ for (int i=0;i<length(a);i++) f(a[i]); }
+	void each(double[] a,void(double) f){ for (int i=0;i<length(a);i++) f(a[i]); }
+	void each(float[] a,void(float) f){ for (int i=0;i<length(a);i++) f(a[i]); }
+	void each(int[] a,void(int) f){ for (int i=0;i<length(a);i++) f(a[i]); }
+	void each(long[] a,void(long) f){ for (int i=0;i<length(a);i++) f(a[i]); }
+	void each(Object[] a,void(Object) f){ for (int i=0;i<length(a);i++) f(a[i]); }
+
+	boolean not(boolean b){ print "!"+b +"="+ !b+"\n"; return !b;}
+	each(<boolean[]>{true,false,false,true},not);
+
+	global int total = 0;
+	int addToTotal(int i){ total += i; return i;}
+	each(<int[]>{0,1,2,3,4,5},addToTotal);
+	print "Total = "+total+"\n";
+
+		char lowerUpper(char c){ if(isupper(c)) print <char>(c-'A'+'a'); else print c; return c;}
+	each(<char[]>{'H','e','L','L','o'},lowerUpper);
+	print "\n";
+
+	/* HOF FSub in short form */
+
+	String fsub(String s,Regex rx, String(Match) f){
+		StringBuffer sb = new StringBuffer();
+		Tokenizer t = new Tokenizer(s,rx);
+		t.setReturnDelimiters(true);
+
+		for(String c=t.next();c != null;c=t.next()){
+			if(rx.matches(c)) sb.append(f( rx.match(c)));
+			else sb.append(c);
+		}
+		return sb.toString();
+	}
+
+	Regex emoticonRx = /[:8B][)(o]/;
+	String emoticonSub(Match m){
+		switch(m.subMatch(0)){
+			case ":)" : return " <img src=\"emoticon11.gif\"> ";
+			case "8)" : return " <img src=\"emoticon21.gif\"> ";
+			case "B)" : return " <img src=\"emoticon31.gif\"> ";
+			case ":(" : return " <img src=\"emoticon12.gif\"> ";
+			case "8(" : return " <img src=\"emoticon22.gif\"> ";
+			case "B(" : return " <img src=\"emoticon32.gif\"> ";
+			case ":o" : return " <img src=\"emoticon13.gif\"> ";
+			case "8o" : return " <img src=\"emoticon23.gif\"> ";
+			case "Bo" : return " <img src=\"emoticon23.gif\"> ";
+		}
+	}
+
+	print fsub( "bar:(maka8(shlaka", emoticonRx, emoticonSub) + "\n";
+	print fsub( "bar:(maka8(shlakaBo", emoticonRx, emoticonSub) + "\n";
+	print fsub( ":)bar:(maka8(shlaka", emoticonRx, emoticonSub) + "\n";
+
+	/* HOF Member in short form */
+
+	double circleArea(double diameter) { return diameter*diameter*3.14*.25*.5; }
+	double etriangleArea(double sidelength) { return sidelength*sidelength*.5 ; }
+	double squareArea(double sidelength){ return sidelength*sidelength; }
+
+	double circlePerimeter(double diameter) { return diameter*3.14; }
+	double etrianglePerimeter(double sidelength) { return sidelength*3 ; }
+	double squarePerimeter(double sidelength){ return sidelength*4; }
+
+
+	class Shape {
+		String type;
+
+		double(double) area;
+		double(double) perimeter;
+
+		Shape(String type){
+			switch(type){
+				case "square": {
+				area = squareArea;
+				perimeter = squarePerimeter;
+				}
+				case "triangle": {
+				area = etriangleArea;
+				perimeter = etrianglePerimeter;
+				}
+				case "circle": {
+				area = circleArea;
+				perimeter = circlePerimeter;
+				}
+			}
+		}
+	}
+
+	print "Square perimeter : "+ (new Shape("square")).perimeter(3) +"\n";
+	print "Square area : "+ (new Shape("square")).area(3)+"\n";
+	print "Triangle perimeter : "+ (new Shape("triangle")).perimeter(3)+"\n";
+	print "Triangle area : "+ (new Shape("triangle")).area(3)+"\n";
+	print "Circle perimeter : "+ (new Shape("circle")).perimeter(3)+"\n";
+	print "Circle area : "+ (new Shape("circle")).area(3);
+
+		/* HOF Quicksort in short form */
+
+	void quicksort( Object[] a, int(Object,Object) compfn){
+		quicksort( a, compfn, 0, length(a)-1);
+	}
+
+	void quicksort( Object[] a, int(Object,Object) compfn, int low, int high )
+	{
+		int pivot;
+		IntStack lows = new IntStack(),highs = new IntStack();
+
+		lows.push(low);
+		highs.push(high);
+
+		/* Termination condition! */
+		while ( lows.size()>0 ) {
+
+			low = lows.pop();
+			high = highs.pop();
+
+			if(high > low) {
+				int pivot = partition( a,compfn, low, high );
+				lows.push(low);
+				highs.push( pivot - 1);
+
+				lows.push(pivot+1);
+				highs.push(high);
+			}
+		}
+	}
+
+	int partition(Object[] a, int(Object,Object) compfn,int low, int high )
+	{
+		int left, right;
+		Object pivot_item;
+
+		pivot_item = a[low];
+		left = low;
+		right = high;
+
+		while ( left < right ) {
+			while(left < right && compfn(a[left],pivot_item) <= 0 ) left++;
+			while(compfn(a[right],pivot_item) > 0 ) right--;
+
+			if ( left < right )
+				{Object t = a[left]; a[left]=a[right]; a[right]=t;}
+		}
+
+		a[low] = a[right];
+		a[right] = pivot_item;
+		return right;
+	}
+
+	int icompare (Object a,Object b){Integer l = <Integer>a, r=<Integer>b;return l.getValue() - r.getValue();}
+	int dcompare (Object a,Object b){Date l = <Date>a, r=<Date>b;return atoi(l.format("%Y%m%d")) - atoi(r.format("%Y%m%d")) ;}
+
+	String itos(Object a){Integer l = <Integer>a; return ""+l.getValue() ;}
+	String dtos(Object a){Date l = <Date>a; return l.format("%m-%d-%Y") ;}
+	String stos(Object a){String l = <String>a; return l ;}
+
+	Integer[] unsorted = {
+		new Integer(3),new Integer(12),new Integer(-32),new Integer(11),
+		new Integer(31),new Integer(13),new Integer(-8),new Integer(8),
+		new Integer(23),new Integer(15),new Integer(62),new Integer(6)
+	};
+
+	Date[] unsorted_dates = {
+		new Date("%m-%d-%Y","01-08-1976"),new Date("%m-%d-%Y","02-21-1976"),
+		new Date("%m-%d-%Y","06-17-1942"),new Date("%m-%d-%Y","04-25-2003"),
+		new Date("%m-%d-%Y","01-09-1988"),new Date("%m-%d-%Y","02-11-1956"),
+		new Date("%m-%d-%Y","06-10-1987"),new Date("%m-%d-%Y","04-23-2032")
+	};
+
+	String[] unsorted_strings = {"foo","bar","maka","shlaka","wham","bam","bam","thank","maka","you","mmam"};
+
+	void printArray(Object[] a, String(Object) f) {
+		print "{";
+		for(int i=0;i<length(a);i++)
+			print (i>0?",":"") + f(a[i]);
+		print "}\n";
+	}
+
+	printArray(unsorted_dates,dtos);
+	quicksort(unsorted_dates,dcompare);
+	printArray(unsorted_dates,dtos);
+
+	printArray(unsorted,itos);
+	quicksort(unsorted,icompare);
+	printArray(unsorted,itos);
+
+	printArray(unsorted_strings,stos);
+	quicksort(unsorted_strings,<int(Object,Object)><Object>strcmp);
+	printArray(unsorted_strings,stos);
+
+}$

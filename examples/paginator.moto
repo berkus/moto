@@ -1,0 +1,68 @@
+${
+/* This class can be used to display simple pagination controls for paginating through
+	A large query result. Initialize it by passing in the number of records, page size, and
+	current page to the constructor. Than call the printPaginationControls method to
+	output the control. The control generates a link with the state variable _page although
+	you can pass a tablename prefix (so that the state variable is named users_page or
+	something) */
+
+class Paginator
+{
+	int page,pagesize,pages,lowerPageBoundary,higherPageBoundary,maxPages,lowPage,highPage;
+
+	Paginator(int recordCount, int pagesize, int page)
+	{
+		this.page = page;
+		this.pagesize = pagesize;
+		this.pages = (recordCount / pagesize) + (recordCount % pagesize != 0 ? 1 : 0);
+		this.lowerPageBoundary = (page - 1)*pagesize;
+		this.higherPageBoundary = page*pagesize > recordCount ? recordCount : page*pagesize;
+
+		this.maxPages = 14;
+		this.lowPage = 1;
+		this.highPage = pages;
+
+		if(maxPages < pages) {
+			if(page > pages - (maxPages / 2))
+				lowPage = pages - maxPages;
+			else if(1 > page - (maxPages / 2))
+				lowPage = 1;
+			else
+				lowPage = page - (maxPages / 2);
+			highPage = lowPage + maxPages;
+		}
+	}
+
+	void printPaginationControls() { printPaginationControls("_page"); }
+
+	void printPaginationControls(String tablename)
+	{ {
+		String template = getRequest().getURI().substring(getRequest().getURI().lastIndexOf('/')+1);
+	}$
+		$declare(int i)
+		<small>
+			$if(pages > 1)
+				$if(page > 1)
+					<a href="$(template)?sid=$(state.getSID())&$(tablename)=$(page-1)">prev</a> |
+				$endif
+
+				$for(i=lowPage;i<=highPage;i++)
+					$if(i==page)
+					<b>$(i)</b>
+					$else
+					<a href="$(template)?sid=$(state.getSID())&$(tablename)=$(i)">$(i)</a>
+					$endif
+					$if(i<highPage) | $endif
+				$endfor
+				$if(page < pages)
+					| <a href="$(template)?sid=$(state.getSID())&$(tablename)=$(page+1)">next</a>
+				$endif
+			$else
+				&nbsp;
+			$endif
+		</small>
+	${ }
+	}
+}
+
+}$

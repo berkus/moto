@@ -1,0 +1,41 @@
+A couple of functions to do Coldfusion like query debugging
+
+${
+	global Vector debugQueries = new Vector();
+	global Vector debugQueryTimes = new Vector();
+	global Vector debugQueryResults = new Vector();
+
+	MySQLResultSet doQuery(MySQLConnection conn, String qry){
+		MySQLResultSet r;
+		long t;
+
+		t=time();
+		r = conn.query(qry);
+		t=t-time();
+
+		debugQueries.add(qry);
+		debugQueryTimes.add(new Long(t));
+		debugQueryResults.add(new Integer(r.size()));
+
+		return r;
+	}
+
+	void doDebugQueries(){
+		int i;
+		for(i=0;i<debugQueries.size();i++){
+			print "<p><pre>";
+			print <String>debugQueries.get(i);
+			print "</pre>\n";
+			print "Results Returned: "+str((<Integer>debugQueryResults.get(i)).getValue()) + "<br>\n";
+			print "Execution Time: "+str((<Long>debugQueryTimes.get(i)).getValue()) + "<br>\n";
+		}
+	}
+}$
+
+Include these function definitions at the beginning of your page. Instead of calling query() on your connection directly, call the doQuery function instead passing the connection as its first argument.
+
+$do(rset=doQuery(conn,qryTestLog))
+
+At the end of your page you can then call the doDebugQueries() function to see the text, rows returned, and execution time , of each of the queries that was executed on your page
+
+$if(getValue("debug")!= null) <hr> $do(doDebugQueries()) $endif

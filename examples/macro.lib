@@ -1,0 +1,22 @@
+GENERIC_TABLE(query)
+	$if(true)
+		$do(rset=conn.query($query))
+		<table bgcolor="#666666" cellpadding=1 cellspacing=0><tr><td>
+		<table cellpadding=1 cellspacing=1 border=0>
+			<tr bgcolor="#999999">
+				$declare(int cols=rset.getColumns())
+				$declare(int i)
+				$for(i=0;i<cols;i++)
+				<td><font color="#FFFFFF"><b>$(rset.getColumnName(i))</b></font></td>
+				$endfor
+			</tr>
+			$while(rset.next())
+				<tr bgcolor="#FFFFFF">
+				$for(i=0;i<cols;i++)
+					<td>$(rset.getString(i))</td>
+				$endfor
+				</tr>
+			$endwhile
+		</table>
+		</td></tr></table>
+	$endif <br>

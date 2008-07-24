@@ -1,0 +1,484 @@
+$use("codex.db.mysql")
+$use("codex.http")
+$use("codex.util")
+$use("cstdlib")
+
+${
+	// The database schema is real simple. Just create the following table in a
+	// mysql database then point the connection below to that database
+	//
+	// CREATE TABLE tblMessage (
+	//    idMessage int primary key auto_increment,
+	//    idParent int not null,
+	//    idThread int not null,
+	//    txtAuthor varchar(64) not null,
+	//    txtAuthorEmail varchar(64) not null,
+	//    txtSubject text not null,
+	//    txtBody text not null,
+	//    datDatePosted datetime not null,
+	//    intFlags integer not null
+	// );
+
+	/* Set up the database connection */
+
+	global MySQLConnection conn = new MySQLConnection(
+		"localhost","messages","root","password");
+
+	global MySQLResultSet rset;
+
+	class Izer {
+		Regex eolRX = /(\r)?\n/;
+		Regex htmlSpecialRX = /[&<>]/;
+		Regex emailRX = /([a-zA-Z0-9_\-]+)@([a-zA-Z0-9_\-]+[.])*[a-zA-Z0-9_\-]+/;
+		Regex webRX = /(http:\/\/([a-zA-Z0-9_\-]+[.])*[a-zA-Z0-9_\-]+)|(www[.]([a-zA-Z0-9_\-]+[.])*[a-zA-Z0-9_\-]+)/;
+		Regex emoticonRX = /([:8B;])([()oOpP])/;
+
+		String htmlSpecialSub(Match m){
+			switch(m.subMatch(0)){
+				case "&" : return "&amp;";
+				case "<" : return "&lt;";
+				case ">" : return "&gt;";
+			}
+		}
+
+		String webSub(Match m){
+			if (m.subMatch(1) != null)
+				return "<a href=\""+m.subMatch(1)+"\">"+m.subMatch(0)+"</a>";
+			else
+				return "<a href=\"http://"+m.subMatch(3)+"\">"+m.subMatch(0)+"</a>";
+		}
+
+		String emoticonSub(Match m){
+			String img = "<img src=\"emoticon";
+
+			switch(m.subMatch(1)){
+				case ":" : img += "1";
+				case "8" : img += "2";
+				case "B" : img += "3";
+				case ";" : img += "4";
+			}
+
+			switch(m.subMatch(2)){
+				case ")" : img += "1";
+				case "(" : img += "2";
+				case "o" : img += "3";
+				case "O" : img += "3";
+				case "p" : img += "4";
+				case "P" : img += "4";
+			}
+
+			img += ".gif\">";
+			return img;
+		}
+
+		String markup(String input){
+			String output = input;
+
+			output = sub(output,htmlSpecialRX, htmlSpecialSub);
+			output = sub(output,eolRX,"<br>");
+			output = sub(output,emailRX,"<a href=\"mailto:$0\">$0</a>");
+			output = sub(output,webRX, webSub);
+			output = sub(output,emoticonRX, emoticonSub);
+
+			return output;
+		}
+
+		String escapeHTML(String input){
+			return sub(input,htmlSpecialRX, htmlSpecialSub);
+		}
+	}
+
+	global Izer izer = new Izer();
+
+	class Thread{
+		int idThread;
+		Message root;
+		IntHashtable idToMessage;
+
+		Thread(int idThread){
+			this.idThread = idThread;
+			idToMessage = new IntHashtable();
+			root = new Message(0);
+			root.replies = new Vector();
+			idToMessage.put(0,root);
+		}
+
+		void retrieve(){
+			MySQLResultSet rset = conn.query(
+				"SELECT * FROM tblMessage WHERE idThread = "+idThread+" ORDER BY idMessage");
+
+			while(rset.next()){
+				Message m = new Message(
+				rset.getInt("idMessage"),
+				rset.getInt("idParent"),
+				rset.getDate("datDatePosted"),
+				rset.getString("txtAuthor"),
+				rset.getString("txtAuthorEmail"),
+				rset.getString("txtSubject"),
+				rset.getString("txtBody"),
+				rset.getInt("intFlags"),
+				this
+				);
+
+				(<Message>idToMessage.get(m.idParent)).replies.add(m);
+
+				idToMessage.put(m.idMessage,m);
+			}
+		}
+
+		Message getMessage(int id){
+			return <Message>idToMessage.get(id);
+		}
+
+		Enumeration messages() {
+			Vector v = new Vector();
+			Stack s = new Stack();
+
+			root.replies.elements().each(s.push);
+
+			while(s.size() > 0){
+				Message m = <Message>s.pop();
+				v.add(m);
+				m.replies.elements().each(s.push);
+			}
+
+			return v.elements();
+		}
+
+		Message next(Message m){
+			Message rval = null;
+
+			if(m.replies.size() != 0)
+				return <Message>m.replies.get(m.replies.size()-1);
+
+			while (true){
+				int i;
+				Message pm = <Message>idToMessage.get(m.idParent);
+				for(i=pm.replies.size()-1;i>=0;i--)
+				if (pm.replies.get(i) == m) break;
+				if(--i >= 0)
+				return <Message>pm.replies.get(i);
+
+				if(m==pm) break;
+				m = pm;
+			}
+
+			return null;
+		}
+
+		Message prev(Message m){
+			Message rval = null;
+
+			int i;
+			Message pm = <Message>idToMessage.get(m.idParent);
+			for(i=pm.replies.size()-1;i>=0;i--)
+				if (pm.replies.get(i) == m) break;
+			if(++i < pm.replies.size()) {
+				m = <Message>pm.replies.get(i);
+				while(m.replies.size() > 0)
+				m = <Message>m.replies.get(0);
+				return m;
+			} else if(pm.idMessage != 0)
+				return pm;
+
+			return null;
+		}
+	}
+
+	global int MSG_AUTOFORMAT = 1;
+	global int MSG_DELETED = 8;
+
+	class Message{
+		int idMessage;
+		int idParent;
+		Date postdate;
+		String author;
+		String authorEmail;
+		String subject;
+		String body;
+		int flags;
+		Thread thread;
+		Vector replies;
+
+		Message(
+			int idMessage,
+			int idParent,
+			Date postdate,
+			String author,
+			String authorEmail,
+			String subject,
+			String body,
+			int flags,
+			Thread thread
+		){
+			this.idMessage=idMessage;
+			this.idParent=idParent;
+			this.postdate=postdate;
+			this.author=author;
+			this.authorEmail=authorEmail;
+			this.subject=subject;
+			this.body=body;
+			this.flags = flags;
+			this.replies=new Vector();
+
+			this.thread = thread;
+		}
+
+		Message(int idMessage){
+			this.idMessage = idMessage;
+		}
+
+		void retrieve(){
+			MySQLResultSet rset = conn.query(
+				"SELECT * FROM tblMessage WHERE idMessage = "+idMessage);
+
+			if(rset.next()){
+				this.idMessage = rset.getInt("idMessage");
+				this.idParent = rset.getInt("idParent");
+				this.postdate = rset.getDate("datDatePosted");
+				this.author = rset.getString("txtAuthor");
+				this.authorEmail = rset.getString("txtAuthorEmail");
+				this.subject = rset.getString("txtSubject");
+				this.body = rset.getString("txtBody");
+				this.flags = rset.getInt("intFlags");
+			} else {
+				throw new Exception("Message "+idMessage+" not found!");
+			}
+		}
+
+		void store(){
+			if(idMessage == 0){
+				conn.update(
+				"INSERT INTO tblMessage "+
+				"(idMessage,idParent,idThread,datDatePosted,txtAuthor,txtAuthorEmail,txtSubject,txtBody,intFlags) "+
+				"VALUES ("+
+				"0,"+idParent+
+				","+thread.idThread+","+
+				"'"+(new Date()).toString("%Y-%m-%d %H:%M:%S")+"',"+
+				"'"+conn.escape(author)+"', "+
+				"'"+conn.escape(authorEmail)+"', "+
+				"'"+conn.escape(subject)+"', "+
+				"'"+conn.escape(body)+"', "+
+				this.flags +
+				")"
+				);
+				idMessage = conn.insertID();
+			} else {
+				conn.update(
+				"UPDATE tblMessage SET "+
+				"txtAuthor = '"+conn.escape(author)+"', "+
+				"txtAuthorEmail = '"+conn.escape(authorEmail)+"', "+
+				"txtSubject = '"+conn.escape(subject)+"', "+
+				"txtBody = '"+conn.escape(body)+"', "+
+				"intFlags = "+this.flags+ " "+
+				"WHERE idMessage = "+idMessage
+				);
+			}
+		}
+
+		int depth(){
+			int depth=0;
+
+			Message m=this;
+			while(m=<Message>thread.idToMessage.get(m.idParent), m.idMessage != 0) depth++;
+			return depth;
+		}
+	}
+
+	void html_beginUpdateForm(String formTitle,String formOp,String formNext, int formColumns) {
+		}$
+			<table border=0 cellpadding=0 cellspacing=0 class="storytable" width="450">
+				<tr>
+				<th bgcolor="#000066">$(formTitle)</th>
+				</tr>
+				<tr><td>
+				<table cellspacing=0 cellpadding=3 >
+					<form method=post>
+
+						<input type=hidden name="_op" value="$(formOp)">
+						$(formHidden("_next_t",formNext))
+		${
+	}
+
+	void html_endUpdateForm(int formColumns,String formSubmitValue) {
+		}$
+						<tr><td colspan="$(formColumns)" align=right>
+							<input type=submit name="_submitOp" value="$(formSubmitValue)">
+						</td></tr>
+					</form>
+				</table>
+				</td></tr>
+			</table>
+		${
+	}
+
+	void html_showMessage(Message m) {
+		}$
+			<table cellpadding="0" cellspacing="0" class="storytable" width="450">
+				<tr>
+				<th bgcolor="#000066">$(m.subject)</th>
+				</tr>
+				<tr>
+				<td>
+					<b>Posted by
+					<a href="mailto:$(m.authorEmail)">$(m.author)</a>
+					on $(m.postdate.toString("%Y-%m-%d %H:%M:%S"))</b>
+					<p>
+					$( (m.flags & MSG_AUTOFORMAT) == 1 ?izer.markup(m.body):m.body)
+					<p align=center>
+					$if(m.thread != null)
+						$if(m.thread.prev(m) != null)
+							<a href="forum.moto?_idThread=$(m.thread.idThread)&_idMessage=$(m.thread.prev(m).idMessage)">
+							Previous Message</a>
+						$endif |
+						$if(m.thread.next(m) != null)
+							<a href="forum.moto?_idThread=$(m.thread.idThread)&_idMessage=$(m.thread.next(m).idMessage)">
+							Next Message</a>
+						$endif
+					$endif
+					<p align=right>
+					<a href="forum.moto?_idThread=$(m.thread.idThread)&_idMessage=$(m.idMessage)&_op=edit">Edit</a> |
+					<a href="forum.moto?_idThread=$(m.thread.idThread)&_idMessage=$(m.idMessage)&_op=reply">Reply</a> |
+					<a href="forum.moto?_idThread=$(m.thread.idThread)&_idMessage=$(m.idMessage)&_op=delete">Delete</a>
+
+				</td>
+				</tr>
+
+			</table>
+		${
+	}
+
+	void html_showMessageHeader(Message m, int curIdMessage) {
+
+		for(int i=m.depth();i>0;i--)
+			print "&nbsp;&nbsp;&nbsp;";
+
+		if( (m.flags & MSG_DELETED) == MSG_DELETED)
+			print "<i>message "+m.idMessage+" marked as deleted</i><br>";
+		else {
+			if(curIdMessage == m.idMessage)
+				print "<b>";
+			else
+				print "<a href=\"forum.moto?_idThread=" + m.thread.idThread +
+					"&_idMessage="+m.idMessage+"\">";
+
+			print m.subject;
+
+			if(curIdMessage != m.idMessage)
+				print "</a>";
+
+			print " posted by "+m.author+" on "+m.postdate.toString("%m/%d/%Y %H:%M:%S");
+
+			if(curIdMessage == m.idMessage) print "</b>";
+
+			print "<br>";
+		}
+	}
+
+	void html_enterMessage(Message m) {
+		}$
+			$if(m.idMessage == 0 && m.idParent == 0)
+				$do(html_beginUpdateForm("Enter Message","submit","",2))
+			$elseif(m.idMessage == 0)
+				$do(html_beginUpdateForm("Enter Reply","submit","",2))
+			$else
+				$do(html_beginUpdateForm("Edit Message","submit","",2))
+
+				$(formHidden("_idMessage",str(m.idMessage)))
+			$endif
+
+			<tr><td width=100>
+				Title : </td><td> $(formTextfield("_subject",m.subject,40))
+			</td></tr>
+			<tr><td >
+				Author : </td><td> $(formTextfield("_author",m.author,40))
+			</td></tr>
+			<tr><td >
+				Author Email : </td><td> $(formTextfield("_authorEmail",m.authorEmail,40))
+			</td></tr>
+			<tr><td colspan=2>
+				Message Content : <br>
+				$(formTextarea("_body",m.body!=null?izer.escapeHTML(m.body):"",10,60))
+			</td></tr>
+			<tr><td colspan=2>
+				<input type="radio" name="_flags" value="0" $( (m.flags & MSG_AUTOFORMAT) == 0?"CHECKED":"")>This message already contains HTML formatting
+			</td></tr><tr><td colspan=2>
+				<input type="radio" name="_flags" value="1" $( (m.flags & MSG_AUTOFORMAT) == 1?"CHECKED":"")>Auto-format this message
+			</td></tr>
+			<input type="hidden" name="_idParent" value="$(m.idParent)">
+			<input type="hidden" name="_idThread" value="$(m.thread.idThread)">
+
+			$if(m.idMessage == 0 && m.idParent == 0)
+				$do(html_endUpdateForm(2,"Submit Message"))
+			$elseif(m.idMessage == 0)
+				$do(html_endUpdateForm(2,"Submit Reply"))
+			$else
+				$do(html_endUpdateForm(2,"Submit Edit"))
+			$endif
+		${
+	}
+
+	Thread t = new Thread(atoi(getValue("_idThread","0")));
+	Message m = null;
+
+	if(getValue("_op","") eq "submit") {
+		m = new Message(
+			atoi(getValue("_idMessage","0")),
+			atoi(getValue("_idParent","0")),
+			new Date(),
+			getValue("_author",""),
+			getValue("_authorEmail",""),
+			getValue("_subject",""),
+			getValue("_body",""),
+			atoi(getValue("_flags","0")),
+			t
+		);
+		m.store();
+		t.retrieve();
+	} else if(getValue("_op","") eq "delete") {
+		m = new Message( atoi(getValue("_idMessage","0")));
+		m.retrieve();
+		m.flags = m.flags | MSG_DELETED;
+		m.store();
+		t.retrieve();
+		m = t.getMessage(atoi(getValue("_idMessage")));
+	} else if(getValue("_idMessage") != null) {
+		t.retrieve();
+		m = t.getMessage(atoi(getValue("_idMessage")));
+	} else
+		t.retrieve();
+}$
+
+<html>
+   <head>
+      <style type="text/css">
+      <!--
+      td,
+      TD,
+      $('#')bodytext { font-family: arial, helvetica, sans-serif; font-size: 12px; }
+      .storytable th { color:#FFFF00; font-size:14px; text-align:left;}
+      -->
+      </style>
+   </head>
+   <body>
+
+      $if(m!=null) $do(html_showMessage(m)) $endif
+
+      <hr>
+      ${
+         if(getValue("_op","") eq "edit")
+            html_enterMessage(m);
+         else if(getValue("_op","") eq "reply")
+            html_enterMessage(
+               new Message(0,m.idMessage,new Date(),null,null,"RE: "+m.subject,null,0,t));
+         else if(getValue("_op","") eq "post")
+            html_enterMessage(
+               new Message(0,0,new Date(),null,null,null,null,0,t));
+      }$
+      <hr>
+      <small>
+      ($(t.idToMessage.size()) Comments | <a href="forum.moto?_idThread=$(t.idThread)&_op=post">New Comment</a>)<br>
+      $do(t.messages().each(<void(Object)>html_showMessageHeader(?,m!=null?m.idMessage:0)))
+      </small>
+   </body>
+</html>

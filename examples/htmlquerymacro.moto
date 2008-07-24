@@ -1,0 +1,20 @@
+A macro to display the contents of an SQL query as an HTML table
+Uses macro.lib
+
+$use("codex.sql")
+$use("codex.util")
+$use("codex.http")
+#readdefs("macro.lib")
+
+<html>
+<body>
+
+	$declare(MySQLConnection conn = new MySQLConnection("localhost","test","root",""))
+
+	$declare(String query)
+	$declare(MySQLResultSet rset)
+
+	$GENERIC_TABLE("SELECT * FROM tblTopic")
+
+</body>
+</html>

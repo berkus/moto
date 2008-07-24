@@ -1,0 +1,70 @@
+${
+	/* Subtracts the elements of set B from set A */
+
+	Stringset subtract(Stringset A, Stringset B)
+	{
+		Stringset result = new Stringset();
+		Enumeration e;
+
+		for(e=A.elements(); e.hasNext();)
+			result.add(<String>e.next());
+		for(e=B.elements(); e.hasNext();)
+			result.remove(<String>e.next());
+
+		return result;
+	}
+
+	/* Returns the Union of the elements of set B and set A */
+
+	Stringset union(Stringset A, Stringset B)
+	{
+		Stringset result = new Stringset();
+		Enumeration e;
+
+		for(e=A.elements(); e.hasNext();)
+			result.add(<String>e.next());
+		for(e=B.elements(); e.hasNext();)
+			result.add(<String>e.next());
+
+		return result;
+	}
+
+	/* Takes a pipe delimited String of ids and converts it to a Stringset */
+
+	Stringset deSerializeSet(String ids)
+	{
+		String curID;
+		Stringset result = new Stringset();
+		Tokenizer tok = new Tokenizer(ids,'|');
+
+		while((curID = tok.next())!=null )
+			result.add(curID);
+
+		return result;
+	}
+
+	/* Takes a Stringset and serializes it to a pipe delimited String */
+
+	String serializeSet(Stringset A)
+	{
+		StringBuffer result = new StringBuffer();
+		Enumeration e;
+		for(e=A.elements(); e.hasNext();) {
+			result.append(<String>e.next());
+			result.append('|');
+		}
+		return result.toString();
+	}
+
+	/* Takes a query that selects a single String and builds a Stringset out of it */
+
+	Stringset selectSet (String query)
+	{
+		Stringset result = new Stringset();
+		rset = conn.query(query);
+		while(rset.next())
+			result.add(rset.getString(0));
+		return result;
+	}
+
+}$
