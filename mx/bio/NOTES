@@ -1,0 +1,26 @@
+See the motoBioExtra.tgz which contains example code on how to use 
+this library. The bio.defines can simply be included in your code 
+for convenience functions.
+
+
+When working with DIGEST Bios, it is not safe to place them in
+the middle of a chain:
+
+ENC->DIGEST->MEM
+
+
+Instead place them on either end of the chain:
+
+MEM->DIGEST
+
+or
+
+DIGEST->MEM
+
+or 
+
+DIGEST->ENC->MEM
+
+
+There should really be no need for this, but it is supported nonetheless.
+

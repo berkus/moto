@@ -1,0 +1,111 @@
+${
+  global int BASE64    = 1;
+  global int BUFFER    = 2;
+  global int CIPHER    = 3;
+  global int DIGEST    = 4;
+  global int NULLF     = 5;
+  global int FSTREAM   = 6;
+  global int MEM       = 7;
+  global int NULLS     = 8;
+
+  global int DES       = 1;
+  global int DES2      = 2;
+  global int DES3      = 3;
+  global int RC4       = 4;
+  global int IDEA      = 5;
+  global int RC2       = 6;
+  global int BLOWFISH  = 7;
+  global int CAST5     = 8;
+  global int RC5       = 9;
+
+  global int MD2       = 1;
+  global int MD5       = 2;
+  global int SHA       = 3;
+  global int SHA1      = 4;
+  global int DSS       = 5;
+  global int DSS1      = 6;
+  global int MDC2      = 7;
+  global int RIPE160   = 8;
+
+  global int F_READ    = 1;  // Read an existing file
+  global int F_WRITE   = 2;  // Write to new file or truncate to existing one
+  global int F_APPEND  = 3;  // Write to end of existing file
+  global int F_RW      = 4;  // F_READ + F_WRITE
+
+
+  String BIO_ENCODE(String data){
+    Bio b64 = new Bio(BASE64);
+    Bio mem = new Bio(MEM);
+    b64.push(mem);
+
+    b64.write(data);
+    b64.flush();
+
+    String ret = new String(mem.read());
+
+    delete b64; delete mem;
+    return ret;
+  }
+
+
+  String BIO_DECODE(String data){
+    Bio b64 = new Bio(BASE64);
+    Bio mem = new Bio(MEM);
+    b64.push(mem);
+
+    mem.write(data);
+    mem.flush();
+
+    String ret = new String(b64.read());
+    delete b64; delete mem;
+    return ret;
+  }
+
+
+  String BIO_ENCRYPT(String data, String key, int type){
+    Bio enc = new Bio(CIPHER);
+    enc.setCipher(type);
+    Bio mem = new Bio(MEM);
+    Bio b64 = new Bio(BASE64);
+
+    enc.push(mem);
+
+    enc.write(data, key);
+    enc.flush();
+
+    String ret = new String(mem.read());
+    delete enc; delete mem;
+    return ret;
+  }
+
+
+  String BIO_DECRYPT(String data, String key, int type){
+    Bio enc = new Bio(CIPHER);
+    enc.setCipher(type);
+    enc.setKey(key);
+    Bio mem = new Bio(MEM);
+    Bio b64 = new Bio(BASE64);
+
+    enc.push(mem);
+
+    mem.write(data);
+    mem.flush();
+
+    String ret = new String(enc.read());
+    delete enc; delete mem;
+    return ret;
+  }
+
+
+  String BIO_DIGEST(String data, int type){
+    Bio md = new Bio(DIGEST);
+    md.setDigest(type);
+
+    md.write(data);
+    md.flush();
+
+    String ret = new String(md.read());
+    delete md;
+    return ret;
+  }
+}$
