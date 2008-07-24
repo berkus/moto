@@ -33,6 +33,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <errno.h>
 
 #include "number.h"
 
@@ -43,8 +44,6 @@
 #define INT32_CHAR_NEG_MAX "2147483648"
 #define INT64_CHAR_POS_MAX "9223372036854775807"
 #define INT64_CHAR_NEG_MAX "9223372036854775808"
-
-extern int errno;
 
 static int parse_int64(char *s, int64_t *n);
 static int parse_int32(char *s, int32_t *n);

@@ -128,7 +128,7 @@ int shared_init(size_t size){
 	
 	/* The first four bytes of shared memory are going to record the
 		offset of the last piece of memory allocated */
-	(caddr_t)BASE_ADDRESS = mmmap(0, SHARED_SEGMENT + ACCOUNTING_SEGMENT, 
+	BASE_ADDRESS = (caddr_t)mmmap(0, SHARED_SEGMENT + ACCOUNTING_SEGMENT, 
 											PROT_READ|PROT_WRITE, MAP_SHARED, fd, 0);
 	close(fd);
 	fflush(stdout);
